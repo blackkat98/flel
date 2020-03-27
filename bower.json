@@ -1,0 +1,20 @@
+{
+  "name": "FLEL",
+  "description": "",
+  "main": "",
+  "authors": [
+    "blackkat98 <nam.th.200698@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "flel.beta",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "adminlte3": "*"
+  }
+}
