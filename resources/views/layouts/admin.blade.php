@@ -19,6 +19,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('bower_components/adminlte3/dist/css/adminlte.min.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('bower_components/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
     @yield('css')
 </head>
 <body class="hold-transition sidebar-mini">
@@ -158,7 +162,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- User Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <img src="{{ Auth::user()->image }}" class="img-size-32 img-circle">
+                        <img src="{{ asset(Auth::user()->image) }}" class="img-size-32 img-circle">
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <span class="dropdown-header">{{ Auth::user()->name }}</span>
@@ -196,31 +200,59 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview menu-open">
+                        <li class="nav-item has-treeview">
                             <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fa fa-language"></i>
                                 <p>
-                                    Starter Pages
+                                    @lang('Languages')
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Active Page</p>
+                                    <a href="{{ route('admin-languages-list') }}" class="nav-link">
+                                        <i class="fa fa-table nav-icon"></i>
+                                        <p>@lang('List')</p>
                                     </a>
                                 </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fa fa-book"></i>
+                                <p>
+                                    @lang('Courses')
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Inactive Page</p>
+                                    <a href="{{ route('admin-courses-list') }}" class="nav-link">
+                                        <i class="fa fa-table nav-icon"></i>
+                                        <p>@lang('List')</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fa fa-certificate"></i>
+                                <p>
+                                    @lang('Test Types')
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin-test-types-list') }}" class="nav-link">
+                                        <i class="fa fa-table nav-icon"></i>
+                                        <p>@lang('List')</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Simple Link
@@ -277,7 +309,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Modals -->
     <div class="modal fade" id="form-logout">
         <div class="modal-dialog">
-            <div class="modal-content bg-danger">
+            <div class="modal-content">
                 <form method="post" action="{{ route('logout') }}">
                     @csrf
                     <div class="modal-header">
@@ -290,8 +322,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <p>@lang('Just to make sure you did not misclick.')</p>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">@lang('Close')</button>
-                        <button type="submit" class="btn btn-outline-light">@lang('Logout')</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn-danger">@lang('Logout')</button>
                     </div>
                 </form>
             </div>
@@ -309,6 +341,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('bower_components/adminlte3/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('bower_components/adminlte3/dist/js/adminlte.min.js') }}"></script>
+    <!-- DataTables -->
+    <script src="{{ asset('bower_components/adminlte3/plugins/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('bower_components/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
     @yield('js')
 </body>
 </html>

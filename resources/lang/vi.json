@@ -13,6 +13,41 @@
     "Close": "Đóng",
     
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
-    "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm."
+    "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",
+    "Create a new instance in": "Tạo một đối tượng mới trong",
     
+    "Data Table of all": "Bảng dữ liệu các",
+    
+    "List": "Danh sách",
+    "Create": "Thêm",
+    "Edit": "Sửa",
+    "Update": "Cập nhật",
+    "Delete": "Xoá",
+    "Remove": "Xoá",
+    "Actions": "Thao tác",
+    
+    "ID": "Chỉ số",
+    "Name": "Tên",
+    "Slug": "Slug",
+    "Code": "Mã",
+    "Language": "Ngôn ngữ",
+    "Creator": "Người tạo",
+    "Description": "Mô tả",
+    "Since": "Tạo lúc",
+    "Last update": "Sửa lần cuối",
+    
+    "has been created": "vừa được tạo",
+    "has been updated": "vừa được cập nhật",
+    "has been deleted": "vừa bị xoá",
+    "Action Failed": "Tác vụ thất bại",
+    
+    "is required": "là bắt buộc",
+    "must be unique": "không được lặp lại",
+    "must has a size of": "phải có độ dài là",
+    "must has a size of at least": "phải có độ dài tối thiểu là",
+    "must has a size of at most": "phải có độ dài tối đa là",
+    
+    "Languages": "Ngôn ngữ",
+    "Courses": "Khoá học",
+    "Test Types": "Loại bài thi"
 }
