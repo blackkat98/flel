@@ -33,6 +33,9 @@
     "Language": "Ngôn ngữ",
     "Creator": "Người tạo",
     "Description": "Mô tả",
+    "Email": "Email",
+    "Password": "Mật khẩu",
+    "Image": "Ảnh",
     "Since": "Tạo lúc",
     "Last update": "Sửa lần cuối",
     
@@ -43,10 +46,13 @@
     
     "is required": "là bắt buộc",
     "must be unique": "không được lặp lại",
-    "must has a size of": "phải có độ dài là",
-    "must has a size of at least": "phải có độ dài tối thiểu là",
-    "must has a size of at most": "phải có độ dài tối đa là",
+    "must have a size of": "phải có độ dài là",
+    "must have a size of at least": "phải có độ dài tối thiểu là",
+    "must have a size of at most": "phải có độ dài tối đa là",
+    "must not contain spaces": "không được chứa dấu cách",
+    "is not in the correct form": "không đúng định dạng",
     
+    "Users": "Người dùng",
     "Languages": "Ngôn ngữ",
     "Courses": "Khoá học",
     "Test Types": "Loại bài thi"

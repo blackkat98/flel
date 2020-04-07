@@ -23,6 +23,13 @@ Route::group(['prefix' => 'home'], function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'Admin\AdminController@index')->name('admin');
+
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/', 'Admin\UserController@list')->name('admin-users-list');
+        Route::post('/store', 'Admin\UserController@store')->name('admin-users-store');
+        Route::post('/update/{id}', 'Admin\UserController@update')->name('admin-users-update');
+        Route::post('/delete/{id}', 'Admin\UserController@destroy')->name('admin-users-delete');
+    });
     
     Route::group(['prefix' => 'languages'], function () {
         Route::get('/', 'Admin\LanguageController@list')->name('admin-languages-list');

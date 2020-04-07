@@ -11,6 +11,10 @@ return [
     'default_locales' => [
         'en' => 'English',
         'vi' => 'Tiếng Việt'
-    ]
+    ],
+    'storage_dir' => '/storage/',
+    'image_dir' => 'images',
+    'sound_dir' => 'sounds',
+    'video_dir' => 'videos'
 ];
 

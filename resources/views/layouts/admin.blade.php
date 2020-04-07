@@ -202,6 +202,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                              with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link active">
+                                <i class="nav-icon fa fa-users"></i>
+                                <p>
+                                    @lang('Users')
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin-users-list') }}" class="nav-link">
+                                        <i class="fa fa-table nav-icon"></i>
+                                        <p>@lang('List')</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link active">
                                 <i class="nav-icon fa fa-language"></i>
                                 <p>
                                     @lang('Languages')
