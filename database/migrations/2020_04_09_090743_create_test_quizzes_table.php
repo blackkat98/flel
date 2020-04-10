@@ -15,6 +15,12 @@ class CreateTestQuizzesTable extends Migration
     {
         Schema::create('test_quizzes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('test_part_id');
+            $table->integer('number');
+            $table->integer('quiz_type');
+            $table->string('question');
+            $table->text('options')->nullable();
+            $table->string('answer');
             $table->timestamps();
         });
     }

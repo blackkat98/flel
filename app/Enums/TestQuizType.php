@@ -11,7 +11,6 @@ use BenSampo\Enum\Enum;
  */
 final class TestQuizType extends Enum
 {
-    const OptionOne =   0;
-    const OptionTwo =   1;
-    const OptionThree = 2;
+    const MULTIPLE_CHOICE = 0;
+    const WRITING = 1;
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Language;
+use App\Models\Test;
 
 class TestType extends Model
 {
@@ -16,5 +17,10 @@ class TestType extends Model
     public function language()
     {
         return $this->belongsTo(Language::class, 'language_id');
+    }
+    
+    public function tests()
+    {
+        return $this->hasMany(Test::class, 'test_type_id');
     }
 }

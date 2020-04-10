@@ -15,6 +15,12 @@ class CreateTestPartsTable extends Migration
     {
         Schema::create('test_parts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('test_id');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->string('image')->nullable();
+            $table->string('sound')->nullable();
+            $table->string('video')->nullable();
             $table->timestamps();
         });
     }
