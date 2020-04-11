@@ -10,7 +10,7 @@ class TestQuiz extends Model
     protected $table = 'test_quizzes';
     
     protected $fillable = [
-        'test_part_id', 'number', 'quiz_type', 'question', 'options', 'answer'
+        'test_part_id', 'number', 'quiz_type', 'question', 'options', 'option_content_type', 'answer'
     ];
     
     protected $casts = [

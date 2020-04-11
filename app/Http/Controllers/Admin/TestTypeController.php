@@ -17,7 +17,7 @@ class TestTypeController extends AdminController
     public function list()
     {
         $test_types = TestType::all(['id', 'language_id', 'name', 'description', 'created_at', 'updated_at']);
-        $languages = Language::all(['id', 'name', 'slug']);
+        $languages = Language::all(['id', 'name', 'slug'])->sortBy('id');
         
         return view('admin.test_types.list', [
             'test_types' => $test_types,

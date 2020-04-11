@@ -11,7 +11,11 @@ class TestPart extends Model
     protected $table = 'test_parts';
     
     protected $fillable = [
-        'test_id', 'name', 'description', 'image', 'sound', 'video'
+        'test_id', 'name', 'description', 'images', 'sound', 'video'
+    ];
+
+    protected $casts = [
+        'images' => 'array'
     ];
     
     public function test()

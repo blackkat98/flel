@@ -17,6 +17,7 @@
     "Create a new instance in": "Tạo một đối tượng mới trong",
     
     "Data Table of all": "Bảng dữ liệu các",
+    "Details of": "Chi tiết về",
     
     "List": "Danh sách",
     "Create": "Thêm",
@@ -24,9 +25,12 @@
     "Update": "Cập nhật",
     "Delete": "Xoá",
     "Remove": "Xoá",
+    "Back": "Quay lại",
+    "Back to": "Quay về",
     "Actions": "Thao tác",
     
     "ID": "Chỉ số",
+    "Type": "Loại",
     "Name": "Tên",
     "Slug": "Slug",
     "Code": "Mã",
@@ -36,6 +40,10 @@
     "Email": "Email",
     "Password": "Mật khẩu",
     "Image": "Ảnh",
+    "More Images": "Thêm ảnh",
+    "Sound": "Âm thanh",
+    "Video": "Đoạn phim",
+    "Time": "Thời gian",
     "Since": "Tạo lúc",
     "Last update": "Sửa lần cuối",
     
@@ -55,5 +63,8 @@
     "Users": "Người dùng",
     "Languages": "Ngôn ngữ",
     "Courses": "Khoá học",
-    "Test Types": "Loại bài thi"
+    "Test Types": "Loại bài thi",
+    "Tests": "Đề thi",
+    "Test Part": "Phần đề thi",
+    "Test Quiz": "Câu hỏi thi"
 }

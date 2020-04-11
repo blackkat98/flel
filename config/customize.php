@@ -12,6 +12,15 @@ return [
         'en' => 'English',
         'vi' => 'Tiếng Việt'
     ],
+    'accepted_image' => [
+        'jpg', 'jpeg', 'png'
+    ],
+    'accepted_sound' => [
+        'mp3'
+    ],
+    'accepted_video' => [
+        'mp4'
+    ],
     'storage_dir' => '/storage/',
     'image_dir' => 'images',
     'sound_dir' => 'sounds',

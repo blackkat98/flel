@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Course;
+use App\Models\Test;
 
 class User extends Authenticatable
 {
@@ -41,5 +42,10 @@ class User extends Authenticatable
     public function courses()
     {
         return $this->hasMany(Course::class, 'user_id');
+    }
+
+    public function tests()
+    {
+        return $this->hasMany(Test::class, 'user_id');
     }
 }

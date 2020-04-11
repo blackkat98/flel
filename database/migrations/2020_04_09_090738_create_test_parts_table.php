@@ -18,7 +18,7 @@ class CreateTestPartsTable extends Migration
             $table->integer('test_id');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
+            $table->text('images')->nullable();
             $table->string('sound')->nullable();
             $table->string('video')->nullable();
             $table->timestamps();

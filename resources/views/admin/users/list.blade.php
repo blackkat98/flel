@@ -138,7 +138,7 @@
                         <label for="image">
                             @lang('Image')
                         </label>
-                        <input type="file" id="image" class="form-control" name="image" accept="image/x-png,image/gif,image/jpeg">
+                        <input type="file" id="image" class="form-control" name="image">
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">

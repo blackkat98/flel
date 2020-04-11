@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\TestType;
 use App\Models\TestPart;
+use App\Models\User;
 
 class Test extends Model
 {
@@ -13,6 +14,11 @@ class Test extends Model
     protected $fillable = [
         'user_id', 'test_type_id', 'name', 'time'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
     
     public function testType()
     {

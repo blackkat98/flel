@@ -20,6 +20,7 @@ class CreateTestQuizzesTable extends Migration
             $table->integer('quiz_type');
             $table->string('question');
             $table->text('options')->nullable();
+            $table->text('option_content_type')->nullable();
             $table->string('answer');
             $table->timestamps();
         });

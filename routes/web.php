@@ -51,4 +51,18 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update/{id}', 'Admin\TestTypeController@update')->name('admin-test-types-update');
         Route::post('/delete/{id}', 'Admin\TestTypeController@destroy')->name('admin-test-types-delete');
     });
+
+    Route::group(['prefix' => 'tests'], function () {
+        Route::get('/', 'Admin\TestController@list')->name('admin-tests-list');
+        Route::get('/show/{id}', 'Admin\TestController@show')->name('admin-tests-show');
+        Route::post('/store', 'Admin\TestController@store')->name('admin-tests-store');
+        Route::post('/update/{id}', 'Admin\TestController@update')->name('admin-tests-update');
+        Route::post('/delete/{id}', 'Admin\TestController@destroy')->name('admin-tests-delete');
+    });
+
+    Route::group(['prefix' => 'test-parts'], function () {
+        Route::post('/store', 'Admin\TestPartController@store')->name('admin-test-parts-store');
+        Route::post('/update/{id}', 'Admin\TestPartController@update')->name('admin-test-parts-update');
+        Route::post('/delete/{id}', 'Admin\TestPartController@destroy')->name('admin-test-parts-delete');
+    });
 });
