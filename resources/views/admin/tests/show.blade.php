@@ -54,6 +54,165 @@
     </div>
 </div>
 
+@foreach ($test_parts as $test_part)
+<div class="row">
+    <div class="col-12">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title md-2"> {{ $test_part->name }} </h3>
+            </div>
+            <div class="card-header row">
+                <button class="btn btn-outline-success col-1" data-toggle="modal" data-target="#form-edit-test-part-{{ $test_part->id }}">
+                    <i class="fa fa-edit"></i> @lang('Edit')
+                </button>
+                <button class="btn btn-outline-danger col-1" data-toggle="modal" data-target="">
+                    <i class="fa fa-trash"></i> @lang('Delete')
+                </button>
+                <button class="btn btn-outline-primary col-2" data-toggle="modal" data-target="">
+                    <i class="fa fa-plus"></i> @lang('Create') @lang('Test Quiz')
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="row border-bottom">
+                    <div class="col-2 text-center text-bold">
+                        @lang('Description')
+                    </div>
+                    <div class="col-10">
+                        @if ($test_part->description)
+                            {{ $test_part->description }}
+                        @else
+                            <i> @lang('Not provided') </i>
+                        @endif
+                    </div>
+                </div>
+                <div class="row border-bottom">
+                    <div class="col-2 text-center text-bold">
+                        @lang('Images')
+                    </div>
+                    <div class="col-10">
+                        @if (!$test_part->images || count($test_part->images) == 0)
+                            <i> @lang('Not provided') </i>
+                        @else
+                            <div class="row">
+                                @foreach ($test_part->images as $image)
+                                    <img class="img-bordered col-4" src="{{ asset($image) }}" alt="">
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="row border-bottom">
+                    <div class="col-2 text-center text-bold">
+                        @lang('Sound')
+                    </div>
+                    <div class="col-10">
+                        @if ($test_part->sound)
+                            <audio class="row" controls>
+                                <source src="{{ asset($test_part->sound) }}">
+                            </audio>
+                        @else
+                            <i> @lang('Not provided') </i>
+                        @endif
+                    </div>
+                </div>
+                <div class="row border-bottom">
+                    <div class="col-2 text-center text-bold">
+                        @lang('Video')
+                    </div>
+                    <div class="col-10">
+                        @if ($test_part->video)
+                            <video>
+                                <source src="{{ asset($test_part->video) }}">
+                            </video>
+                        @else
+                            <i> @lang('Not provided') </i>
+                        @endif
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2 text-center text-bold">
+                        @lang('Quizzes')
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-bordered table-striped col-12">
+                        <thead>
+                            <tr>
+                                <td> @lang('Number') </td>
+                                <td> @lang('Type') </td>
+                                <td> @lang('Question') </td>
+                                <td> @lang('Options') </td>
+                                <td> @lang('Answer') </td>
+                                <td> @lang('Actions') </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Forms for Test Part Model -->
+<div class="modal fade" id="form-edit-test-part-{{ $test_part->id }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{{ route('admin-test-parts-update', ['id' => $test_part->id]) }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">@lang('Create') @lang('Test Part')</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="test_id" value="{{ $test->id }}">
+                    <div class="form-group">
+                        <label for="name">
+                            @lang('Name')*
+                        </label>
+                        <input id="name" class="form-control" name="name" value="{{ $test_part->name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">
+                            @lang('Description')
+                        </label>
+                        <textarea id="description" class="form-control" name="description">{{ $test_part->description }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Image')
+                        </label>
+                        <input type="file" class="form-control" name="image-1">
+                        <input type="file" class="form-control" name="image-2">
+                        <input type="file" class="form-control" name="image-3">
+                    </div>
+                    <div class="form-group">
+                        <label for="sound">
+                            @lang('Sound')
+                        </label>
+                        <input type="file" id="sound" class="form-control" name="sound">
+                    </div>
+                    <div class="form-group">
+                        <label for="video">
+                            @lang('Video')
+                        </label>
+                        <input type="file" id="video" class="form-control" name="video">
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn-primary">@lang('Update')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endforeach
+
 <!-- Forms for Test Model -->
 <div class="modal fade" id="form-edit-test-{{ $test->id }}">
     <div class="modal-dialog">
@@ -130,7 +289,7 @@
 <div class="modal fade" id="form-create-test-part">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="{{ route('admin-tests-store') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('admin-test-parts-store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h4 class="modal-title">@lang('Create') @lang('Test Part')</h4>
@@ -156,20 +315,9 @@
                         <label>
                             @lang('Image')
                         </label>
-                        <input type="file" class="form-control js-input-img" name="image-1">
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            @lang('More images')
-                        </label>
-                        <div class="btn-group">
-                            <button id="js-more-img" type="button" class="btn btn-primary">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                            <button id="js-less-img" type="button" class="btn btn-primary">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
+                        <input type="file" class="form-control" name="image-1">
+                        <input type="file" class="form-control" name="image-2">
+                        <input type="file" class="form-control" name="image-3">
                     </div>
                     <div class="form-group">
                         <label for="sound">
@@ -204,16 +352,6 @@
             "ordering": true,
             "info": true,
             "autoWidth": true
-        });
-
-        $('#js-more-img').on('click', function () {
-            var index = $('.js-input-img').length;
-
-            if (index >= 3) {
-                return;
-            }
-
-            $('.js-input-img').last().after(`<input type="file" class="form-control js-input-img" name="image-${index + 1}">`);
         });
     });
 </script>

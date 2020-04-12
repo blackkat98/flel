@@ -26,11 +26,11 @@ class TestPartRequest extends FormRequest
         switch ($this->route()->getName()) {
             case 'admin-test-parts-store':
                 return [
-                    'name' => 'required|unique:test_parts'
+                    'name' => 'required|unique:test_parts,name,null,null,test_id,' . $this->test_id
                 ];
             case 'admin-test-parts-update':
                 return [
-                    
+                    'name' => 'required|unique:test_parts,name,null,null,test_id,' . $this->test_id . ',id,' . $this->id
                 ];
         }
     }
