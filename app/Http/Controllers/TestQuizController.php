@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\TestQuiz;
+use App\Enums\TestQuizType;
+use App\Enums\TestQuizOptionType;
 
 class TestQuizController extends Controller
 {

@@ -8,6 +8,8 @@ use App\Models\Test;
 use App\Models\TestType;
 use App\Models\TestPart;
 use Illuminate\Support\Facades\Auth;
+use App\Enums\TestQuizType;
+use App\Enums\TestQuizOptionType;
 
 class TestController extends AdminController
 {
@@ -69,11 +71,15 @@ class TestController extends AdminController
         $test = Test::findOrFail($id);
         $test_types = TestType::all(['id', 'name'])->sortBy('id');
         $test_parts = $test->testParts->sortBy('id');
+        $quiz_types = array_flip(TestQuizType::toArray());
+        $quiz_option_types = array_flip(TestQuizOptionType::toArray());
 
         return view('admin.tests.show', [
             'test' => $test,
             'test_types' => $test_types,
-            'test_parts' => $test_parts
+            'test_parts' => $test_parts,
+            'quiz_types' => $quiz_types,
+            'quiz_option_types' => $quiz_option_types
         ]);
     }
 

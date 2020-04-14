@@ -65,4 +65,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update/{id}', 'Admin\TestPartController@update')->name('admin-test-parts-update');
         Route::post('/delete/{id}', 'Admin\TestPartController@destroy')->name('admin-test-parts-delete');
     });
+    
+    Route::group(['prefix' => 'test-quizzes'], function () {
+        Route::post('/store', 'Admin\TestQuizController@store')->name('admin-test-quizzes-store');
+        Route::post('/update/{id}', 'Admin\TestQuizController@update')->name('admin-test-quizzes-update');
+        Route::post('/delete/{id}', 'Admin\TestQuizController@destroy')->name('admin-test-quizzes-delete');
+    });
 });

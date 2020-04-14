@@ -68,7 +68,7 @@
                 <button class="btn btn-outline-danger col-1" data-toggle="modal" data-target="">
                     <i class="fa fa-trash"></i> @lang('Delete')
                 </button>
-                <button class="btn btn-outline-primary col-2" data-toggle="modal" data-target="">
+                <button class="btn btn-outline-primary col-2" data-toggle="modal" data-target="#form-create-test-quiz">
                     <i class="fa fa-plus"></i> @lang('Create') @lang('Test Quiz')
                 </button>
             </div>
@@ -206,6 +206,89 @@
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
                     <button type="submit" class="btn btn-primary">@lang('Update')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Forms for Test Quiz Model -->
+<div class="modal fade" id="form-create-test-quiz">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{{ route('admin-test-quizzes-store') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">@lang('Create') @lang('Test Quiz')</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="test_part_id" value="{{ $test_part->id }}">
+                    <div class="form-group">
+                        <label for="number">
+                            @lang('Number')*
+                        </label>
+                        <input type="number" min="1" max="500" id="number" class="form-control" name="number">
+                    </div>
+                    <div class="form-group">
+                        <label for="quiz_type">
+                            @lang('Test Quiz') @lang('Type')*
+                        </label>
+                        <select class="form-control" name="quiz_type">
+                            @foreach ($quiz_types as $key => $value)
+                                <option value="{{ $key }}"> {{ $value }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="question">
+                            @lang('Question')*
+                        </label>
+                        <textarea id="question" class="form-control" name="question"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Options')*
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-1">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-1">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-2">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-2">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-3">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-3">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-4">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-4">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn-primary">@lang('Create')</button>
                 </div>
             </form>
         </div>
