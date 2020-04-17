@@ -250,8 +250,16 @@
                     </div>
                     <div class="form-group">
                         <label>
-                            @lang('Options')*
+                            @lang('Options')/@lang('Answer')*
                         </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-0">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-0">
+                        </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -284,6 +292,47 @@
                             </div>
                             <input type="text" class="form-control" name="option-4">
                         </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-5">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-5">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-6">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-6">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-7">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-7">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-8">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-8">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <input type="checkbox" name="tick-9">
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" name="option-9">
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
