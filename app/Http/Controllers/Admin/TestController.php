@@ -71,6 +71,12 @@ class TestController extends AdminController
         $test = Test::findOrFail($id);
         $test_types = TestType::all(['id', 'name'])->sortBy('id');
         $test_parts = $test->testParts->sortBy('id');
+        $quizzes_in_parts = [];
+        
+        foreach ($test_parts as $part) {
+            $quizzes_in_parts[] = $part->testQuizzes->sortBy('number');
+        }
+        
         $quiz_types = array_flip(TestQuizType::toArray());
         $quiz_option_types = array_flip(TestQuizOptionType::toArray());
 
@@ -78,6 +84,8 @@ class TestController extends AdminController
             'test' => $test,
             'test_types' => $test_types,
             'test_parts' => $test_parts,
+            'quizzes_in_parts' => $quizzes_in_parts,
+            
             'quiz_types' => $quiz_types,
             'quiz_option_types' => $quiz_option_types
         ]);

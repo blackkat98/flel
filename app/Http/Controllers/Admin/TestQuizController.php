@@ -46,7 +46,11 @@ class TestQuizController extends AdminController
 
         for ($i = 0; $i < 10; $i++) {
             if ($request->get('tick-' . $i) != '' && $request->get('tick-' . $i) != null) {
-                
+                $ticks[] = $i;
+            }
+            
+            if ($request->get('option-' . $i) != '' && $request->get('option-' . $i) != null) {
+                $options[] = $request->get('option-' . $i);
             }
         }
     }

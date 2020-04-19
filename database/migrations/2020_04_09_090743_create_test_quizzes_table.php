@@ -17,10 +17,15 @@ class CreateTestQuizzesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('test_part_id');
             $table->integer('number');
+            $table->integer('associated_quiz_id');
             $table->integer('quiz_type');
             $table->string('question');
-            $table->text('options')->nullable();
-            $table->string('answer');
+            $table->text('images')->nullable();
+            $table->string('sound')->nullable();
+            $table->string('video')->nullable();
+            $table->text('essay')->nullable();
+            $table->text('options')->nullable(); //edit this
+            $table->text('answer');
             $table->timestamps();
         });
     }

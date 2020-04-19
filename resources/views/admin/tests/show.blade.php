@@ -54,15 +54,15 @@
     </div>
 </div>
 
-@foreach ($test_parts as $test_part)
+@for ($i = 0; $i < count($test_parts); $i++)
 <div class="row">
     <div class="col-12">
         <div class="card card-default">
             <div class="card-header">
-                <h3 class="card-title md-2"> {{ $test_part->name }} </h3>
+                <h3 class="card-title md-2"> {{ $test_parts[$i]->name }} </h3>
             </div>
             <div class="card-header row">
-                <button class="btn btn-outline-success col-1" data-toggle="modal" data-target="#form-edit-test-part-{{ $test_part->id }}">
+                <button class="btn btn-outline-success col-1" data-toggle="modal" data-target="#form-edit-test-part-{{ $test_parts[$i]->id }}">
                     <i class="fa fa-edit"></i> @lang('Edit')
                 </button>
                 <button class="btn btn-outline-danger col-1" data-toggle="modal" data-target="">
@@ -78,8 +78,8 @@
                         @lang('Description')
                     </div>
                     <div class="col-10">
-                        @if ($test_part->description)
-                            {{ $test_part->description }}
+                        @if ($test_parts[$i]->description)
+                            {{ $test_parts[$i]->description }}
                         @else
                             <i> @lang('Not provided') </i>
                         @endif
@@ -90,11 +90,11 @@
                         @lang('Images')
                     </div>
                     <div class="col-10">
-                        @if (!$test_part->images || count($test_part->images) == 0)
+                        @if (!$test_parts[$i]->images || count($test_parts[$i]->images) == 0)
                             <i> @lang('Not provided') </i>
                         @else
                             <div class="row">
-                                @foreach ($test_part->images as $image)
+                                @foreach ($test_parts[$i]->images as $image)
                                     <img class="img-bordered col-4" src="{{ asset($image) }}" alt="">
                                 @endforeach
                             </div>
@@ -106,9 +106,9 @@
                         @lang('Sound')
                     </div>
                     <div class="col-10">
-                        @if ($test_part->sound)
+                        @if ($test_parts[$i]->sound)
                             <audio class="row" controls>
-                                <source src="{{ asset($test_part->sound) }}">
+                                <source src="{{ asset($test_parts[$i]->sound) }}">
                             </audio>
                         @else
                             <i> @lang('Not provided') </i>
@@ -120,9 +120,9 @@
                         @lang('Video')
                     </div>
                     <div class="col-10">
-                        @if ($test_part->video)
+                        @if ($test_parts[$i]->video)
                             <video>
-                                <source src="{{ asset($test_part->video) }}">
+                                <source src="{{ asset($test_parts[$i]->video) }}">
                             </video>
                         @else
                             <i> @lang('Not provided') </i>
@@ -135,32 +135,33 @@
                     </div>
                 </div>
                 <div class="row">
-                    <table class="table table-bordered table-striped col-12">
-                        <thead>
-                            <tr>
-                                <td> @lang('Number') </td>
-                                <td> @lang('Type') </td>
-                                <td> @lang('Question') </td>
-                                <td> @lang('Options') </td>
-                                <td> @lang('Answer') </td>
-                                <td> @lang('Actions') </td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                        </tbody>
-                    </table>
+                    <div class="col-12">
+                        <table class="table table-bordered table-striped js-quizzes">
+                            <thead>
+                                <tr>
+                                    <td> @lang('Number') </td>
+                                    <td> @lang('Type') </td>
+                                    <td> @lang('Question') </td>
+                                    <td> @lang('Options') </td>
+                                    <td> @lang('Answer') </td>
+                                    <td> @lang('Actions') </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Forms for Test Part Model -->
-<div class="modal fade" id="form-edit-test-part-{{ $test_part->id }}">
+<div class="modal fade" id="form-edit-test-part-{{ $test_parts[$i]->id }}">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="{{ route('admin-test-parts-update', ['id' => $test_part->id]) }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('admin-test-parts-update', ['id' => $test_parts[$i]->id]) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h4 class="modal-title">@lang('Create') @lang('Test Part')</h4>
@@ -174,17 +175,17 @@
                         <label for="name">
                             @lang('Name')*
                         </label>
-                        <input id="name" class="form-control" name="name" value="{{ $test_part->name }}">
+                        <input id="name" class="form-control" name="name" value="{{ $test_parts[$i]->name }}">
                     </div>
                     <div class="form-group">
                         <label for="description">
                             @lang('Description')
                         </label>
-                        <textarea id="description" class="form-control" name="description">{{ $test_part->description }}</textarea>
+                        <textarea id="description" class="form-control" name="description">{{ $test_parts[$i]->description }}</textarea>
                     </div>
                     <div class="form-group">
                         <label>
-                            @lang('Image')
+                            @lang('Images')
                         </label>
                         <input type="file" class="form-control" name="image-1">
                         <input type="file" class="form-control" name="image-2">
@@ -211,139 +212,7 @@
         </div>
     </div>
 </div>
-
-<!-- Forms for Test Quiz Model -->
-<div class="modal fade" id="form-create-test-quiz">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="post" action="{{ route('admin-test-quizzes-store') }}" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-header">
-                    <h4 class="modal-title">@lang('Create') @lang('Test Quiz')</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="test_part_id" value="{{ $test_part->id }}">
-                    <div class="form-group">
-                        <label for="number">
-                            @lang('Number')*
-                        </label>
-                        <input type="number" min="1" max="500" id="number" class="form-control" name="number">
-                    </div>
-                    <div class="form-group">
-                        <label for="quiz_type">
-                            @lang('Test Quiz') @lang('Type')*
-                        </label>
-                        <select class="form-control" name="quiz_type">
-                            @foreach ($quiz_types as $key => $value)
-                                <option value="{{ $key }}"> {{ $value }} </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="question">
-                            @lang('Question')*
-                        </label>
-                        <textarea id="question" class="form-control" name="question"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            @lang('Options')/@lang('Answer')*
-                        </label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-0">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-0">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-1">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-1">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-2">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-2">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-3">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-3">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-4">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-4">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-5">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-5">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-6">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-6">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-7">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-7">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-8">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-8">
-                        </div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <input type="checkbox" name="tick-9">
-                                </span>
-                            </div>
-                            <input type="text" class="form-control" name="option-9">
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
-                    <button type="submit" class="btn btn-primary">@lang('Create')</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endforeach
+@endfor
 
 <!-- Forms for Test Model -->
 <div class="modal fade" id="form-edit-test-{{ $test->id }}">
@@ -477,9 +346,9 @@
 @section('js')
 <script>
     $(document).ready(function () {
-        $('#js-table').DataTable({
+        $('.table.table-bordered.table-striped.js-quizzes').DataTable({
             "paging": true,
-            "lengthChange": true,
+            "lengthChange": false,
             "searching": true,
             "ordering": true,
             "info": true,

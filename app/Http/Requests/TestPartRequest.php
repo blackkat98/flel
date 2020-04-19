@@ -30,7 +30,7 @@ class TestPartRequest extends FormRequest
                 ];
             case 'admin-test-parts-update':
                 return [
-                    'name' => 'required|unique:test_parts,name,null,null,test_id,' . $this->test_id . ',id,' . $this->id
+
                 ];
         }
     }

@@ -22,16 +22,12 @@ class TestQuizRequest extends FormRequest
             case 'admin-test-quizzes-store':
                 return [
                     'number' => 'required',
-                    'quiz_type' => 'required',
-                    'question' => 'required',
-                    'answer' => 'required'
+                    'question' => 'required'
                 ];
             case 'admin-test-quizzes-update':
                 return [
                     'number' => 'required',
-                    'quiz_type' => 'required',
-                    'question' => 'required',
-                    'answer' => 'required'
+                    'question' => 'required'
                 ];
         }
     }
@@ -45,9 +41,7 @@ class TestQuizRequest extends FormRequest
     {
         return [
             'number.required' => __('Number') . ' ' . __('is required'),
-            'quiz_type.required' => __('Type') . ' ' . __('is required'),
-            'question.required' => __('Question') . ' ' . __('is required'),
-            'answer.required' => __('Answer') . ' ' . __('is required')
+            'question.required' => __('Question') . ' ' . __('is required')
         ];
     }
 }
