@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Course;
 use App\Models\TestType;
+use App\Models\WordCategory;
 
 class Language extends Model
 {
@@ -22,5 +23,10 @@ class Language extends Model
     public function testTypes()
     {
         return $this->hasMany(TestType::class, 'language_id');
+    }
+
+    public function wordCategories()
+    {
+        return $this->hasMany(WordCategory::class, 'language_id');
     }
 }

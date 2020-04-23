@@ -6,6 +6,7 @@ use App\Http\Requests\CourseRequest;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\Course;
 use App\Models\Language;
+use App\Models\Lesson;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends AdminController
@@ -52,12 +53,12 @@ class CourseController extends AdminController
         $language = Language::findOrFail($request->get('language_id'));
         $slug = $language->slug;
         $max_id_course = Course::where('language_id', $language->id)->max('id');
-        $max_id = $max_id_course != null ? $max_id_course->null : 0;
+        $max_id = $max_id_course != null ? $max_id_course : 0;
         
         $course->code = strtoupper($slug) . '-' . ($max_id + 1);
         
         if ($course->save()) {
-            return redirect()->back()->with('success', $course->code . ' ' . __('has been created'));
+            return redirect()->route('admin-courses-show', ['id' => $course->id])->with('success', $course->code . ' ' . __('has been created'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
         }
@@ -71,7 +72,13 @@ class CourseController extends AdminController
      */
     public function show($id)
     {
-        //
+        $course = Course::findOrFail($id);
+        $lessons = $course->lessons->sortBy('number');
+
+        return view('admin.courses.show', [
+            'course' => $course,
+            'lessons' => $lessons
+        ]);
     }
 
     /**
@@ -114,10 +121,14 @@ class CourseController extends AdminController
     {
         $course = Course::findOrFail($id);
         
+        foreach ($course->lessons as $lesson) {
+            $lesson->delete();
+        }
+        
         if ($course->delete()) {
             return redirect()->back()->with('success', $course->code . ' ' . __('has been deleted'));
         } else {
-            return redirect()->back()->with('error', __('Action Failed'));
+            return redirect()->route('admin-courses-list')->with('error', __('Action Failed'));
         }
     }
 }

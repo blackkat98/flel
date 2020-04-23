@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Language;
+use App\Models\Lesson;
 
 class Course extends Model
 {
@@ -22,5 +23,10 @@ class Course extends Model
     public function language()
     {
         return $this->belongsTo(Language::class, 'language_id');
+    }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class, 'course_id');
     }
 }

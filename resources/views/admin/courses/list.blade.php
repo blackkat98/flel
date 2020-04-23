@@ -42,7 +42,7 @@
                                 <td> {{ $course->created_at }} </td>
                                 <td> {{ $course->updated_at }} </td>
                                 <td>
-                                    <a href="#" class="btn btn-outline">
+                                    <a href="{{ route('admin-courses-show', ['id' => $course->id]) }}" class="btn btn-outline">
                                         <i class="far fa-eye text-primary"></i>
                                     </a>
                                     <button class="btn btn-outline" data-toggle="modal" data-target="#form-edit-{{ $course->id }}">
@@ -92,7 +92,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                       @lang('Just to make sure you did not misclick.')
+                                                        @lang('Just to make sure you did not misclick.')
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>

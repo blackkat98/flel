@@ -131,6 +131,20 @@ class TestController extends AdminController
      */
     public function destroy($id)
     {
-        //
+        $test = Test::findOrFail($id);
+
+        foreach ($test->testParts as $part) {
+            foreach ($part->testQuizzes as $quiz) {
+                $quiz->delete();
+            }
+
+            $part->delete();
+        }
+
+        if ($test->delete()) {
+            return redirect()->route('admin-tests-list')->with('success', $test->name . ' ' . __('has been deleted'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
     }
 }

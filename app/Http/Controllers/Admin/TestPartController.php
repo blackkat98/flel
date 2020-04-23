@@ -160,6 +160,16 @@ class TestPartController extends AdminController
      */
     public function destroy($id)
     {
-        //
+        $test_part = TestPart::findOrFail($id);
+
+        foreach ($test_part->testQuizzes as $quiz) {
+            $quiz->delete();
+        }
+
+        if ($test_part->delete()) {
+            return redirect()->back()->with('success', $test_part->name . ' ' . __('has been deleted'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
     }
 }

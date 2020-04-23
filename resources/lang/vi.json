@@ -33,6 +33,7 @@
     "Type": "Loại",
     "Name": "Tên",
     "Number": "Số",
+    "Associated with": "Liên quan tới",
     "Slug": "Slug",
     "Code": "Mã",
     "Language": "Ngôn ngữ",
@@ -47,8 +48,10 @@
     "Video": "Đoạn phim",
     "Time": "Thời gian",
     "Quizzes": "Các câu hỏi thi",
+    "No quiz": "Không câu nào",
     "Question": "Câu hỏi",
     "Essay": "Đoạn văn bản",
+    "Lecture": "Bài giảng",
     "Options": "Các lựa chọn",
     "Answer": "Đáp án",
     "Since": "Tạo lúc",
@@ -74,5 +77,7 @@
     "Test Types": "Loại bài thi",
     "Tests": "Đề thi",
     "Test Part": "Phần đề thi",
-    "Test Quiz": "Câu hỏi thi"
+    "Test Quiz": "Câu hỏi thi",
+    "Lesson": "Bài học",
+    "Word Categories": "Phân loại từ"
 }

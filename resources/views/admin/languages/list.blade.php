@@ -91,7 +91,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                       @lang('Just to make sure you did not misclick.')
+                                                        @lang('Just to make sure you did not misclick.')
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
