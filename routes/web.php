@@ -29,6 +29,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/store', 'Admin\UserController@store')->name('admin-users-store');
         Route::post('/update/{id}', 'Admin\UserController@update')->name('admin-users-update');
         Route::post('/delete/{id}', 'Admin\UserController@destroy')->name('admin-users-delete');
+        Route::post('/update_roles/{id}', 'Admin\UserController@updateRoles')->name('admin-users-update-roles');
+        Route::post('/update_permissions/{id}', 'Admin\UserController@updatePermissions')->name('admin-users-update-permissions');
     });
     
     Route::group(['prefix' => 'languages'], function () {
@@ -84,5 +86,26 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/store', 'Admin\WordCategoryController@store')->name('admin-word-categories-store');
         Route::post('/update/{id}', 'Admin\WordCategoryController@update')->name('admin-word-categories-update');
         Route::post('/delete/{id}', 'Admin\WordCategoryController@destroy')->name('admin-word-categories-delete');
+    });
+
+    Route::group(['prefix' => 'words'], function () {
+        Route::get('/', 'Admin\WordController@list')->name('admin-words-list');
+        Route::post('/store', 'Admin\WordController@store')->name('admin-words-store');
+        Route::post('/update/{id}', 'Admin\WordController@update')->name('admin-words-update');
+        Route::post('/delete/{id}', 'Admin\WordController@destroy')->name('admin-words-delete');
+    });
+
+    Route::group(['prefix' => 'permissions'], function () {
+        Route::get('/', 'Admin\PermissionController@list')->name('admin-permissions-list');
+        Route::post('/store', 'Admin\PermissionController@store')->name('admin-permissions-store');
+        Route::post('/update/{id}', 'Admin\PermissionController@update')->name('admin-permissions-update');
+        Route::post('/delete/{id}', 'Admin\PermissionController@destroy')->name('admin-permissions-delete');
+    });
+
+    Route::group(['prefix' => 'roles'], function () {
+        Route::get('/', 'Admin\RoleController@list')->name('admin-roles-list');
+        Route::post('/store', 'Admin\RoleController@store')->name('admin-roles-store');
+        Route::post('/update/{id}', 'Admin\RoleController@update')->name('admin-roles-update');
+        Route::post('/delete/{id}', 'Admin\RoleController@destroy')->name('admin-roles-delete');
     });
 });

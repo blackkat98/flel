@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\TestTypeRequest;
+use App\Http\Requests\PermissionRequest;
 use App\Http\Controllers\Admin\AdminController;
-use App\Models\TestType;
-use App\Models\Language;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 
-class TestTypeController extends AdminController
+class PermissionController extends AdminController
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +17,10 @@ class TestTypeController extends AdminController
      */
     public function list()
     {
-        $test_types = TestType::all();
-        $languages = Language::all()->sortBy('id');
-        
-        return view('admin.test_types.list', [
-            'test_types' => $test_types,
-            'languages' => $languages
+        $permissions = Permission::all();
+
+        return view('admin.permissions.list', [
+            'permissions' => $permissions
         ]);
     }
 
@@ -38,18 +37,19 @@ class TestTypeController extends AdminController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\TestTypeRequest  $request
+     * @param  App\Http\Requests\PermissionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TestTypeRequest $request)
+    public function store(PermissionRequest $request)
     {
-        $test_type = new TestType();
-        $test_type->language_id = $request->get('language_id');
-        $test_type->name = $request->get('name');
-        $test_type->description = $request->get('description');
-        
-        if ($test_type->save()) {
-            return redirect()->back()->with('success', $test_type->name . ' ' . __('has been created'));
+        $name = $request->get('name');
+
+        $permission = Permission::create([
+            'name' => $name
+        ]);
+
+        if ($permission->id) {
+            return redirect()->back()->with('success', $permission->name . ' ' . __('has been created'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
         }
@@ -80,19 +80,17 @@ class TestTypeController extends AdminController
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\TestTypeRequest  $request
+     * @param  App\Http\Requests\PermissionRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TestTypeRequest $request, $id)
+    public function update(PermissionRequest $request, $id)
     {
-        $test_type = TestType::findOrFail($id);
-        $test_type->language_id = $request->get('language_id');
-        $test_type->name = $request->get('name');
-        $test_type->description = $request->get('description');
+        $permission = Permission::findById($id);
+        $permission->name = $request->get('name');
         
-        if ($test_type->save()) {
-            return redirect()->back()->with('success', $test_type->name . ' ' . __('has been updated'));
+        if ($permission->save()) {
+            return redirect()->back()->with('success', $permission->name . ' ' . __('has been updated'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
         }
@@ -106,10 +104,16 @@ class TestTypeController extends AdminController
      */
     public function destroy($id)
     {
-        $test_type = TestType::findOrFail($id);
-        
-        if ($test_type->delete()) {
-            return redirect()->back()->with('success', $test_type->name . ' ' . __('has been deleted'));
+        $permission = Permission::findById($id);
+
+        $roles = Role::all();
+
+        foreach ($roles as $role) {
+            $role->revokePermissionTo($permission);
+        }
+
+        if ($permission->delete()) {
+            return redirect()->back()->with('success', $permission->name . ' ' . __('has been deleted'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
         }

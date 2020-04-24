@@ -18,8 +18,8 @@ class CourseController extends AdminController
      */
     public function list()
     {
-        $courses = Course::all(['id', 'user_id', 'language_id', 'name', 'code', 'created_at', 'updated_at']);
-        $languages = Language::all(['id', 'name', 'slug']);
+        $courses = Course::all();
+        $languages = Language::all();
         
         return view('admin.courses.list', [
             'courses' => $courses,

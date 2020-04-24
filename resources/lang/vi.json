@@ -15,6 +15,7 @@
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
     "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",
     "Create a new instance in": "Tạo một đối tượng mới trong",
+    "Choose a Category": "Chọn phân loại",
     
     "Data Table of all": "Bảng dữ liệu các",
     "Details of": "Chi tiết về",
@@ -28,10 +29,15 @@
     "Back": "Quay lại",
     "Back to": "Quay về",
     "Actions": "Thao tác",
+    "In": "Trong",
+    "Existing": "Hiện có",
+    "Additional": "Ngoại lệ",
     
     "ID": "Chỉ số",
     "Type": "Loại",
+    "Category": "Phân loại",
     "Name": "Tên",
+    "Guard Name": "Tên Guard",
     "Number": "Số",
     "Associated with": "Liên quan tới",
     "Slug": "Slug",
@@ -54,6 +60,11 @@
     "Lecture": "Bài giảng",
     "Options": "Các lựa chọn",
     "Answer": "Đáp án",
+    "Word": "Từ",
+    "Definition": "Định nghĩa",
+    "Example": "Ví dụ",
+    "IPA": "IPA",
+    "Pronounciation": "Phát âm",
     "Since": "Tạo lúc",
     "Last update": "Sửa lần cuối",
     "Not provided": "Không được cung cấp",
@@ -79,5 +90,8 @@
     "Test Part": "Phần đề thi",
     "Test Quiz": "Câu hỏi thi",
     "Lesson": "Bài học",
-    "Word Categories": "Phân loại từ"
+    "Word Categories": "Phân loại từ",
+    "Word": "Từ",
+    "Roles": "Vị trí chức năng",
+    "Permissions": "Quyền thực thi"
 }

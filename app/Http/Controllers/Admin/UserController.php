@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class UserController extends AdminController
 {
@@ -17,10 +20,14 @@ class UserController extends AdminController
      */
     public function list()
     {
-        $users = User::all(['id', 'name', 'email', 'password', 'image', 'created_at', 'updated_at']);
+        $users = User::all();
+        $roles = Role::all();
+        $permissions = Permission::all();
 
         return view('admin.users.list', [
-            'users' => $users
+            'users' => $users,
+            'roles' => $roles,
+            'permissions' => $permissions
         ]);
     }
 
@@ -54,7 +61,25 @@ class UserController extends AdminController
             $user->image = config('customize.default_avatar');
         }
 
+        $selected_roles_id = [];
+
+        for ($i = 1; $i <= Role::max('id'); $i++) {
+            if ($request->get('role-' . $i)) {
+                $selected_roles_id[] = $i;
+            }
+        }
+
+        if (count($selected_roles_id) > 0) {
+            $selected_roles = Role::whereIn('id', $selected_roles_id)->get();
+        }
+
         if ($user->save()) {
+            if ($selected_roles) {
+                foreach ($selected_roles as $role) {
+                    $user->assignRole($role);
+                }
+            }
+
             return redirect()->back()->with('success', $user->name . ' ' . __('has been created'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
@@ -104,5 +129,85 @@ class UserController extends AdminController
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Update the Roles of a specific User.
+     *
+     * @param  App\Http\Requests\UserRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateRoles(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $existing_roles = $user->roles;
+
+        $selected_roles_id = [];
+        $selected_roles = [];
+
+        for ($i = 1; $i <= Role::max('id'); $i++) {
+            if ($request->get('role-' . $i)) {
+                $selected_roles_id[] = $i;
+            }
+        }
+
+        if (count($selected_roles_id) > 0) {
+            $selected_roles = Role::whereIn('id', $selected_roles_id)->get();
+        }
+
+        if ($existing_roles) {
+            foreach ($existing_roles as $e_role) {
+                $user->removeRole($e_role);
+            }
+        }
+
+        if ($selected_roles) {
+            foreach ($selected_roles as $role) {
+                $user->assignRole($role);
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Update the Direct Permissions of a specific User.
+     *
+     * @param  App\Http\Requests\UserRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePermissions(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $existing_permissions = $user->permissions;
+
+        $selected_permissions_id = [];
+        $selected_permissions = [];
+
+        for ($i = 1; $i <= Permission::max('id'); $i++) {
+            if ($request->get('permission-' . $i)) {
+                $selected_permissions_id[] = $i;
+            }
+        }
+
+        if (count($selected_permissions_id) > 0) {
+            $selected_permissions = Permission::whereIn('id', $selected_permissions_id)->get();
+        }
+
+        if ($existing_permissions) {
+            foreach ($existing_permissions as $e_permission) {
+                $user->revokePermissionTo($e_permission);
+            }
+        }
+
+        if ($selected_permissions) {
+            foreach ($selected_permissions as $permission) {
+                $user->givePermissionTo($permission);
+            }
+        }
+
+        return redirect()->back();
     }
 }

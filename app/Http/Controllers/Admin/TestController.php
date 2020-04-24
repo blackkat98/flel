@@ -20,8 +20,8 @@ class TestController extends AdminController
      */
     public function list()
     {
-        $tests = Test::all(['id', 'user_id', 'test_type_id', 'name', 'time', 'created_at', 'updated_at']);
-        $test_types = TestType::all(['id', 'name'])->sortBy('id');
+        $tests = Test::all();
+        $test_types = TestType::all()->sortBy('id');
 
         return view('admin.tests.list', [
             'tests' => $tests,
@@ -69,7 +69,7 @@ class TestController extends AdminController
     public function show($id)
     {
         $test = Test::findOrFail($id);
-        $test_types = TestType::all(['id', 'name'])->sortBy('id');
+        $test_types = TestType::all()->sortBy('id');
         $test_parts = $test->testParts->sortBy('id');
         $quizzes_in_parts = [];
         

@@ -16,8 +16,8 @@ class WordCategoryController extends AdminController
      */
     public function list()
     {
-        $word_categories = WordCategory::all(['id', 'language_id', 'name', 'created_at', 'updated_at']);
-        $languages = Language::all(['id', 'name', 'slug']);
+        $word_categories = WordCategory::all();
+        $languages = Language::all();
 
         return view('admin.word_categories.list', [
             'word_categories' => $word_categories,
@@ -104,6 +104,17 @@ class WordCategoryController extends AdminController
      */
     public function destroy($id)
     {
-        //
+        $word_category = WordCategory::findOrFail($id);
+
+        if (count($word_category->words) > 0) {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
+
+        if ($word_category->delete()) {
+            return redirect()->back()->with('success', $word_category->name . ' ' . __('has been deleted'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
+
     }
 }

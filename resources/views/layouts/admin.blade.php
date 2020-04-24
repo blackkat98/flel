@@ -219,6 +219,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link active">
+                                <i class="nav-icon fa fa-wheelchair"></i>
+                                <p>
+                                    @lang('Permissions')
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin-permissions-list') }}" class="nav-link">
+                                        <i class="fa fa-table nav-icon"></i>
+                                        <p>@lang('List')</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fa fa-smile"></i>
+                                <p>
+                                    @lang('Roles')
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin-roles-list') }}" class="nav-link">
+                                        <i class="fa fa-table nav-icon"></i>
+                                        <p>@lang('List')</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link active">
                                 <i class="nav-icon fa fa-language"></i>
                                 <p>
                                     @lang('Languages')
@@ -245,6 +279,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('admin-word-categories-list') }}" class="nav-link">
+                                        <i class="fa fa-table nav-icon"></i>
+                                        <p>@lang('List')</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fa fa-th"></i>
+                                <p>
+                                    @lang('Words')
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin-words-list') }}" class="nav-link">
                                         <i class="fa fa-table nav-icon"></i>
                                         <p>@lang('List')</p>
                                     </a>
@@ -301,15 +352,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Simple Link
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
                         </li>
                     </ul>
                 </nav>

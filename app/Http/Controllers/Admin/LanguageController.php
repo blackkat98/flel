@@ -15,7 +15,7 @@ class LanguageController extends AdminController
      */
     public function list()
     {
-        $languages = Language::all(['id', 'name', 'slug', 'created_at', 'updated_at']);
+        $languages = Language::all();
         
         return view('admin.languages.list', [
             'languages' => $languages
