@@ -188,7 +188,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="#" class="brand-link">
                 <img src="{{ asset('img/flel.png') }}" alt="FLEL Logo" class="brand-image img-thumbnail elevation-3">
                 <span class="brand-text font-weight-light">F.L.E.L.</span>
             </a>
@@ -347,6 +347,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('admin-tests-list') }}" class="nav-link">
+                                        <i class="fa fa-table nav-icon"></i>
+                                        <p>@lang('List')</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fa fa-tty"></i>
+                                <p>
+                                    @lang('Tutor Contacts')
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin-tutor-contacts-list') }}" class="nav-link">
                                         <i class="fa fa-table nav-icon"></i>
                                         <p>@lang('List')</p>
                                     </a>

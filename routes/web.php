@@ -108,4 +108,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/update/{id}', 'Admin\RoleController@update')->name('admin-roles-update');
         Route::post('/delete/{id}', 'Admin\RoleController@destroy')->name('admin-roles-delete');
     });
+
+    Route::group(['prefix' => 'tutor_contacts'], function () {
+        Route::get('/', 'Admin\TutorContactController@list')->name('admin-tutor-contacts-list');
+        Route::post('/store', 'Admin\TutorContactController@store')->name('admin-tutor-contacts-store');
+        Route::post('/update/{id}', 'Admin\TutorContactController@update')->name('admin-tutor-contacts-update');
+        Route::post('/delete/{id}', 'Admin\TutorContactController@destroy')->name('admin-tutor-contacts-delete');
+    });
 });

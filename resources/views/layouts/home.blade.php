@@ -44,7 +44,7 @@
                     <!-- logo -->
                     <div class="nav-logo">
 
-                        <a href="#" class="logo"><img src="{{ asset('home_config/img/banner.jpg') }}" alt=""></a>
+                        <a href="#" class="logo"><img src="{{ asset('img/flel_h.png') }}" alt=""></a>
                     </div>
                     <!-- /logo -->
 
@@ -69,6 +69,12 @@
                                             </a>
                                         </div>
                                         <div>
+                                            <a class="dropdown-item" href="#">
+                                                &nbsp;&nbsp;<i class="fa fa-tachometer"></i>
+                                                &nbsp;&nbsp;@lang('Statistics')
+                                            </a>
+                                        </div>
+                                        <div>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 &nbsp;&nbsp;<i class="fa fa-power-off"></i>
@@ -84,13 +90,13 @@
                             </ul>
                         @endguest
                         
-                        <button class="search-btn">{{ app()->getLocale() }}</button>
+                        <button class="nav-item dropdown">{{ app()->getLocale() }}</button>
                         <button class="search-btn"><i class="fa fa-search"></i></button>
                         <button class="aside-btn"><i class="fa fa-bars"></i></button>
                         <div id="nav-search">
                             <form method="post" action="#">
                                 @csrf
-                                <input class="input" name="search" placeholder="Enter your search...">
+                                <input class="input" name="search" placeholder="@lang('Search')">
                             </form>
                             <button class="nav-close search-close">
                                 <span></span>
@@ -110,21 +116,100 @@
                     <!-- nav -->
 
                     <ul class="nav-menu">
-
-                        <li><a class="btn btn-primary" href="#"><i class="fa fa-home"></i> Home </a>  </li>
-                        
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-home"></i> @lang('Home')
+                            </a>
+                        </li> 
                         <li class="has-dropdown">
-                            <a href="#"> Videos </a>
+                            <a href="#"> @lang('Words') </a>
                             <div class="dropdown">
                                 <div class="dropdown-body">
                                     <ul class="dropdown-list">
-
-                                        <li> <a href="#"> Dummy </a> </li>
-
+                                        @foreach ($languages as $language)
+                                            <li> <a href="#"> @lang('Words') @lang('In') {{ $language->name }} </a> </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
                         </li>
+                        <li class="has-dropdown">
+                            <a href="#"> @lang('Courses') </a>
+                            <div class="dropdown">
+                                <div class="dropdown-body">
+                                    <ul class="dropdown-list">
+                                        @foreach ($languages as $language)
+                                            <li>
+                                                <b> {{ $language->name }} </b>
+                                            </li>
+
+                                            @foreach ($courses as $course)
+                                                @if ($course->language_id === $language->id)
+                                                    <li>
+                                                        <a href="#"> {{ $course->name }} </a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="has-dropdown">
+                            <a href="#"> @lang('Test Types') </a>
+                            <div class="dropdown">
+                                <div class="dropdown-body">
+                                    <ul class="dropdown-list">
+                                        @foreach ($languages as $language)
+                                            <li>
+                                                <b> {{ $language->name }} </b>
+                                            </li>
+
+                                            @foreach ($test_types as $test_type)
+                                                @if ($test_type->language_id == $language->id)
+                                                    <li>
+                                                        <a href="#"> {{ $test_type->name }} </a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="has-dropdown">
+                            <a href="#"> @lang('Tests') </a>
+                            <div class="dropdown">
+                                <div class="dropdown-body">
+                                    <ul class="dropdown-list">
+                                        @foreach ($tests as $test)
+                                            <li>
+                                                <a href="#"> {{ $test->name }} ({{ $test->testType->name }}) </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="has-dropdown">
+                            <a href="#"> @lang('Tutor Contacts') </a>
+                            <div class="dropdown">
+                                <div class="dropdown-body">
+                                    <ul class="dropdown-list">
+                                        @foreach ($languages as $language)
+                                            <li> <a href="#"> {{ $language->name }} </a> </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        @auth
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-tachometer"></i> @lang('Statistics')
+                                </a>
+                            </li> 
+                        @endauth
                     </ul>
                     <!-- /nav -->
                 </div>

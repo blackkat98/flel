@@ -107,9 +107,16 @@ class PermissionController extends AdminController
         $permission = Permission::findById($id);
 
         $roles = Role::all();
+        $users = User::with('permissions')->get();
 
         foreach ($roles as $role) {
             $role->revokePermissionTo($permission);
+        }
+
+        if (count($users) > 0) {
+                foreach ($users as $user) {
+                $user->revokePermissionTo($permission);
+            }
         }
 
         if ($permission->delete()) {

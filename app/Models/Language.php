@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Course;
 use App\Models\TestType;
 use App\Models\WordCategory;
+use App\Models\TutorContact;
 
 class Language extends Model
 {
@@ -28,5 +29,10 @@ class Language extends Model
     public function wordCategories()
     {
         return $this->hasMany(WordCategory::class, 'language_id');
+    }
+
+    public function tutorContacts()
+    {
+        return $this->hasMany(TutorContact::class, 'language_id');
     }
 }

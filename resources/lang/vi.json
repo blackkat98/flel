@@ -1,5 +1,6 @@
 {
     "Welcome": "Chào mừng bạn",
+    "Authentication": "Xác thực người dùng",
     "Admin": "Quản trị viên",
     "Home": "Trang chính",
     "Profile": "T.tin cá nhân",
@@ -11,15 +12,6 @@
     "Register": "Đăng ký",
     "Logout": "Đăng xuất",
     "Close": "Đóng",
-    
-    "Are you sure to logout?": "Bạn muốn đăng xuất?",
-    "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",
-    "Create a new instance in": "Tạo một đối tượng mới trong",
-    "Choose a Category": "Chọn phân loại",
-    
-    "Data Table of all": "Bảng dữ liệu các",
-    "Details of": "Chi tiết về",
-    
     "List": "Danh sách",
     "Create": "Thêm",
     "Edit": "Sửa",
@@ -32,6 +24,15 @@
     "In": "Trong",
     "Existing": "Hiện có",
     "Additional": "Ngoại lệ",
+    "Search": "Tìm kiếm",
+    
+    "Are you sure to logout?": "Bạn muốn đăng xuất?",
+    "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",
+    "Create a new instance in": "Tạo một đối tượng mới trong",
+    "Choose a Category": "Chọn phân loại",
+    
+    "Data Table of all": "Bảng dữ liệu các",
+    "Details of": "Chi tiết về",
     
     "ID": "Chỉ số",
     "Type": "Loại",
@@ -45,6 +46,7 @@
     "Language": "Ngôn ngữ",
     "Creator": "Người tạo",
     "Description": "Mô tả",
+    "Extra": "Thêm",
     "Email": "Email",
     "Password": "Mật khẩu",
     "Image": "Ảnh",
@@ -68,6 +70,8 @@
     "Since": "Tạo lúc",
     "Last update": "Sửa lần cuối",
     "Not provided": "Không được cung cấp",
+    "Status": "Tình trạng",
+    "Location": "Vị trí",
     
     "has been created": "vừa được tạo",
     "has been updated": "vừa được cập nhật",
@@ -85,6 +89,7 @@
     "Users": "Người dùng",
     "Languages": "Ngôn ngữ",
     "Courses": "Khoá học",
+    "Course": "Khoá",
     "Test Types": "Loại bài thi",
     "Tests": "Đề thi",
     "Test Part": "Phần đề thi",
@@ -93,5 +98,6 @@
     "Word Categories": "Phân loại từ",
     "Word": "Từ",
     "Roles": "Vị trí chức năng",
-    "Permissions": "Quyền thực thi"
+    "Permissions": "Quyền thực thi",
+    "Tutor Contacts": "Danh bạ gia sư"
 }

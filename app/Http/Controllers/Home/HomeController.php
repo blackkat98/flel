@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\View;
+use App\Models\Language;
+use App\Models\Course;
+use App\Models\TestType;
+use App\Models\Test;
 
 class HomeController extends Controller
 {
@@ -15,6 +20,15 @@ class HomeController extends Controller
     public function __construct()
     {
         // $this->middleware('auth');
+        $courses = Course::all();
+        $languages = Language::all();
+        $test_types = TestType::all();
+        $tests = Test::inRandomOrder()->limit(10)->get();
+
+        View::share('courses', $courses);
+        View::share('languages', $languages);
+        View::share('test_types', $test_types);
+        View::share('tests', $tests);
     }
 
     /**
