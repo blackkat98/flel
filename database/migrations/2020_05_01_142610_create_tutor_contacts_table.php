@@ -15,14 +15,13 @@ class CreateTutorContactsTable extends Migration
     {
         Schema::create('tutor_contacts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('user_id')->unique();
             $table->integer('language_id');
-            $table->string('name');
-            $table->string('image')->nullable();
-            $table->string('email')->unique();
+            $table->string('real_name');
             $table->string('phone')->nullable();
-            $table->text('extra')->nullable();
+            $table->text('social_networks')->nullable();
+            $table->text('experiences')->nullable();
             $table->string('location')->nullable();
-            $table->integer('is_occupied')->default(0);
             $table->timestamps();
         });
     }

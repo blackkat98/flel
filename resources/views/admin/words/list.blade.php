@@ -31,7 +31,7 @@
                             <td> @lang('Word') </td>
                             <td> @lang('Category') </td>
                             <td> @lang('IPA') </td>
-                            <td> @lang('Pronounciation') </td>
+                            <td> @lang('Pronunciation') </td>
                             <td> @lang('Definition') </td>
                             <td> @lang('Example') </td>
                             <td> @lang('Since') </td>
@@ -46,10 +46,10 @@
                                 <td> {{ $word->wordCategory->name }} ({{ $word->wordCategory->language->slug }}) </td>
                                 <td> {{ $word->ipa }} </td>
                                 <td>
-                                    @if ($word->pronounciation)
+                                    @if ($word->pronunciation)
                                         <audio controls>
-                                            <source src="{{ $word->pronounciation }}">
-                                        </audio> 
+                                            <source src="{{ $word->pronunciation }}">
+                                        </audio>
                                     @endif
                                 </td>
                                 <td> {{ $word->definition }} </td>
@@ -63,11 +63,11 @@
                                     <button class="btn btn-outline" data-toggle="modal" data-target="#form-delete-{{ $word->id }}">
                                         <i class="far fa-trash-alt text-danger"></i>
                                     </button>
-                                    
+
                                     <div class="modal fade" id="form-edit-{{ $word->id }}">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <form method="post" action="{{ route('admin-words-update', ['id' => $word->id]) }}">
+                                                <form method="post" action="{{ route('admin-words-update', ['id' => $word->id]) }}" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="modal-header">
                                                         <h4 class="modal-title">@lang('Edit') {{ $word->word }}?</h4>
@@ -76,7 +76,50 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Word')
+                                                            </label>
+                                                            <div class="row">
+                                                                <div class="col-5">
+                                                                    <select style="width: 100%;" class="form-control js-select2" name="word_category_id">
+                                                                        @foreach ($word_categories as $word_category)
+                                                                            @if ($word->word_category_id == $word_category->id)
+                                                                                <option value="{{ $word_category->id }}" selected> {{ $word_category->name }} ({{ $word_category->language->name }}) </option>
+                                                                            @else
+                                                                                <option value="{{ $word_category->id }}"> {{ $word_category->name }} ({{ $word_category->language->name }}) </option>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-7">
+                                                                    <input class="form-control" name="word" placeholder="@lang('Word')" value="{{ $word->word }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-5">
+                                                                    <input class="form-control" name="ipa" placeholder="@lang('IPA')*" value="{{ $word->ipa }}">
+                                                                </div>
+                                                                <div class="col-7">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">
+                                                                                <i class="fa fa-music"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        <input type="file" class="form-control" name="pronunciation">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <textarea class="form-control" name="definition" placeholder="@lang('Definition')*">{{ $word->definition }}</textarea>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <textarea class="form-control" name="example" placeholder="@lang('Example')">{{ $word->example }}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
@@ -86,7 +129,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="modal fade" id="form-delete-{{ $word->id }}">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -158,7 +201,7 @@
                                             <i class="fa fa-music"></i>
                                         </span>
                                     </div>
-                                    <input type="file" class="form-control" name="pronounciation">
+                                    <input type="file" class="form-control" name="pronunciation">
                                 </div>
                             </div>
                         </div>

@@ -8,6 +8,11 @@
 @lang('Data Table of all') @lang('Tutor Contacts') 
 @endsection
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('bower_components/adminlte3/plugins/select2/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('bower_components/adminlte3/plugins/summernote/summernote-bs4.css') }}">
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-12">
@@ -23,28 +28,38 @@
                 <table id="js-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <td> @lang('Name') </td>
+                            <td> @lang('Name') (@lang('Real Name')) </td>
                             <td> @lang('Image') </td>
                             <td> @lang('Language') </td>
-                            <td> @lang('Email') </td>
-                            <td> @lang('Phone') </td>
-                            <td> @lang('Extra') </td>
+                            <td> @lang('Email') + @lang('Phone') </td>
+                            <td> @lang('Social Networks') </td>
+                            <td> @lang('Experiences') </td>
                             <td> @lang('Actions') </td>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($contacts as $contact)
                             <tr>
-                                <td> {{ $contact->name }} </td>
                                 <td>
-                                    @if ($contact->image)
-                                        <img class="img-size-32" src="{{ $contact->image }}" alt="">
-                                    @endif
+                                    {{ $contact->user->name }} ({{ $contact->real_name }})
+                                </td>
+                                <td>
+                                    <img class="img-size-32" src="{{ asset($contact->user->image) }}" alt="">
                                 </td>
                                 <td> {{ $contact->language->name }} </td>
-                                <td> {{ $contact->email }} </td>
-                                <td> {{ $contact->phone }} </td>
-                                <td> {{ $contact->extra }} </td>
+                                <td>
+                                    {{ $contact->user->email }} <br> {{ $contact->phone }}
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach ($contact->social_networks as $key => $value)
+                                            <li>
+                                                <b>{{ $key }}</b>: <a href="{{ $value }}">{{ $value }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td> {{ $contact->experiences }} </td>
                                 <td>
                                     <button class="btn btn-outline" data-toggle="modal" data-target="#form-edit-{{ $contact->id }}">
                                         <i class="far fa-edit text-success"></i>
@@ -66,28 +81,28 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
+                                                            <label>
+                                                                @lang('User')*
+                                                            </label>
+                                                            <select class="form-control row js-select2" style="width: 100%;" name="user_id">
+                                                                @foreach ($users as $user)
+                                                                    @if ($contact->user_id == $user->id)
+                                                                        <option value="{{ $user->id }}" selected>
+                                                                            {{ $user->name }}
+                                                                        </option>
+                                                                    @else
+                                                                        <option value="{{ $user->id }}">
+                                                                            {{ $user->name }}
+                                                                        </option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label for="name">
-                                                                @lang('Name')*
+                                                                @lang('Real Name')*
                                                             </label>
-                                                            <input id="name" class="form-control" name="name" value="{{ $contact->name }}">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="email">
-                                                                @lang('Email')*
-                                                            </label>
-                                                            <input id="email" class="form-control" name="email" value="{{ $contact->email }}">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="phone">
-                                                                @lang('Phone')
-                                                            </label>
-                                                            <input id="phone" class="form-control" name="phone" value="{{ $contact->phone }}">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="image">
-                                                                @lang('Image')
-                                                            </label>
-                                                            <input type="file" id="image" class="form-control" name="image">
+                                                            <input id="real_name" class="form-control" name="real_name" value="{{ $contact->real_name }}">
                                                         </div>
                                                         <div class="form-group">
                                                             <label>
@@ -104,18 +119,51 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
+                                                            <label for="phone">
+                                                                @lang('Phone')
+                                                            </label>
+                                                            <input id="phone" class="form-control" name="phone" value="{{ $contact->phone }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Social Networks')
+                                                            </label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                        <img class="img-size-32" src="{{ asset('img/facebook.png') }}" alt="">
+                                                                    </span>
+                                                                </div>
+                                                                <input class="form-control" name="socnet_fb" value="{{ $contact->social_networks['facebook'] }}">
+                                                            </div>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                        <img class="img-size-32" src="{{ asset('img/twitter.png') }}" alt="">
+                                                                    </span>
+                                                                </div>
+                                                                <input class="form-control" name="socnet_tw" value="{{ $contact->social_networks['twitter'] }}">
+                                                            </div>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                        <img class="img-size-32" src="{{ asset('img/google_plus.png') }}" alt="">
+                                                                    </span>
+                                                                </div>
+                                                                <input class="form-control" name="socnet_gp" value="{{ $contact->social_networks['google_plus'] }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="experiences">
+                                                                @lang('Experiences')
+                                                            </label>
+                                                            <textarea id="experiences" class="form-control" name="experiences" maxlength="500">{{ $contact->experiences }}</textarea>
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label for="location">
                                                                 @lang('Location')
                                                             </label>
                                                             <input id="location" class="form-control" name="location" value="{{ $contact->location }}">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="extra">
-                                                                @lang('Extra')
-                                                            </label>
-                                                            <textarea id="extra" class="form-control" name="extra" maxlength="500">
-                                                                {{ $contact->extra }}
-                                                            </textarea>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
@@ -172,28 +220,22 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label>
+                            @lang('User')*
+                        </label>
+                        <select class="form-control row js-select2" style="width: 100%;" name="user_id">
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">
+                                    {{ $user->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="name">
-                            @lang('Name')*
+                            @lang('Real Name')*
                         </label>
-                        <input id="name" class="form-control" name="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">
-                            @lang('Email')*
-                        </label>
-                        <input id="email" class="form-control" name="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">
-                            @lang('Phone')
-                        </label>
-                        <input id="phone" class="form-control" name="phone">
-                    </div>
-                    <div class="form-group">
-                        <label for="image">
-                            @lang('Image')
-                        </label>
-                        <input type="file" id="image" class="form-control" name="image">
+                        <input id="real_name" class="form-control" name="real_name">
                     </div>
                     <div class="form-group">
                         <label>
@@ -206,16 +248,51 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="phone">
+                            @lang('Phone')
+                        </label>
+                        <input id="phone" class="form-control" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Social Networks')
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <img class="img-size-32" src="{{ asset('img/facebook.png') }}" alt="">
+                                </span>
+                            </div>
+                            <input class="form-control" name="socnet_fb">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <img class="img-size-32" src="{{ asset('img/twitter.png') }}" alt="">
+                                </span>
+                            </div>
+                            <input class="form-control" name="socnet_tw">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <img class="img-size-32" src="{{ asset('img/google_plus.png') }}" alt="">
+                                </span>
+                            </div>
+                            <input class="form-control" name="socnet_gp">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="experiences">
+                            @lang('Experiences')
+                        </label>
+                        <textarea id="experiences" class="form-control" name="experiences" maxlength="500"></textarea>
+                    </div>
+                    <div class="form-group">
                         <label for="location">
                             @lang('Location')
                         </label>
                         <input id="location" class="form-control" name="location">
-                    </div>
-                    <div class="form-group">
-                        <label for="extra">
-                            @lang('Extra')
-                        </label>
-                        <textarea id="extra" class="form-control" name="extra" maxlength="500"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -229,6 +306,8 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('bower_components/adminlte3/plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('bower_components/adminlte3/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script>
     $(document).ready(function () {
         $('#js-table').DataTable({
@@ -238,6 +317,10 @@
             "ordering": true,
             "info": true,
             "autoWidth": true
+        });
+
+        $('.js-select2').select2({
+            theme: 'bootstrap4'
         });
     });
 </script>

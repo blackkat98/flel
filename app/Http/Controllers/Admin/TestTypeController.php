@@ -47,6 +47,8 @@ class TestTypeController extends AdminController
         $test_type->language_id = $request->get('language_id');
         $test_type->name = $request->get('name');
         $test_type->description = $request->get('description');
+        $test_type->fixed_quiz_quantity = $request->get('fixed_quiz_quantity');
+        $test_type->fixed_time = $request->get('fixed_time');
         
         if ($test_type->save()) {
             return redirect()->back()->with('success', $test_type->name . ' ' . __('has been created'));
@@ -90,6 +92,8 @@ class TestTypeController extends AdminController
         $test_type->language_id = $request->get('language_id');
         $test_type->name = $request->get('name');
         $test_type->description = $request->get('description');
+        $test_type->fixed_quiz_quantity = $request->get('fixed_quiz_quantity');
+        $test_type->fixed_time = $request->get('fixed_time');
         
         if ($test_type->save()) {
             return redirect()->back()->with('success', $test_type->name . ' ' . __('has been updated'));

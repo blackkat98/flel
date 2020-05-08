@@ -8,7 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <title>{{ config('app.name') }} @lang('Home') | @yield('title')</title>
-    
+
     <link rel="icon" href="{{ asset('img/flel.png') }}">
 
     <!-- Google font -->
@@ -97,7 +97,7 @@
                                 </li>
                             </ul>
                         @endguest
-                        
+
                         <button class="nav-item dropdown">{{ app()->getLocale() }}</button>
                         <button class="search-btn"><i class="fa fa-search"></i></button>
                         <button class="aside-btn"><i class="fa fa-bars"></i></button>
@@ -128,7 +128,7 @@
                             <a href="#">
                                 <i class="fa fa-home"></i> @lang('Home')
                             </a>
-                        </li> 
+                        </li>
                         <li class="has-dropdown">
                             <a href="#"> @lang('Words') </a>
                             <div class="dropdown">
@@ -216,7 +216,7 @@
                                 <a href="#">
                                     <i class="fa fa-tachometer"></i> @lang('Statistics')
                                 </a>
-                            </li> 
+                            </li>
                         @endauth
                     </ul>
                     <!-- /nav -->

@@ -26,13 +26,13 @@ class TutorContactRequest extends FormRequest
         switch ($this->route()->getName()) {
             case 'admin-tutor-contacts-store':
                 return [
-                    'name' => 'required|string',
-                    'email' => 'required|string|email|unique:tutor_contacts'
+                    'user_id' => 'unique:tutor_contacts',
+                    'real_name' => 'required'
                 ];
             case 'admin-tutor-contacts-update':
                 return [
-                    'name' => 'required|string',
-                    'email' => 'required|string|email|unique:tutor_contacts,email,' . $this->id
+                    'user_id' => 'unique:tutor_contacts,id,' . $this->id,
+                    'real_name' => 'required'
                 ];
         }
     }
@@ -45,11 +45,8 @@ class TutorContactRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => __('Name') . ' ' . __('is required'),
-            'name.string' => __('Name') . ' ' . __('must not contain spaces'),
-            'email.required' => __('Email') . ' ' . __('is required'),
-            'email.unique' => __('Email') . ' ' . __('must be unique'),
-            'email.email' => __('Email') . ' ' . __('is not in the correct form')
+            'user_id.unique' => __('User') . ' ' . __('must be unique'),
+            'real_name.required' => __('Real Name') . ' ' . __('is required')
         ];
     }
 }

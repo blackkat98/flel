@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\TutorContact;
 use App\Models\Language;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class TutorContactController extends AdminController
@@ -20,10 +21,12 @@ class TutorContactController extends AdminController
     {
         $contacts = TutorContact::all();
         $languages = Language::all();
+        $users = User::all();
 
         return view('admin.tutor_contacts.list', [
             'contacts' => $contacts,
-            'languages' => $languages
+            'languages' => $languages,
+            'users' => $users
         ]);
     }
 
@@ -46,22 +49,26 @@ class TutorContactController extends AdminController
     public function store(TutorContactRequest $request)
     {
         $contact = new TutorContact();
-        $contact->name = $request->get('name');
-        $contact->email = $request->get('email');
-        $contact->phone = $request->get('phone');
+        $contact->real_name = $request->get('real_name');
+        $contact->user_id = $request->get('user_id');
         $contact->language_id = $request->get('language_id');
+        $contact->phone = $request->get('phone');
+        $contact->experiences = $request->get('experiences');
         $contact->location = $request->get('location');
-        $contact->extra = $request->get('extra');
 
-        if ($request->hasFile('image')) {
-            $path = Storage::disk('public')->put(config('customize.image_dir'), $request->file('image'));
-            $contact->image = config('customize.storage_dir') . $path;
-        } else {
-            $contact->image = config('customize.default_avatar');
-        }
+        $facebook = $request->get('socnet_fb');
+        $twitter = $request->get('socnet_tw');
+        $google_plus = $request->get('socnet_gp');
+
+        $social_networks = [];
+        $social_networks['facebook'] = $facebook;
+        $social_networks['twitter'] = $twitter;
+        $social_networks['google_plus'] = $google_plus;
+
+        $contact->social_networks = $social_networks;
 
         if ($contact->save()) {
-            return redirect()->back()->with('success', $contact->name . ' ' . __('has been created'));
+            return redirect()->back()->with('success', $contact->real_name . ' ' . __('has been created'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
         }
@@ -99,20 +106,26 @@ class TutorContactController extends AdminController
     public function update(TutorContactRequest $request, $id)
     {
         $contact = TutorContact::findOrFail($id);
-        $contact->name = $request->get('name');
-        $contact->email = $request->get('email');
-        $contact->phone = $request->get('phone');
+        $contact->real_name = $request->get('real_name');
+        $contact->user_id = $request->get('user_id');
         $contact->language_id = $request->get('language_id');
+        $contact->phone = $request->get('phone');
+        $contact->experiences = $request->get('experiences');
         $contact->location = $request->get('location');
-        $contact->extra = $request->get('extra');
 
-        if ($request->hasFile('image')) {
-            $path = Storage::disk('public')->put(config('customize.image_dir'), $request->file('image'));
-            $contact->image = config('customize.storage_dir') . $path;
-        }
+        $facebook = $request->get('socnet_fb');
+        $twitter = $request->get('socnet_tw');
+        $google_plus = $request->get('socnet_gp');
+
+        $social_networks = [];
+        $social_networks['facebook'] = $facebook;
+        $social_networks['twitter'] = $twitter;
+        $social_networks['google_plus'] = $google_plus;
+
+        $contact->social_networks = $social_networks;
 
         if ($contact->save()) {
-            return redirect()->back()->with('success', $contact->name . ' ' . __('has been updated'));
+            return redirect()->back()->with('success', $contact->real_name . ' ' . __('has been updated'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
         }

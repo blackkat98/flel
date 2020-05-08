@@ -18,6 +18,8 @@ class CreateTestTypesTable extends Migration
             $table->integer('language_id');
             $table->string('name')->unique();
             $table->text('description')->nullable();
+            $table->integer('fixed_quiz_quantity')->default(0);
+            $table->integer('fixed_time')->default(0);
             $table->timestamps();
         });
     }

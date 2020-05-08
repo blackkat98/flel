@@ -26,8 +26,9 @@
                             <td> @lang('Name') </td>
                             <td> @lang('Language') </td>
                             <td> @lang('Description') </td>
-                            <td> @lang('Since') </td>
-                            <td> @lang('Last update') </td>
+                            <td> @lang('Number of') @lang('Quizzes') </td>
+                            <td> @lang('Time') </td>
+                            <td> @lang('Rules') </td>
                             <td> @lang('Actions') </td>
                         </tr>
                     </thead>
@@ -37,8 +38,23 @@
                                 <td> {{ $type->name }} </td>
                                 <td> {{ $type->language->name }} </td>
                                 <td> {{ $type->description }} </td>
-                                <td> {{ $type->created_at }} </td>
-                                <td> {{ $type->updated_at }} </td>
+                                <td>
+                                    @if ($type->fixed_quiz_quantity > 0)
+                                        {{ $type->fixed_quiz_quantity }}
+                                    @else
+                                        @lang('No default')
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($type->fixed_time > 0)
+                                        {{ $type->fixed_time }}
+                                    @else
+                                        @lang('No default')
+                                    @endif
+                                </td>
+                                <td>
+
+                                </td>
                                 <td>
                                     <button class="btn btn-outline" data-toggle="modal" data-target="#form-edit-{{ $type->id }}">
                                         <i class="far fa-edit text-success"></i>
@@ -78,6 +94,18 @@
                                                                     @endif
                                                                 @endforeach
                                                             </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Number of') @lang('Quizzes')
+                                                            </label>
+                                                            <input type="number" min="0" max="250" class="form-control" name="fixed_quiz_quantity" value="{{ $type->fixed_quiz_quantity }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Time')
+                                                            </label>
+                                                            <input type="number" min="0" max="250" class="form-control" name="fixed_time" value="{{ $type->fixed_time }}">
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="description">
@@ -156,6 +184,18 @@
                                 <option value="{{ $language->id }}"> {{ $language->name }} ({{ $language->slug }}) </option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Number of') @lang('Quizzes')
+                        </label>
+                        <input type="number" min="0" max="250" class="form-control" name="fixed_quiz_quantity" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Time')
+                        </label>
+                        <input type="number" min="0" max="250" class="form-control" name="fixed_time" value="0">
                     </div>
                     <div class="form-group">
                         <label for="description">

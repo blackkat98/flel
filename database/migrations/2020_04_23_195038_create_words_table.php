@@ -18,7 +18,7 @@ class CreateWordsTable extends Migration
             $table->integer('word_category_id');
             $table->string('word');
             $table->string('ipa');
-            $table->string('pronounciation')->nullable();
+            $table->string('pronunciation')->nullable();
             $table->text('definition');
             $table->text('example')->nullable();
             $table->timestamps();

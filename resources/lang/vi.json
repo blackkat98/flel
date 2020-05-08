@@ -5,9 +5,9 @@
     "Home": "Trang chính",
     "Profile": "T.tin cá nhân",
     "Statistics": "Thống kê",
-    
+
     "Select page language": "Chọn ngôn ngữ hiển thị",
-    
+
     "Login": "Đăng nhập",
     "Register": "Đăng ký",
     "Logout": "Đăng xuất",
@@ -22,22 +22,30 @@
     "Back to": "Quay về",
     "Actions": "Thao tác",
     "In": "Trong",
+    "For": "Cho",
+    "From": "Từ",
+    "To": "Đến",
+    "Each": "Mỗi",
     "Existing": "Hiện có",
     "Additional": "Ngoại lệ",
     "Search": "Tìm kiếm",
-    
+    "Start": "Bắt đầu",
+    "Resume": "Tiếp tục",
+    "No default": "Không định trước",
+
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
     "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",
     "Create a new instance in": "Tạo một đối tượng mới trong",
     "Choose a Category": "Chọn phân loại",
-    
+
     "Data Table of all": "Bảng dữ liệu các",
     "Details of": "Chi tiết về",
-    
+
     "ID": "Chỉ số",
     "Type": "Loại",
     "Category": "Phân loại",
     "Name": "Tên",
+    "Real Name": "Tên thật",
     "Guard Name": "Tên Guard",
     "Number": "Số",
     "Associated with": "Liên quan tới",
@@ -67,7 +75,7 @@
     "Definition": "Định nghĩa",
     "Example": "Ví dụ",
     "IPA": "IPA",
-    "Pronounciation": "Phát âm",
+    "Pronunciation": "Phát âm",
     "Since": "Tạo lúc",
     "Last update": "Sửa lần cuối",
     "Not provided": "Không được cung cấp",
@@ -76,32 +84,42 @@
     "Shown": "Hiện",
     "Hidden": "Ẩn",
     "Length": "Độ dài",
-    
+    "Progress": "Tiến độ",
+    "Remaining": "Còn lại",
+    "Number of": "Số lượng",
+    "Social Networks": "Mạng xã hội",
+    "Experiences": "Kinh nghiệm",
+
     "has been created": "vừa được tạo",
     "has been updated": "vừa được cập nhật",
     "has been deleted": "vừa bị xoá",
     "Action Failed": "Tác vụ thất bại",
-    
+
     "is required": "là bắt buộc",
     "must be unique": "không được lặp lại",
     "must have a size of": "phải có độ dài là",
     "must have a size of at least": "phải có độ dài tối thiểu là",
     "must have a size of at most": "phải có độ dài tối đa là",
+    "must be at least": "phải tối thiểu là",
+    "must be at most": "phải tối đa là",
     "must not contain spaces": "không được chứa dấu cách",
     "is not in the correct form": "không đúng định dạng",
-    
+
     "Users": "Người dùng",
+    "User": "Người dùng",
     "Languages": "Ngôn ngữ",
     "Courses": "Khoá học",
     "Course": "Khoá",
     "Test Types": "Loại bài thi",
+    "Score": "Điểm",
+    "Rules": "Luật",
     "Tests": "Đề thi",
     "Test Part": "Phần đề thi",
     "Test Quiz": "Câu hỏi thi",
     "Lessons": "Bài học",
     "Lesson": "Bài học",
     "Word Categories": "Phân loại từ",
-    "Word": "Từ",
+    "Words": "Từ",
     "Roles": "Vị trí chức năng",
     "Permissions": "Quyền thực thi",
     "Tutor Contacts": "Danh bạ gia sư"

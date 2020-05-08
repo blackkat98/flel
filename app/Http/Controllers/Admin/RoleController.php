@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Models\User;
+use App\Enums\DefaultUserRole;
 
 class RoleController extends AdminController
 {
@@ -151,6 +152,10 @@ class RoleController extends AdminController
         $role = Role::findById($id);
 
         if ($role->users != null) {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
+
+        if (in_array($role->name, array_flip(DefaultUserRole::toArray()))) {
             return redirect()->back()->with('error', __('Action Failed'));
         }
 

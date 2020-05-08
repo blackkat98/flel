@@ -27,12 +27,16 @@ class TestTypeRequest extends FormRequest
             case 'admin-test-types-store':
                 return [
                     'name' => 'required|unique:test_types',
-                    'language_id' => 'required'
+                    'language_id' => 'required',
+                    'fixed_quiz_quantity' => 'required|min:0|max:250',
+                    'fixed_time' => 'required|min:0'
                 ];
             case 'admin-test-types-update':
                 return [
                     'name' => 'required|unique:test_types,name,' . $this->id,
-                    'language_id' => 'required'
+                    'language_id' => 'required',
+                    'fixed_quiz_quantity' => 'required|min:0|max:250',
+                    'fixed_time' => 'required|min:0'
                 ];
         }
     }
@@ -47,7 +51,12 @@ class TestTypeRequest extends FormRequest
         return [
             'name.required' => __('Name') . ' ' . __('is required'),
             'name.unique' => __('Name') . ' ' . __('must be unique'),
-            'language_id.required' => __('Language') . ' ' . __('is required')
+            'language_id.required' => __('Language') . ' ' . __('is required'),
+            'fixed_quiz_quantity.required' => __('Number of') . ' ' . __('Quizzes') . ' ' . __('is required'),
+            'fixed_quiz_quantity.min' =>  __('Number of') . ' ' . __('Quizzes') . ' ' . __('must be at least') . ' 0',
+            'fixed_quiz_quantity.max' =>  __('Number of') . ' ' . __('Quizzes') . ' ' . __('must be at most') . ' 0',
+            'fixed_time.required' => __('Time') . ' ' . __('is required'),
+            'fixed_time.min' =>  __('Time') . ' ' . __('must be at least') . ' 0'
         ];
     }
 }

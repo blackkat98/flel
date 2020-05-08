@@ -51,9 +51,9 @@ class WordController extends AdminController
         $word->definition = $request->get('definition');
         $word->example = $request->get('example');
 
-        if ($request->hasFile('pronounciation')) {
-            $path = Storage::disk('public')->put(config('customize.sound_dir'), $request->file('pronounciation'));
-            $word->pronounciation = config('customize.storage_dir') . $path;
+        if ($request->hasFile('pronunciation')) {
+            $path = Storage::disk('public')->put(config('customize.sound_dir'), $request->file('pronunciation'));
+            $word->pronunciation = config('customize.storage_dir') . $path;
         }
 
         if ($word->save()) {
@@ -94,7 +94,23 @@ class WordController extends AdminController
      */
     public function update(WordRequest $request, $id)
     {
-        //
+        $word = Word::findOrFail($id);
+        $word->word_category_id = $request->get('word_category_id');
+        $word->word = $request->get('word');
+        $word->ipa = $request->get('ipa');
+        $word->definition = $request->get('definition');
+        $word->example = $request->get('example');
+
+        if ($request->hasFile('pronunciation')) {
+            $path = Storage::disk('public')->put(config('customize.sound_dir'), $request->file('pronunciation'));
+            $word->pronunciation = config('customize.storage_dir') . $path;
+        }
+
+        if ($word->save()) {
+            return redirect()->back()->with('success', $word->word . ' ' . __('has been updated'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
     }
 
     /**
@@ -105,6 +121,12 @@ class WordController extends AdminController
      */
     public function destroy($id)
     {
-        //
+        $word = Word::findOrFail($id);
+
+        if ($word->delete()) {
+            return redirect()->back()->with('success', $word->word . ' ' . __('has been deleted'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
     }
 }
