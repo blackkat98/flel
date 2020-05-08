@@ -49,13 +49,14 @@ class CourseController extends AdminController
         $course->user_id = Auth::user()->id;
         $course->language_id = $request->get('language_id');
         $course->name = $request->get('name');
+        $course->description = $request->get('description');
         
         $language = Language::findOrFail($request->get('language_id'));
         $slug = $language->slug;
         $max_id_course = Course::where('language_id', $language->id)->max('id');
         $max_id = $max_id_course != null ? $max_id_course : 0;
         
-        $course->code = strtoupper($slug) . '-' . ($max_id + 1);
+        $course->code = $slug . '-' . ($max_id + 1);
         
         if ($course->save()) {
             return redirect()->route('admin-courses-show', ['id' => $course->id])->with('success', $course->code . ' ' . __('has been created'));
@@ -103,6 +104,7 @@ class CourseController extends AdminController
     {
         $course = Course::findOrFail($id);
         $course->name = $request->get('name');
+        $course->description = $request->get('description');
         
         if ($course->save()) {
             return redirect()->back()->with('success', $course->code . ' ' . __('has been updated'));
@@ -129,6 +131,29 @@ class CourseController extends AdminController
             return redirect()->back()->with('success', $course->code . ' ' . __('has been deleted'));
         } else {
             return redirect()->route('admin-courses-list')->with('error', __('Action Failed'));
+        }
+    }
+
+    /**
+     * Change availability.
+     *
+     * @param  int  $id
+     * @return void
+     */
+    public function available($id)
+    {
+        $course = Course::findOrFail($id);
+
+        if ($course->is_available == 0) {
+            $course->is_available = 1;
+        } else {
+            $course->is_available = 0;
+        }
+
+        if ($course->save()) {
+            return redirect()->back()->with('success', $course->code . ' ' . __('has been updated'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
         }
     }
 }

@@ -24,6 +24,16 @@
                     <button class="btn btn-success col-2" data-toggle="modal" data-target="#form-edit-test-{{ $test->id }}">
                         <i class="fa fa-edit"></i> @lang('Edit')
                     </button>
+                    <form class="col-2" method="post" action="{{ route('admin-tests-available', ['id' => $test->id]) }}">
+                        @csrf
+                        <button class="btn btn-default col-12">
+                            @if ($test->is_available == 1)
+                                <b class="text-success"> @lang('Shown') </b>
+                            @else
+                                <b class="text-danger"> @lang('Hidden') </b>
+                            @endif
+                        </button>
+                    </form>
                     <button class="btn btn-danger col-2" data-toggle="modal" data-target="#form-delete-test-{{ $test->id }}">
                         <i class="fa fa-trash"></i> @lang('Delete')
                     </button>

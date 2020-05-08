@@ -12,7 +12,7 @@ class Test extends Model
     protected $table = 'tests';
     
     protected $fillable = [
-        'user_id', 'test_type_id', 'name', 'time'
+        'user_id', 'test_type_id', 'name', 'time', 'is_available'
     ];
 
     public function user()

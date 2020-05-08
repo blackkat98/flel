@@ -147,4 +147,27 @@ class TestController extends AdminController
             return redirect()->back()->with('error', __('Action Failed'));
         }
     }
+
+    /**
+     * Change availability.
+     *
+     * @param  int  $id
+     * @return void
+     */
+    public function available($id)
+    {
+        $test = Test::findOrFail($id);
+
+        if ($test->is_available == 0) {
+            $test->is_available = 1;
+        } else {
+            $test->is_available = 0;
+        }
+
+        if ($test->save()) {
+            return redirect()->back()->with('success', $test->name . ' ' . __('has been updated'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
+    }
 }

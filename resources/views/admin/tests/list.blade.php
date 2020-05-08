@@ -29,6 +29,7 @@
                             <td> @lang('Creator') </td>
                             <td> @lang('Since') </td>
                             <td> @lang('Last update') </td>
+                            <td> @lang('Status') </td>
                             <td> @lang('Actions') </td>
                         </tr>
                     </thead>
@@ -41,6 +42,18 @@
                                 <td> {{ $test->user->name }} </td>
                                 <td> {{ $test->created_at }} </td>
                                 <td> {{ $test->updated_at }} </td>
+                                <td>
+                                    <form method="post" action="{{ route('admin-tests-available', ['id' => $test->id]) }}">
+                                        @csrf
+                                        <button class="btn btn-default">
+                                            @if ($test->is_available == 1)
+                                                <b class="text-success"> @lang('Shown') </b>
+                                            @else
+                                                <b class="text-danger"> @lang('Hidden') </b>
+                                            @endif
+                                        </button>
+                                    </form>
+                                </td>
                                 <td>
                                     <a href="{{ route('admin-tests-show', ['id' => $test->id]) }}" class="btn btn-outline">
                                         <i class="far fa-eye text-primary"></i>

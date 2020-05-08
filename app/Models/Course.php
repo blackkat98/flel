@@ -12,7 +12,7 @@ class Course extends Model
     protected $table = 'courses';
     
     protected $fillable = [
-        'user_id', 'language_id', 'name', 'code'
+        'user_id', 'language_id', 'name', 'description', 'code', 'is_available'
     ];
     
     public function user()

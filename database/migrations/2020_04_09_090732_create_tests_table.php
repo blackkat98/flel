@@ -19,6 +19,7 @@ class CreateTestsTable extends Migration
             $table->integer('test_type_id');
             $table->string('name')->unique();
             $table->integer('time')->nullable();
+            $table->integer('is_available')->default(0);
             $table->timestamps();
         });
     }

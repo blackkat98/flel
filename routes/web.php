@@ -19,6 +19,10 @@ Auth::routes();
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'Home\HomeController@index')->name('home');
+
+    Route::group(['prefix' => 'course'], function () {
+        Route::get('/{code}', 'Home\CourseController@show')->name('home-course-show');
+    });
 });
 
 Route::group(['prefix' => 'admin'], function () {
@@ -46,6 +50,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/store', 'Admin\CourseController@store')->name('admin-courses-store');
         Route::post('/update/{id}', 'Admin\CourseController@update')->name('admin-courses-update');
         Route::post('/delete/{id}', 'Admin\CourseController@destroy')->name('admin-courses-delete');
+        Route::post('/available/{id}', 'Admin\CourseController@available')->name('admin-courses-available');
     });
     
     Route::group(['prefix' => 'test-types'], function () {
@@ -61,6 +66,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/store', 'Admin\TestController@store')->name('admin-tests-store');
         Route::post('/update/{id}', 'Admin\TestController@update')->name('admin-tests-update');
         Route::post('/delete/{id}', 'Admin\TestController@destroy')->name('admin-tests-delete');
+        Route::post('/available/{id}', 'Admin\TestController@available')->name('admin-tests-available');
     });
 
     Route::group(['prefix' => 'test-parts'], function () {

@@ -8,6 +8,10 @@
 @lang('Data Table of all') @lang('Courses')
 @endsection
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('bower_components/adminlte3/plugins/summernote/summernote-bs4.css') }}">
+@endsection
+
 @section('content')
 <div class="row">
     <div class="col-12">
@@ -29,6 +33,7 @@
                             <td> @lang('Creator') </td>
                             <td> @lang('Since') </td>
                             <td> @lang('Last update') </td>
+                            <td> @lang('Status') </td>
                             <td> @lang('Actions') </td>
                         </tr>
                     </thead>
@@ -41,6 +46,18 @@
                                 <td> {{ $course->user->name }} </td>
                                 <td> {{ $course->created_at }} </td>
                                 <td> {{ $course->updated_at }} </td>
+                                <td>
+                                    <form method="post" action="{{ route('admin-courses-available', ['id' => $course->id]) }}">
+                                        @csrf
+                                        <button class="btn btn-default">
+                                            @if ($course->is_available == 1)
+                                                <b class="text-success"> @lang('Shown') </b>
+                                            @else
+                                                <b class="text-danger"> @lang('Hidden') </b>
+                                            @endif
+                                        </button>
+                                    </form>
+                                </td>
                                 <td>
                                     <a href="{{ route('admin-courses-show', ['id' => $course->id]) }}" class="btn btn-outline">
                                         <i class="far fa-eye text-primary"></i>
@@ -69,6 +86,14 @@
                                                                 @lang('Name')*
                                                             </label>
                                                             <input id="name" class="form-control" name="name" value="{{ $course->name }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="description">
+                                                                @lang('Description')
+                                                            </label>
+                                                            <textarea id="description" class="form-control" name="description">
+                                                                {{ $course->description }}
+                                                            </textarea>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
@@ -140,6 +165,12 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="description">
+                            @lang('Description')
+                        </label>
+                        <textarea id="description" class="form-control" name="description"></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
@@ -152,6 +183,7 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('bower_components/adminlte3/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script>
     $(document).ready(function () {
         $('#js-table').DataTable({
@@ -162,6 +194,7 @@
             "info": true,
             "autoWidth": true
         });
+        $('textarea').summernote();
     });
 </script>
 @endsection

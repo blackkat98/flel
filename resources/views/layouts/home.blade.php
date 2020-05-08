@@ -23,6 +23,14 @@
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="{{ asset('home_config/css/style.css') }}" />
     <link type="text/css" rel="stylesheet" href="{{ asset('home_config/css/custom.css') }}" />
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     @yield('css')
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -146,7 +154,7 @@
                                             @foreach ($courses as $course)
                                                 @if ($course->language_id === $language->id)
                                                     <li>
-                                                        <a href="#"> {{ $course->name }} </a>
+                                                        <a href="{{ route('home-course-show', ['code' => $course->code]) }}"> {{ $course->name }} </a>
                                                     </li>
                                                 @endif
                                             @endforeach

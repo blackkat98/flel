@@ -20,10 +20,10 @@ class HomeController extends Controller
     public function __construct()
     {
         // $this->middleware('auth');
-        $courses = Course::all();
+        $courses = Course::where('is_available', 1)->get();
         $languages = Language::all();
         $test_types = TestType::all();
-        $tests = Test::inRandomOrder()->limit(10)->get();
+        $tests = Test::where('is_available', 1)->inRandomOrder()->limit(10)->get();
 
         View::share('courses', $courses);
         View::share('languages', $languages);

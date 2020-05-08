@@ -24,6 +24,16 @@
                     <button class="btn btn-success col-2" data-toggle="modal" data-target="#form-edit-course-{{ $course->id }}">
                         <i class="fa fa-edit"></i> @lang('Edit')
                     </button>
+                    <form class="col-2" method="post" action="{{ route('admin-courses-available', ['id' => $course->id]) }}">
+                        @csrf
+                        <button class="btn btn-default col-12">
+                            @if ($course->is_available == 1)
+                                <b class="text-success"> @lang('Shown') </b>
+                            @else
+                                <b class="text-danger"> @lang('Hidden') </b>
+                            @endif
+                        </button>
+                    </form>
                     <button class="btn btn-danger col-2" data-toggle="modal" data-target="#form-delete-course-{{ $course->id }}">
                         <i class="fa fa-trash"></i> @lang('Delete')
                     </button>
@@ -36,6 +46,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <td> @lang('Description') </td>
                             <td> @lang('Language') </td>
                             <td> @lang('Creator') </td>
                             <td> @lang('Since') </td>
@@ -44,6 +55,7 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td> {!! $course->description !!} </td>
                             <td> {{ $course->language->name }} </td>
                             <td> {{ $course->user->name }} </td>
                             <td> {{ $course->created_at }} </td>
@@ -217,6 +229,14 @@
                             @lang('Name')*
                         </label>
                         <input id="name" class="form-control" name="name" value="{{ $course->name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">
+                            @lang('Description')
+                        </label>
+                        <textarea id="description" class="form-control js-editor" name="description">
+                            {{ $course->description }}
+                        </textarea>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
