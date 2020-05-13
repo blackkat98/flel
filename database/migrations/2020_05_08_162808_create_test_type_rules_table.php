@@ -16,6 +16,7 @@ class CreateTestTypeRulesTable extends Migration
         Schema::create('test_type_rules', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('test_type_id')->unique();
+            $table->integer('score_rule_type');
             $table->text('score_rules');
             $table->text('extra')->nullable();
             $table->timestamps();

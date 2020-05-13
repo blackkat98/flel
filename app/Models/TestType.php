@@ -12,7 +12,11 @@ class TestType extends Model
     protected $table = 'test_types';
 
     protected $fillable = [
-        'language_id', 'name', 'description', 'fixed_quiz_quantity', 'fixed_time'
+        'language_id', 'name', 'description', 'fixed_quiz_quantity', 'fixed_parts', 'fixed_time'
+    ];
+
+    protected $casts = [
+        'fixed_parts' => 'array'
     ];
 
     public function language()

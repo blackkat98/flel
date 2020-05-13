@@ -10,7 +10,7 @@ class TestTypeRule extends Model
     protected $table = 'test_type_rules';
 
     protected $fillable = [
-        'test_type_id', 'score_rules', 'extra'
+        'test_type_id', 'score_rule_type', 'score_rules', 'extra'
     ];
 
     protected $casts = [

@@ -6,6 +6,7 @@ use App\Http\Requests\TestTypeRequest;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\TestType;
 use App\Models\Language;
+use App\Enums\ScoreRuleType;
 
 class TestTypeController extends AdminController
 {
@@ -18,10 +19,12 @@ class TestTypeController extends AdminController
     {
         $test_types = TestType::all();
         $languages = Language::all()->sortBy('id');
+        $score_rule_types = array_flip(ScoreRuleType::toArray());
         
         return view('admin.test_types.list', [
             'test_types' => $test_types,
-            'languages' => $languages
+            'languages' => $languages,
+            'score_rule_types' => $score_rule_types
         ]);
     }
 
@@ -49,6 +52,20 @@ class TestTypeController extends AdminController
         $test_type->description = $request->get('description');
         $test_type->fixed_quiz_quantity = $request->get('fixed_quiz_quantity');
         $test_type->fixed_time = $request->get('fixed_time');
+
+        $fixed_parts = [];
+
+        for ($i = 0; $i < 5; $i++) {
+            if ($request->get('part-' . $i) != '' && $request->get('part-' . $i) != null) {
+                $fixed_parts[] = $request->get('part-' . $i);
+            }
+        }
+
+        if (count($fixed_parts) < 1) {
+            $fixed_parts[] = 'Default';
+        }
+
+        $test_type->fixed_parts = $fixed_parts;
         
         if ($test_type->save()) {
             return redirect()->back()->with('success', $test_type->name . ' ' . __('has been created'));
@@ -94,6 +111,20 @@ class TestTypeController extends AdminController
         $test_type->description = $request->get('description');
         $test_type->fixed_quiz_quantity = $request->get('fixed_quiz_quantity');
         $test_type->fixed_time = $request->get('fixed_time');
+
+        $fixed_parts = [];
+
+        for ($i = 0; $i < 5; $i++) {
+            if ($request->get('part-' . $i) != '' && $request->get('part-' . $i) != null) {
+                $fixed_parts[] = $request->get('part-' . $i);
+            }
+        }
+
+        if (count($fixed_parts) < 1) {
+            $fixed_parts[] = 'Default';
+        }
+
+        $test_type->fixed_parts = $fixed_parts;
         
         if ($test_type->save()) {
             return redirect()->back()->with('success', $test_type->name . ' ' . __('has been updated'));

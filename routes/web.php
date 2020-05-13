@@ -60,6 +60,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/delete/{id}', 'Admin\TestTypeController@destroy')->name('admin-test-types-delete');
     });
 
+    Route::group(['prefix' => 'test-type-rules'], function () {
+        Route::post('/store', 'Admin\TestTypeRuleController@store')->name('admin-test-type-rules-store');
+        Route::post('/update/{id}', 'Admin\TestTypeRuleController@update')->name('admin-test-type-rules-update');
+        Route::post('/delete/{id}', 'Admin\TestTypeRuleController@destroy')->name('admin-test-type-rules-delete');
+    });
+
     Route::group(['prefix' => 'tests'], function () {
         Route::get('/', 'Admin\TestController@list')->name('admin-tests-list');
         Route::get('/show/{id}', 'Admin\TestController@show')->name('admin-tests-show');

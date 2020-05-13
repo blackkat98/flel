@@ -27,6 +27,7 @@
                             <td> @lang('Language') </td>
                             <td> @lang('Description') </td>
                             <td> @lang('Number of') @lang('Quizzes') </td>
+                            <td> @lang('Parts') </td>
                             <td> @lang('Time') </td>
                             <td> @lang('Rules') </td>
                             <td> @lang('Actions') </td>
@@ -46,6 +47,17 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if ($type->fixed_parts)
+                                        <ul>
+                                            @foreach ($type->fixed_parts as $part)
+                                                <li>{{ $part }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        @lang('No default')
+                                    @endif
+                                </td>
+                                <td>
                                     @if ($type->fixed_time > 0)
                                         {{ $type->fixed_time }}
                                     @else
@@ -53,7 +65,77 @@
                                     @endif
                                 </td>
                                 <td>
+                                    @if ($type->testTypeRule)
 
+                                    @else
+                                        <button class="btn btn-outline" data-toggle="modal" data-target="#form-create-rule-{{ $type->id }}">
+                                            <i class="fa fa-plus text-primary"></i>
+                                        </button>
+
+                                        <div class="modal fade" id="form-create-rule-{{ $type->id }}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form method="post" action="{{ route('admin-test-type-rules-store') }}">
+                                                        @csrf
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">@lang('Create') @lang('Rules') @lang('For') {{ $type->name }}</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <input type="hidden" name="test_type_id" value="{{ $type->id }}">
+                                                            <div class="form-group">
+                                                                <label>
+                                                                    @lang('Score') @lang('Rules') (@lang('Type'))*
+                                                                </label>
+                                                                <select class="form-control" name="score_rule_type">
+                                                                    @foreach ($score_rule_types as $key => $value)
+                                                                        <option value="{{ $key }}">{{ $value }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>
+                                                                    @lang('Score')*
+                                                                </label>
+                                                                <br>
+                                                                @for ($j = 0; $j < count($type->fixed_parts); $j++)
+                                                                    &bull; <i>{{ $type->fixed_parts[$j] }}</i><br>
+                                                                    <div class="row">
+                                                                        <label class="col-4">
+                                                                            @lang('From') 1 @lang('To')
+                                                                        </label>
+                                                                        <input type="number" min="1" max="250" class="form-control col-4" name="to-0" placeholder="@lang('To')">
+                                                                        <input type="number" min="1" max="250" class="form-control col-4" name="score-0" placeholder="@lang('Score')">
+                                                                    </div>
+                                                                    @for ($k = 1; $k < 10; $k++)
+                                                                        <div class="row">
+                                                                            <label class="col-4">
+                                                                                @lang('From') @lang('Next') @lang('To')
+                                                                            </label>
+                                                                            <input type="number" min="1" max="250" class="form-control col-4" name="to-{{ $k }}" placeholder="@lang('To')">
+                                                                            <input type="number" min="1" max="250" class="form-control col-4" name="score-{{ $k }}" placeholder="@lang('Score')">
+                                                                        </div>
+                                                                    @endfor
+                                                                @endfor
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>
+                                                                    @lang('Extra')
+                                                                </label>
+                                                                <textarea class="form-control" name="extra"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
+                                                            <button type="submit" class="btn btn-default">@lang('Create')</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </td>
                                 <td>
                                     <button class="btn btn-outline" data-toggle="modal" data-target="#form-edit-{{ $type->id }}">
@@ -100,6 +182,18 @@
                                                                 @lang('Number of') @lang('Quizzes')
                                                             </label>
                                                             <input type="number" min="0" max="250" class="form-control" name="fixed_quiz_quantity" value="{{ $type->fixed_quiz_quantity }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Parts')
+                                                            </label>
+                                                            @for ($i = 0; $i < 5; $i++)
+                                                                @if ($i < count($type->fixed_parts))
+                                                                    <input class="form-control" name="part-{{ $i }}" value="{{ $type->fixed_parts[$i] }}">
+                                                                @else
+                                                                    <input class="form-control" name="part-{{ $i }}">
+                                                                @endif
+                                                            @endfor
                                                         </div>
                                                         <div class="form-group">
                                                             <label>
@@ -190,6 +284,14 @@
                             @lang('Number of') @lang('Quizzes')
                         </label>
                         <input type="number" min="0" max="250" class="form-control" name="fixed_quiz_quantity" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Parts')
+                        </label>
+                        @for ($i = 0; $i < 5; $i++)
+                            <input class="form-control" name="part-{{ $i }}">
+                        @endfor
                     </div>
                     <div class="form-group">
                         <label>

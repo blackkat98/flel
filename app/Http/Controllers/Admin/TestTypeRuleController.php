@@ -37,7 +37,35 @@ class TestTypeRuleController extends AdminController
      */
     public function store(TestTypeRuleRequest $request)
     {
-        
+        $rule = new TestTypeRule();
+        $rule->test_type_id = $request->get('test_type_id');
+        $rule->score_rule_type = $request->get('score_rule_type');
+        $rule->extra = $request->get('extra');
+
+        $tos = [];
+        $scores = [];
+
+        for ($i = 0; $i < 10; $i++) {
+            if ($request->get('to-' . $i) != '' && $request->get('to-' . $i) != null) {
+                $tos[] = $request->get('to-' . $i);
+
+                if ($request->get('score-' . $i) != '' && $request->get('score-' . $i) != null) {
+                    $scores[] = $request->get('score-' . $i);
+                } else {
+                    $scores[] = 0;
+                }
+            }
+        }
+
+        if (count($tos) > 0) {
+            $rule->score_rules = array_combine($tos, $scores);
+        }
+
+        if ($rule->save()) {
+            return redirect()->back()->with('success', $rule->testType->name . ' ' . __('has been created'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
     }
 
     /**
