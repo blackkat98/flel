@@ -58,6 +58,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/store', 'Admin\TestTypeController@store')->name('admin-test-types-store');
         Route::post('/update/{id}', 'Admin\TestTypeController@update')->name('admin-test-types-update');
         Route::post('/delete/{id}', 'Admin\TestTypeController@destroy')->name('admin-test-types-delete');
+        Route::post('/available/{id}', 'Admin\TestTypeController@available')->name('admin-test-types-available');
     });
 
     Route::group(['prefix' => 'test-type-rules'], function () {

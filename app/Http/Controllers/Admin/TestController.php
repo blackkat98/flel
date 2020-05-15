@@ -21,7 +21,7 @@ class TestController extends AdminController
     public function list()
     {
         $tests = Test::all();
-        $test_types = TestType::all()->sortBy('id');
+        $test_types = TestType::where('is_available', 1)->get()->sortBy('id');
 
         return view('admin.tests.list', [
             'tests' => $tests,

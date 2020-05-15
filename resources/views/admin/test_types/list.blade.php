@@ -30,6 +30,7 @@
                             <td> @lang('Parts') </td>
                             <td> @lang('Time') </td>
                             <td> @lang('Rules') </td>
+                            <td> @lang('Status') </td>
                             <td> @lang('Actions') </td>
                         </tr>
                     </thead>
@@ -66,7 +67,45 @@
                                 </td>
                                 <td>
                                     @if ($type->testTypeRule)
+                                        <button class="btn btn-outline" data-toggle="modal" data-target="#form-delete-rule-{{ $type->id }}">
+                                            <i class="fa fa-eye text-success"></i>
+                                        </button>
 
+                                        <div class="modal fade" id="form-delete-rule-{{ $type->id }}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form method="post" action="{{ route('admin-test-type-rules-delete', ['id' => $type->testTypeRule->id]) }}">
+                                                        @csrf
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">@lang('Rules') @lang('For') {{ $type->name }}</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <ul>
+                                                                @foreach ($type->testTypeRule->score_rules as $key => $value)
+                                                                    <li>
+                                                                        <b>{{ $key }}</b>
+                                                                        <ul>
+                                                                            @foreach ($value as $k => $v)
+                                                                                <li>
+                                                                                    @lang('From') @lang('Next') @lang('To') {{ $k }}: {{ $v }} @lang('Score')
+                                                                                </li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
+                                                            <button type="submit" class="btn btn-danger">@lang('Delete')</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @else
                                         <button class="btn btn-outline" data-toggle="modal" data-target="#form-create-rule-{{ $type->id }}">
                                             <i class="fa fa-plus text-primary"></i>
@@ -106,16 +145,16 @@
                                                                         <label class="col-4">
                                                                             @lang('From') 1 @lang('To')
                                                                         </label>
-                                                                        <input type="number" min="1" max="250" class="form-control col-4" name="to-0" placeholder="@lang('To')">
-                                                                        <input type="number" min="1" max="250" class="form-control col-4" name="score-0" placeholder="@lang('Score')">
+                                                                        <input type="number" min="1" max="250" class="form-control col-4" name="to-0-{{ $j }}" placeholder="@lang('To')">
+                                                                        <input type="number" min="1" max="250" class="form-control col-4" name="score-0-{{ $j }}" placeholder="@lang('Score')">
                                                                     </div>
                                                                     @for ($k = 1; $k < 10; $k++)
                                                                         <div class="row">
                                                                             <label class="col-4">
                                                                                 @lang('From') @lang('Next') @lang('To')
                                                                             </label>
-                                                                            <input type="number" min="1" max="250" class="form-control col-4" name="to-{{ $k }}" placeholder="@lang('To')">
-                                                                            <input type="number" min="1" max="250" class="form-control col-4" name="score-{{ $k }}" placeholder="@lang('Score')">
+                                                                            <input type="number" min="1" max="250" class="form-control col-4" name="to-{{ $k }}-{{ $j }}" placeholder="@lang('To')">
+                                                                            <input type="number" min="1" max="250" class="form-control col-4" name="score-{{ $k }}-{{ $j }}" placeholder="@lang('Score')">
                                                                         </div>
                                                                     @endfor
                                                                 @endfor
@@ -129,13 +168,25 @@
                                                         </div>
                                                         <div class="modal-footer justify-content-between">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
-                                                            <button type="submit" class="btn btn-default">@lang('Create')</button>
+                                                            <button type="submit" class="btn btn-primary">@lang('Create')</button>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     @endif
+                                </td>
+                                <td>
+                                    <form method="post" action="{{ route('admin-test-types-available', ['id' => $type->id]) }}">
+                                        @csrf
+                                        <button class="btn btn-default">
+                                            @if ($type->is_available == 1)
+                                                <b class="text-success"> @lang('Shown') </b>
+                                            @else
+                                                <b class="text-danger"> @lang('Hidden') </b>
+                                            @endif
+                                        </button>
+                                    </form>
                                 </td>
                                 <td>
                                     <button class="btn btn-outline" data-toggle="modal" data-target="#form-edit-{{ $type->id }}">

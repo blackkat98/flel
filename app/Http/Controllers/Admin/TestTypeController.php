@@ -124,6 +124,10 @@ class TestTypeController extends AdminController
             $fixed_parts[] = 'Default';
         }
 
+        if ($test_type->fixed_parts != $fixed_parts && $test_type->testTypeRule) {
+            $test_type->testTypeRule->delete();
+        }
+
         $test_type->fixed_parts = $fixed_parts;
         
         if ($test_type->save()) {
@@ -145,6 +149,29 @@ class TestTypeController extends AdminController
         
         if ($test_type->delete()) {
             return redirect()->back()->with('success', $test_type->name . ' ' . __('has been deleted'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
+    }
+
+    /**
+     * Change availability.
+     *
+     * @param  int  $id
+     * @return void
+     */
+    public function available($id)
+    {
+        $test_type = TestType::findOrFail($id);
+
+        if ($test_type->is_available == 0) {
+            $test_type->is_available = 1;
+        } else {
+            $test_type->is_available = 0;
+        }
+
+        if ($test_type->save()) {
+            return redirect()->back()->with('success', $test_type->name . ' ' . __('has been updated'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
         }

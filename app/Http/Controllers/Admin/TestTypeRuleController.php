@@ -42,23 +42,30 @@ class TestTypeRuleController extends AdminController
         $rule->score_rule_type = $request->get('score_rule_type');
         $rule->extra = $request->get('extra');
 
-        $tos = [];
-        $scores = [];
+        $test_type = TestType::findOrFail($request->get('test_type_id'));
+        $score_rules = [];
 
-        for ($i = 0; $i < 10; $i++) {
-            if ($request->get('to-' . $i) != '' && $request->get('to-' . $i) != null) {
-                $tos[] = $request->get('to-' . $i);
+        for ($j = 0; $j < count($test_type->fixed_parts); $j++) {
+            $tos = [];
+            $scores = [];
 
-                if ($request->get('score-' . $i) != '' && $request->get('score-' . $i) != null) {
-                    $scores[] = $request->get('score-' . $i);
-                } else {
-                    $scores[] = 0;
+            for ($k = 0; $k < 10; $k++) {
+                if ($request->get('to-' . $k . '-' . $j) != '' && $request->get('to-' . $k . '-' . $j) != null) {
+                    $tos[] = $request->get('to-' . $k . '-' . $j);
+
+                    if ($request->get('score-' . $k . '-' . $j) != '' && $request->get('score-' . $k . '-' . $j) != null) {
+                        $scores[] = $request->get('score-' . $k . '-' . $j);
+                    } else {
+                        $scores[] = 0;
+                    }
                 }
             }
+
+            $score_rules[$test_type->fixed_parts[$j]] = array_combine($tos, $scores);
         }
 
-        if (count($tos) > 0) {
-            $rule->score_rules = array_combine($tos, $scores);
+        if (count($score_rules) > 0) {
+            $rule->score_rules = $score_rules;
         }
 
         if ($rule->save()) {
@@ -110,6 +117,12 @@ class TestTypeRuleController extends AdminController
      */
     public function destroy($id)
     {
-        //
+        $rule = TestTypeRule::findOrFail($id);
+
+        if ($rule->delete()) {
+            return redirect()->back()->with('success', $rule->testType->name . ' ' . __('has been delete'));
+        } else {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
     }
 }

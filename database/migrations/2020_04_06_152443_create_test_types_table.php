@@ -21,6 +21,7 @@ class CreateTestTypesTable extends Migration
             $table->integer('fixed_quiz_quantity')->default(0);
             $table->text('fixed_parts')->nullable();
             $table->integer('fixed_time')->default(0);
+            $table->integer('is_available')->default(0);
             $table->timestamps();
         });
     }
