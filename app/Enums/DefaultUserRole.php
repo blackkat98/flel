@@ -11,8 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class DefaultUserRole extends Enum
 {
-    const ROOT = 0;
-    const ADMIN = 1;
-    const EDITOR = 2;
-    const NORMAL = 3;
+    const root = 0;
+    const admin = 1;
+    const editor = 2;
 }

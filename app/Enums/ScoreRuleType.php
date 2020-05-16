@@ -12,6 +12,6 @@ use BenSampo\Enum\Enum;
 final class ScoreRuleType extends Enum
 {
     // Score for each quiz, or score for a number of quizzes (like in Toeic)
-    const EACH = 0;
-    const COUNT = 1;
+    const each = 0;
+    const count = 1;
 }

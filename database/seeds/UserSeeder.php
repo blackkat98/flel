@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // ID = 1
         DB::table('users')->insert([
             'name' => 'nam',
             'email' => 'nam.th.200698@gmail.com',
@@ -21,6 +22,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('062098')
         ]);
 
+        // ID = 2
         DB::table('users')->insert([
             'name' => 'trang',
             'email' => 'tanghuyentrangit1998@gmail.com',
@@ -28,6 +30,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('090698')
         ]);
 
+        // ID = 3
         DB::table('users')->insert([
             'name' => 'blackkat',
             'email' => 'tonymckiller@gmail.com',
@@ -35,6 +38,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('111111')
         ]);
 
+        // ID = 4
         DB::table('users')->insert([
             'name' => 'root',
             'email' => 'flelroot@gmail.com',
@@ -42,6 +46,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('111111')
         ]);
 
+        // ID = 5
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'fleladmin@gmail.com',
@@ -49,6 +54,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('111111')
         ]);
 
+        // ID = 6
         DB::table('users')->insert([
             'name' => 'editor',
             'email' => 'fleleditor@gmail.com',
@@ -56,6 +62,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('111111')
         ]);
 
+        // ID = 7
         DB::table('users')->insert([
             'name' => 'sampleuser',
             'email' => 'flelsampleuser@gmail.com',

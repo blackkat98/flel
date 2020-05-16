@@ -49,7 +49,7 @@ class TestTypeRuleController extends AdminController
             $tos = [];
             $scores = [];
 
-            for ($k = 0; $k < 10; $k++) {
+            for ($k = 0; $k < 30; $k++) {
                 if ($request->get('to-' . $k . '-' . $j) != '' && $request->get('to-' . $k . '-' . $j) != null) {
                     $tos[] = $request->get('to-' . $k . '-' . $j);
 

@@ -15,6 +15,9 @@ class RoleSeeder extends Seeder
     {
         $default_roles = array_flip(DefaultUserRole::toArray());
 
+        // root ID = 1
+        // admin ID = 2
+        // editor ID = 3
         foreach ($default_roles as $key => $value) {
             DB::table('roles')->insert([
                 'name' => $value,

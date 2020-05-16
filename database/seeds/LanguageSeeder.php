@@ -15,6 +15,8 @@ class LanguageSeeder extends Seeder
     {
         $default_languages = DefaultLanguage::toArray();
 
+        // English (en) ID = 1
+        // Tiếng Việt (vi) ID = 2
         foreach ($default_languages as $slug => $name) {
             DB::table('languages')->insert([
                 'name' => $name,

@@ -9,8 +9,11 @@ use BenSampo\Enum\Enum;
  * @method static static OptionTwo()
  * @method static static OptionThree()
  */
-final class TestQuizOptionType extends Enum
+final class FocusOnAspect extends Enum
 {
-    const text = 0;
-    const image = 1;
+    const grammar = 0;
+    const vocabulary = 1;
+    const reading = 2;
+    const listening = 3;
+    const logic = 4;
 }

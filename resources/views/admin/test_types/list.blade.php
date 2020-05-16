@@ -83,6 +83,12 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
+                                                            @foreach ($score_rule_types as $key => $value)
+                                                                @if ($type->testTypeRule->score_rule_type == $key)
+                                                                    @lang('Score') @lang('Type'): <b>{{ $value }}</b>
+                                                                @endif
+                                                            @endforeach
+
                                                             <ul>
                                                                 @foreach ($type->testTypeRule->score_rules as $key => $value)
                                                                     <li>
@@ -148,7 +154,7 @@
                                                                         <input type="number" min="1" max="250" class="form-control col-4" name="to-0-{{ $j }}" placeholder="@lang('To')">
                                                                         <input type="number" min="1" max="250" class="form-control col-4" name="score-0-{{ $j }}" placeholder="@lang('Score')">
                                                                     </div>
-                                                                    @for ($k = 1; $k < 10; $k++)
+                                                                    @for ($k = 1; $k < 30; $k++)
                                                                         <div class="row">
                                                                             <label class="col-4">
                                                                                 @lang('From') @lang('Next') @lang('To')
