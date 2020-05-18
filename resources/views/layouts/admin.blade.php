@@ -22,7 +22,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('bower_components/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/adminlte3/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('bower_components/adminlte3/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('bower_components/adminlte3/plugins/toastr/toastr.min.css') }}">
     @yield('css')
 </head>
 <body class="hold-transition sidebar-mini">
@@ -454,6 +458,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- DataTables -->
     <script src="{{ asset('bower_components/adminlte3/plugins/datatables/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('bower_components/adminlte3/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('bower_components/adminlte3/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('bower_components/adminlte3/plugins/toastr/toastr.min.js') }}"></script>
     @yield('js')
 </body>
 </html>

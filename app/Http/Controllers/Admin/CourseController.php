@@ -128,9 +128,9 @@ class CourseController extends AdminController
         }
         
         if ($course->delete()) {
-            return redirect()->back()->with('success', $course->code . ' ' . __('has been deleted'));
+            return redirect()->route('admin-courses-list')->with('success', $course->code . ' ' . __('has been deleted'));
         } else {
-            return redirect()->route('admin-courses-list')->with('error', __('Action Failed'));
+            return redirect()->back()->with('error', __('Action Failed'));
         }
     }
 
@@ -151,7 +151,7 @@ class CourseController extends AdminController
         }
 
         if ($course->save()) {
-            return redirect()->back()->with('success', $course->code . ' ' . __('has been updated'));
+            return redirect()->route('admin-courses-list')->with('success', $course->code . ' ' . __('has been updated'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
         }
