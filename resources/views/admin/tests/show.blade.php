@@ -37,9 +37,6 @@
                     <button class="btn btn-danger col-2" data-toggle="modal" data-target="#form-delete-test-{{ $test->id }}">
                         <i class="fa fa-trash"></i> @lang('Delete')
                     </button>
-                    <button class="btn btn-primary col-2" data-toggle="modal" data-target="#form-create-test-part">
-                        <i class="fa fa-plus"></i> @lang('Create') @lang('Test Part')
-                    </button>
                 </div>
             </div>
             <div class="card-body">
@@ -549,20 +546,6 @@
                         <input id="name" class="form-control" name="name" value="{{ $test->name }}">
                     </div>
                     <div class="form-group">
-                        <label>
-                            @lang('Type')*
-                        </label>
-                        <select class="form-control" name="test_type_id">
-                            @foreach ($test_types as $type)
-                                @if ($test->test_type_id == $type->id)
-                                    <option value="{{ $type->id }}" selected> {{ $type->name }} </option>
-                                @else
-                                    <option value="{{ $type->id }}"> {{ $type->name }} </option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="time">
                             @lang('Time')
                         </label>
@@ -595,62 +578,6 @@
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
                     <button type="submit" class="btn btn-danger">@lang('Delete')</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Forms for Test Part Model -->
-<div class="modal fade" id="form-create-test-part">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="post" action="{{ route('admin-test-parts-store') }}" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-header">
-                    <h4 class="modal-title">@lang('Create') @lang('Test Part')</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="test_id" value="{{ $test->id }}">
-                    <div class="form-group">
-                        <label for="name">
-                            @lang('Name')*
-                        </label>
-                        <input id="name" class="form-control" name="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">
-                            @lang('Description')
-                        </label>
-                        <textarea id="description" class="form-control" name="description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            @lang('Image')
-                        </label>
-                        <input type="file" class="form-control" name="image-1">
-                        <input type="file" class="form-control" name="image-2">
-                        <input type="file" class="form-control" name="image-3">
-                    </div>
-                    <div class="form-group">
-                        <label for="sound">
-                            @lang('Sound')
-                        </label>
-                        <input type="file" id="sound" class="form-control" name="sound">
-                    </div>
-                    <div class="form-group">
-                        <label for="video">
-                            @lang('Video')
-                        </label>
-                        <input type="file" id="video" class="form-control" name="video">
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
-                    <button type="submit" class="btn btn-primary">@lang('Create')</button>
                 </div>
             </form>
         </div>

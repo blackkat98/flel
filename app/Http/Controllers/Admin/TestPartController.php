@@ -6,6 +6,7 @@ use App\Http\Requests\TestPartRequest;
 use App\Http\Controllers\Admin\AdminController;
 use App\Models\TestPart;
 use Illuminate\Support\Facades\Storage;
+use App\Helper\MediaDeletion;
 
 class TestPartController extends AdminController
 {
@@ -41,6 +42,10 @@ class TestPartController extends AdminController
         $test_part->test_id = $request->get('test_id');
         $test_part->name = $request->get('name');
         $test_part->description = $request->get('description');
+
+        if ($test_part->test->testType->fixed_parts != null) {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
         
         $images = [];
         
@@ -111,7 +116,7 @@ class TestPartController extends AdminController
     {
         $test_part = TestPart::findOrFail($id);
         // $test_part->test_id = $request->get('test_id');
-        $test_part->name = $request->get('name');
+        // $test_part->name = $request->get('name');
         $test_part->description = $request->get('description');
         
         $images = [];
@@ -132,16 +137,30 @@ class TestPartController extends AdminController
         }
         
         if (count($images) > 0) {
+            if ($test_part->images != null) {
+                MediaDeletion::delete($test_part->images);
+            }
+
             $test_part->images = $images;
         }
         
         if ($request->hasFile('sound')) {
             $path4 = Storage::disk('public')->put(config('customize.sound_dir'), $request->file('sound'));
+
+            if ($test_part->sound != null) {
+                MediaDeletion::delete($test_part->sound);
+            }
+
             $test_part->sound = config('customize.storage_dir') . $path4;
         }
         
         if ($request->hasFile('video')) {
             $path5 = Storage::disk('public')->put(config('customize.video_dir'), $request->file('video'));
+
+            if ($test_part->video != null) {
+                MediaDeletion::delete($test_part->video);
+            }
+
             $test_part->video = config('customize.storage_dir') . $path5;
         }
         

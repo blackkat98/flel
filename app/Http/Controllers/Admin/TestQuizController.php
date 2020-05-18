@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Models\TestQuiz;
 use App\Enums\TestQuizType;
 use Illuminate\Support\Facades\Storage;
+use App\Helper\MediaDeletion;
 
 class TestQuizController extends AdminController
 {
@@ -170,16 +171,30 @@ class TestQuizController extends AdminController
         }
         
         if (count($images) > 0) {
+            if ($test_quiz->images != null) {
+                MediaDeletion::delete($test_quiz->images);
+            }
+
             $test_quiz->images = $images;
         }
         
         if ($request->hasFile('sound')) {
             $path4 = Storage::disk('public')->put(config('customize.sound_dir'), $request->file('sound'));
+
+            if ($test_quiz->sound != null) {
+                MediaDeletion::delete($test_quiz->sound);
+            }
+
             $test_quiz->sound = config('customize.storage_dir') . $path4;
         }
         
         if ($request->hasFile('video')) {
             $path5 = Storage::disk('public')->put(config('customize.video_dir'), $request->file('video'));
+
+            if ($test_quiz->video != null) {
+                MediaDeletion::delete($test_quiz->video);
+            }
+
             $test_quiz->video = config('customize.storage_dir') . $path5;
         }
 

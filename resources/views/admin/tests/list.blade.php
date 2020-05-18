@@ -100,7 +100,7 @@
                         <label for="time">
                             @lang('Time')
                         </label>
-                        <input type="number" min="0" max="180" id="time" class="form-control" name="time">
+                        <input type="number" min="0" max="180" id="time" class="form-control" name="time" value="0">
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">

@@ -53,7 +53,21 @@ class TestController extends AdminController
         $test->test_type_id = $request->get('test_type_id');
         $test->time = $request->get('time');
 
+        $test_type = TestType::findOrFail($request->get('test_type_id'));
+
+        if ($test_type->fixed_time > 0) {
+            $test->time = $test_type->fixed_time;
+        }
+
         if ($test->save()) {
+            foreach ($test_type->fixed_parts as $default_part) {
+                $part = new TestPart();
+                $part->test_id = $test->id;
+                $part->name = $default_part;
+
+                $part->save();
+            }
+
             return redirect()->route('admin-tests-show', ['id' => $test->id])->with('success', $test->name . ' ' . __('has been created'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
@@ -113,8 +127,13 @@ class TestController extends AdminController
     {
         $test = Test::findOrFail($id);
         $test->name = $request->get('name');
-        $test->test_type_id = $request->get('test_type_id');
         $test->time = $request->get('time');
+
+        $test_type = $test->testType;
+
+        if ($test_type->fixed_time > 0) {
+            $test->time = $test_type->fixed_time;
+        }
 
         if ($test->save()) {
             return redirect()->back()->with('success', $test->name . ' ' . __('has been updated'));

@@ -5,6 +5,7 @@
     "Home": "Trang chính",
     "Profile": "T.tin cá nhân",
     "Statistics": "Thống kê",
+    "Q&A": "Hỏi-đáp",
 
     "Select page language": "Chọn ngôn ngữ hiển thị",
 
@@ -26,13 +27,15 @@
     "From": "Từ",
     "To": "Đến",
     "Each": "Mỗi",
-    "Next": "Tiếp",
+    "Next": " Kế tiếp",
+    "Previous": "Kế trước",
     "Existing": "Hiện có",
     "Additional": "Ngoại lệ",
     "Search": "Tìm kiếm",
     "Start": "Bắt đầu",
     "Resume": "Tiếp tục",
     "No default": "Không định trước",
+    "Go": "Đi",
 
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
     "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",

@@ -89,7 +89,7 @@
             <ul>
                 @foreach ($p_lessons as $lesson)
                     <li>
-                        <a class="btn btn-outline">
+                        <a href="{{ route('home-lesson-show', ['code' => $p_course->code, 'lesson_number' => $lesson->number]) }}" class="btn btn-outline">
                             <p class="text-primary">
                                 @lang('Lesson') {{ $lesson->number }}: {{ $lesson->name }}
                             </p>

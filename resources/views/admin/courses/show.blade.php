@@ -130,7 +130,7 @@
 <div class="modal fade" id="form-edit-lesson-{{ $lesson->id }}">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="{{ route('admin-lessons-update', ['id' => $lesson->id]) }}">
+            <form method="post" action="{{ route('admin-lessons-update', ['id' => $lesson->id]) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h4 class="modal-title">@lang('Edit') {{ $lesson->name }}?</h4>
@@ -181,7 +181,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">@lang('Close')</button>
-                    <button type="submit" class="btn btn-danger">@lang('Delete')</button>
+                    <button type="submit" class="btn btn-success">@lang('Update')</button>
                 </div>
             </form>
         </div>
@@ -288,7 +288,7 @@
                         <label for="number">
                             @lang('Number')*
                         </label>
-                        <input type="number" min="1" max="250" id="number" class="form-control" name="number">
+                        <input type="number" min="1" max="250" id="number" class="form-control" name="number" value="1">
                     </div>
                     <div class="form-group">
                         <label for="name">

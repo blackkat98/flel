@@ -22,6 +22,7 @@ Route::group(['prefix' => 'home'], function () {
 
     Route::group(['prefix' => 'course'], function () {
         Route::get('/{code}', 'Home\CourseController@show')->name('home-course-show');
+        Route::get('/{code}/{lesson_number}', 'Home\LessonController@show')->name('home-lesson-show');
     });
 });
 
