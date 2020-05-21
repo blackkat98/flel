@@ -284,6 +284,10 @@
             toastr.error('{!! session()->get('error') !!}');
         }
 
+        if ('{!! session()->get('warning') !!}' !== '') {
+            toastr.warning('{!! session()->get('warning') !!}');
+        }
+
         var form_validation_errors = {!! json_encode($errors->toArray(), JSON_HEX_TAG) !!};
         
         for (var key in form_validation_errors) {

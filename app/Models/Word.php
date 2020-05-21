@@ -10,7 +10,11 @@ class Word extends Model
     protected $table = 'words';
 
     protected $fillable = [
-        'word_category_id', 'word', 'definition', 'example', 'ipa', 'pronunciation'
+        'word_category_id', 'word', 'word_type', 'definition', 'example', 'ipa', 'pronunciation'
+    ];
+
+    protected $casts = [
+    	'word_type' => 'array'
     ];
 
     public function wordCategory()

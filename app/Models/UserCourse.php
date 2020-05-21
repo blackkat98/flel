@@ -11,7 +11,7 @@ class UserCourse extends Model
     protected $table = 'user_courses';
 
     protected $fillable = [
-        'user_id', 'course_id', 'progress_lesson_id'
+        'user_id', 'course_id', 'progress_lesson_number'
     ];
 
     public function user()

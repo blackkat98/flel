@@ -29,12 +29,12 @@
                     <thead>
                         <tr>
                             <td> @lang('Word') </td>
+                            <td> @lang('Type') </td>
                             <td> @lang('Category') </td>
                             <td> @lang('IPA') </td>
                             <td> @lang('Pronunciation') </td>
                             <td> @lang('Definition') </td>
                             <td> @lang('Example') </td>
-                            <td> @lang('Since') </td>
                             <td> @lang('Last update') </td>
                             <td> @lang('Actions') </td>
                         </tr>
@@ -43,6 +43,15 @@
                         @foreach ($words as $word)
                             <tr>
                                 <td> {{ $word->word }} </td>
+                                <td>
+                                    <ul>
+                                        @foreach ($word_types as $key => $value)
+                                            @if (in_array($key, $word->word_type))
+                                                <li>{{ $value }}</li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </td>
                                 <td> {{ $word->wordCategory->name }} ({{ $word->wordCategory->language->slug }}) </td>
                                 <td> {{ $word->ipa }} </td>
                                 <td>
@@ -54,7 +63,6 @@
                                 </td>
                                 <td> {{ $word->definition }} </td>
                                 <td> {{ $word->example }} </td>
-                                <td> {{ $word->created_at }} </td>
                                 <td> {{ $word->updated_at }} </td>
                                 <td>
                                     <button class="btn btn-outline" data-toggle="modal" data-target="#form-edit-{{ $word->id }}">
@@ -78,47 +86,69 @@
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <label>
-                                                                @lang('Word')
+                                                                @lang('Category')*
                                                             </label>
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <select style="width: 100%;" class="form-control js-select2" name="word_category_id">
-                                                                        @foreach ($word_categories as $word_category)
-                                                                            @if ($word->word_category_id == $word_category->id)
-                                                                                <option value="{{ $word_category->id }}" selected> {{ $word_category->name }} ({{ $word_category->language->name }}) </option>
-                                                                            @else
-                                                                                <option value="{{ $word_category->id }}"> {{ $word_category->name }} ({{ $word_category->language->name }}) </option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
+                                                            <select style="width: 100%;" class="form-control js-select2" name="word_category_id">
+                                                                @foreach ($word_categories as $word_category)
+                                                                    @if ($word->word_category_id == $word_category->id)
+                                                                        <option value="{{ $word_category->id }}" selected> {{ $word_category->name }} ({{ $word_category->language->name }}) </option>
+                                                                    @else
+                                                                        <option value="{{ $word_category->id }}" selected> {{ $word_category->name }} ({{ $word_category->language->name }}) </option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Word')*
+                                                            </label>
+                                                            <input class="form-control" name="word" value="{{ $word->word }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Type')*
+                                                            </label>
+                                                            @foreach ($word_types as $key => $value)
+                                                                <div class="form-check">
+                                                                    @if (in_array($key, $word->word_type))
+                                                                        <input type="checkbox" class="form-check-input" name="word-type-{{ $key }}" checked>
+                                                                    @else
+                                                                        <input type="checkbox" class="form-check-input" name="word-type-{{ $key }}">
+                                                                    @endif
+                                                                    <label class="form-check-label"><b>{{ $value }}</b></label>
                                                                 </div>
-                                                                <div class="col-7">
-                                                                    <input class="form-control" name="word" placeholder="@lang('Word')" value="{{ $word->word }}">
+                                                            @endforeach
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('IPA')*
+                                                            </label>
+                                                            <input class="form-control" name="ipa" value="{{ $word->ipa }}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Pronunciation')
+                                                            </label>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">
+                                                                        <i class="fa fa-music"></i>
+                                                                    </span>
                                                                 </div>
+                                                                <input type="file" class="form-control" name="pronunciation">
                                                             </div>
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <input class="form-control" name="ipa" placeholder="@lang('IPA')*" value="{{ $word->ipa }}">
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <div class="input-group">
-                                                                        <div class="input-group-prepend">
-                                                                            <span class="input-group-text">
-                                                                                <i class="fa fa-music"></i>
-                                                                            </span>
-                                                                        </div>
-                                                                        <input type="file" class="form-control" name="pronunciation">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <textarea class="form-control" name="definition" placeholder="@lang('Definition')*">{{ $word->definition }}</textarea>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <textarea class="form-control" name="example" placeholder="@lang('Example')">{{ $word->example }}</textarea>
-                                                                </div>
-                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Definition')*
+                                                            </label>
+                                                            <textarea class="form-control" name="definition">{{ $word->definition }}</textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>
+                                                                @lang('Example')
+                                                            </label>
+                                                            <textarea class="form-control" name="example">{{ $word->example }}</textarea>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer justify-content-between">
@@ -176,43 +206,61 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>
-                            @lang('Word')
+                            @lang('Category')*
                         </label>
-                        <div class="row">
-                            <div class="col-5">
-                                <select style="width: 100%;" class="form-control js-select2" name="word_category_id">
-                                    @foreach ($word_categories as $word_category)
-                                        <option value="{{ $word_category->id }}"> {{ $word_category->name }} ({{ $word_category->language->name }}) </option>
-                                    @endforeach
-                                </select>
+                        <select style="width: 100%;" class="form-control js-select2" name="word_category_id">
+                            @foreach ($word_categories as $word_category)
+                                <option value="{{ $word_category->id }}"> {{ $word_category->name }} ({{ $word_category->language->name }}) </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Word')*
+                        </label>
+                        <input class="form-control" name="word">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Type')*
+                        </label>
+                        @foreach ($word_types as $key => $value)
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="word-type-{{ $key }}">
+                                <label class="form-check-label"><b>{{ $value }}</b></label>
                             </div>
-                            <div class="col-7">
-                                <input class="form-control" name="word" placeholder="@lang('Word')*">
+                        @endforeach
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('IPA')*
+                        </label>
+                        <input class="form-control" name="ipa">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Pronunciation')
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-music"></i>
+                                </span>
                             </div>
+                            <input type="file" class="form-control" name="pronunciation">
                         </div>
-                        <div class="row">
-                            <div class="col-5">
-                                <input class="form-control" name="ipa" placeholder="@lang('IPA')*">
-                            </div>
-                            <div class="col-7">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fa fa-music"></i>
-                                        </span>
-                                    </div>
-                                    <input type="file" class="form-control" name="pronunciation">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <textarea class="form-control" name="definition" placeholder="@lang('Definition')*"></textarea>
-                            </div>
-                            <div class="col-6">
-                                <textarea class="form-control" name="example" placeholder="@lang('Example')"></textarea>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Definition')*
+                        </label>
+                        <textarea class="form-control" name="definition"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            @lang('Example')
+                        </label>
+                        <textarea class="form-control" name="example"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -239,7 +287,9 @@
             "autoWidth": true
         });
 
-        $('.js-select2').select2();
+        $('.js-select2').select2({
+            theme: 'bootstrap4'
+        });
 
         if ('{!! session()->get('success') !!}' !== '') {
             toastr.success('{!! session()->get('success') !!}');
@@ -247,6 +297,10 @@
 
         if ('{!! session()->get('error') !!}' !== '') {
             toastr.error('{!! session()->get('error') !!}');
+        }
+
+        if ('{!! session()->get('warning') !!}' !== '') {
+            toastr.warning('{!! session()->get('warning') !!}');
         }
 
         var form_validation_errors = {!! json_encode($errors->toArray(), JSON_HEX_TAG) !!};

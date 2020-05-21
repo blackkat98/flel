@@ -69,12 +69,12 @@
                     </div>
                     <div class="col-md-9">
                         <div class="row">
-                            <a href="#" class="btn btn-success col-md-6">
+                            <button class="btn btn-success col-md-6">
                                 <b> @lang('Start') </b>
-                            </a>
-                            <a href="#" class="btn btn-primary col-md-6">
+                            </button>
+                            <button class="btn btn-primary col-md-6">
                                 <b> @lang('Resume') </b>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -84,20 +84,41 @@
         </fieldset>
     </div>
     <div class="col-md-4">
-        <fieldset class="form-border">
-            <legend class="form-border">@lang('Lessons') @lang('In') @lang('Course')</legend>
-            <ul>
-                @foreach ($p_lessons as $lesson)
-                    <li>
-                        <a href="{{ route('home-lesson-show', ['code' => $p_course->code, 'lesson_number' => $lesson->number]) }}" class="btn btn-outline">
-                            <p class="text-primary">
-                                @lang('Lesson') {{ $lesson->number }}: {{ $lesson->name }}
-                            </p>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        </fieldset>
+        <div class="row">
+            <div class="col-md-12">
+                <fieldset class="form-border">
+                    <legend class="form-border">@lang('Lessons') @lang('In') @lang('Course')</legend>
+                    <ul>
+                        @foreach ($p_lessons as $lesson)
+                            <li>
+                                <a href="{{ route('home-lesson-show', ['code' => $p_course->code, 'lesson_number' => $lesson->number]) }}" class="btn btn-outline">
+                                    <b class="text-primary">
+                                        @lang('Lesson') {{ $lesson->number }}: {{ $lesson->name }}
+                                    </b>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </fieldset>
+            </div>
+
+            <div class="col-md-12">
+                <fieldset class="form-border">
+                    <legend class="form-border">@lang('Related') (@lang('Courses'))</legend>
+                    <ul>
+                        @foreach ($related_courses as $r_course)
+                            <li>
+                                <a href="{{ route('home-course-show', ['code' => $r_course->code]) }}" class="btn btn-outline">
+                                    <p class="text-primary">
+                                        @lang('Course') {{ $r_course->code }}: {{ $r_course->name }}
+                                    </p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </fieldset>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

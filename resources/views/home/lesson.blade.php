@@ -34,20 +34,24 @@
                     </div>
                 @endif
             </div>
+            <br>
             <div class="row">
                 @if ($p_lesson->sound)
-                    <audio class="col-md-12" controls>
+                    <div class="col-md-1">
+
+                    </div>
+                    <audio class="col-md-10" controls>
                         <source src="{{ asset($p_lesson->sound) }}">
                     </audio>
                 @endif
             </div>
             <br>
             <div class="row">
-                <div class="col-md-1">
-
-                </div>
                 @if ($p_lesson->video)
-                    <video class="col-md-10" controls autoplay>
+                    <div class="col-md-1">
+
+                    </div>
+                    <video class="col-md-10" controls>
                         <source src="{{ asset($p_lesson->video) }}">
                     </video>
                 @endif
@@ -72,23 +76,58 @@
                     @endif
                 </div>
             </div>
+            <br>
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <form method="post" action="{{ route('home-user-course-store') }}">
+                    @csrf
+                    <input type="hidden" name="code" value="{{ $p_course->code }}">
+                    <input type="hidden" name="lesson_number" value="{{ $p_lesson->number }}">
+                    <button class="btn btn-primary col-md-6">
+                        <b> @lang('Save') @lang('Progress') </b>
+                    </button>
+                </form>
+            </div>
         </fieldset>
     </div>
     <div class="col-md-4">
-        <fieldset class="form-border">
-            <legend class="form-border">@lang('Lessons') @lang('In') @lang('Course')</legend>
-            <ul>
-                @foreach ($p_lessons as $lesson)
-                    <li>
-                        <a href="{{ route('home-lesson-show', ['code' => $p_course->code, 'lesson_number' => $lesson->number]) }}" class="btn btn-outline">
-                            <p class="text-primary">
-                                @lang('Lesson') {{ $lesson->number }}: {{ $lesson->name }}
-                            </p>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        </fieldset>
+        <div class="row">
+            <div class="col-md-12">
+                <fieldset class="form-border">
+                    <legend class="form-border">@lang('Lessons') @lang('In') @lang('Course')</legend>
+                    <ul>
+                        @foreach ($p_lessons as $lesson)
+                            <li>
+                                <a href="{{ route('home-lesson-show', ['code' => $p_course->code, 'lesson_number' => $lesson->number]) }}" class="btn btn-outline">
+                                    <b class="text-primary">
+                                        @lang('Lesson') {{ $lesson->number }}: {{ $lesson->name }}
+                                    </b>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </fieldset>
+            </div>
+
+            <div class="col-md-12">
+                <fieldset class="form-border">
+                    <legend class="form-border">@lang('Related') (@lang('Courses'))</legend>
+                    <ul>
+                        @foreach ($related_courses as $r_course)
+                            <li>
+                                <a href="{{ route('home-course-show', ['code' => $r_course->code]) }}" class="btn btn-outline">
+                                    <p class="text-primary">
+                                        @lang('Course') {{ $r_course->code }}: {{ $r_course->name }}
+                                    </p>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </fieldset>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

@@ -17,6 +17,7 @@ class CreateWordsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('word_category_id');
             $table->string('word');
+            $table->text('word_type');
             $table->string('ipa');
             $table->string('pronunciation')->nullable();
             $table->text('definition');

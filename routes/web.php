@@ -24,6 +24,18 @@ Route::group(['prefix' => 'home'], function () {
         Route::get('/{code}', 'Home\CourseController@show')->name('home-course-show');
         Route::get('/{code}/{lesson_number}', 'Home\LessonController@show')->name('home-lesson-show');
     });
+
+    Route::group(['prefix' => 'user_course'], function () {
+        Route::post('/save', 'Home\UserCourseController@store')->name('home-user-course-store');
+    });
+
+    Route::group(['prefix' => 'test-type'], function () {
+        Route::get('/{id}', 'Home\TestTypeController@show')->name('home-test-type-show');
+    });
+
+    Route::group(['prefix' => 'word-categories'], function() {
+        Route::get('/{language_slug}', 'Home\WordCategoryController@list')->name('home-word-categories-list');
+    });
 });
 
 Route::group(['prefix' => 'admin'], function () {

@@ -135,7 +135,10 @@
                                 <div class="dropdown-body">
                                     <ul class="dropdown-list">
                                         @foreach ($languages as $language)
-                                            <li> <a href="#"> @lang('Words') @lang('In') {{ $language->name }} </a> </li>
+                                            <li>
+                                                <a href="{{ route('home-word-categories-list', ['language_slug' => $language->slug]) }}"> @lang('Words') @lang('In') {{ $language->name }}
+                                                </a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -154,7 +157,9 @@
                                             @foreach ($courses as $course)
                                                 @if ($course->language_id === $language->id)
                                                     <li>
-                                                        <a href="{{ route('home-course-show', ['code' => $course->code]) }}"> {{ $course->name }} </a>
+                                                        <a href="{{ route('home-course-show', ['code' => $course->code]) }}">
+                                                            <i>{{ $course->name }}</i>
+                                                        </a>
                                                     </li>
                                                 @endif
                                             @endforeach
@@ -176,7 +181,9 @@
                                             @foreach ($test_types as $test_type)
                                                 @if ($test_type->language_id == $language->id)
                                                     <li>
-                                                        <a href="#"> {{ $test_type->name }} </a>
+                                                        <a href="{{ route('home-test-type-show', ['id' => $test_type->id]) }}">
+                                                            <i>{{ $test_type->name }}</i>
+                                                        </a>
                                                     </li>
                                                 @endif
                                             @endforeach
@@ -192,7 +199,9 @@
                                     <ul class="dropdown-list">
                                         @foreach ($tests as $test)
                                             <li>
-                                                <a href="#"> {{ $test->name }} ({{ $test->testType->name }}) </a>
+                                                <a href="#">
+                                                    <i>{{ $test->name }} ({{ $test->testType->name }})</i>
+                                                </a>
                                             </li>
                                         @endforeach
                                     </ul>
