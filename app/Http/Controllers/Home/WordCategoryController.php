@@ -7,6 +7,7 @@ use App\Http\Controllers\Home\HomeController;
 use App\Models\WordCategory;
 use App\Models\Word;
 use App\Models\Language;
+use App\Enums\WordType;
 
 class WordCategoryController extends HomeController
 {
@@ -18,6 +19,7 @@ class WordCategoryController extends HomeController
      */
     public function list($language_slug)
     {
+        $word_types = array_flip(WordType::toArray());
         $p_language = Language::where('slug', $language_slug)->first();
 
         if (!$p_language) {
@@ -36,7 +38,8 @@ class WordCategoryController extends HomeController
         return view('home.word_categories', [
             'p_language' => $p_language,
             'p_word_categories' => $p_word_categories,
-            'p_words' => $p_words
+            'p_words' => $p_words,
+            'word_types' => $word_types
         ]);
     }
 }
