@@ -39,7 +39,7 @@ Route::group(['prefix' => 'home'], function () {
 
     Route::group(['prefix' => 'test'], function () {
         Route::get('overall/{type_slug}/{code}', 'Home\TestController@showOverall')->name('home-test-show-overall');
-        Route::get('detail/{type_slug}/{code}', 'Home\TestController@showOverall')->name('home-test-show-detail');
+        Route::get('detail/{type_slug}/{code}', 'Home\TestController@showTestSheet')->name('home-test-show-detail');
     });
 
     Route::group(['prefix' => 'word_categories'], function() {

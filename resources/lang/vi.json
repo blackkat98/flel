@@ -46,6 +46,7 @@
     "Lowercase letters": "chữ thường",
     "Uppercase letters": "chữ hoa",
     "Numbers": "Số",
+    "Overall": "Tổng quan",
 
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
     "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",
@@ -104,6 +105,7 @@
     "Social Networks": "Mạng xã hội",
     "Experiences": "Kinh nghiệm",
     "Parts": "Phần",
+    "Attempt": "Lần thử",
 
     "has been created": "vừa được tạo",
     "has been updated": "vừa được cập nhật",

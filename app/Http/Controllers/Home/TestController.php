@@ -27,6 +27,9 @@ class TestController extends HomeController
 
         $p_test = Test::where('test_type_id', $p_test_type->id)
                 ->where('code', $code)->first();
+        $related_tests = Test::where('test_type_id', $p_test_type->id)
+                ->where('id', '<>', $p_test->id)
+                ->inRandomOrder()->limit(5)->get();
 
         if (!$p_test) {
             return redirect()->route('home-test-type-show', [
@@ -34,9 +37,10 @@ class TestController extends HomeController
             ]);
         }
 
-        return view('home.test', [
+        return view('home.test_overall', [
             'p_test_type' => $p_test_type,
-            'p_test' => $p_test
+            'p_test' => $p_test,
+            'related_tests' => $related_tests
         ]);
     }
 
@@ -47,7 +51,7 @@ class TestController extends HomeController
      * @param  string  $code
      * @return void
      */
-    public function showDetail($type_slug, $code)
+    public function showTestSheet($type_slug, $code)
     {
         $p_test_type = TestType::where('slug', $type_slug)->first();
 
@@ -71,7 +75,7 @@ class TestController extends HomeController
             $p_test_quizzes[$part->id] = $part->testQuizzes;
         }
 
-        return view('home.test', [
+        return view('home.test_sheet', [
             'p_test_type' => $p_test_type,
             'p_test' => $p_test,
             'p_test_parts' => $p_test_parts,

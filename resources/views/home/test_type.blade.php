@@ -17,7 +17,7 @@
                 @foreach ($p_tests as $test)
                     <li>
                         <h3>
-                            <a href="#">
+                            <a href="{{ route('home-test-show-overall', ['type_slug' => $test->testType->slug, 'code' => $test->code]) }}">
                                 <i class="fa fa-file"></i> {{ $test->name }}
                             </a>
                         </h3>

@@ -199,7 +199,7 @@
                                     <ul class="dropdown-list">
                                         @foreach ($tests as $test)
                                             <li>
-                                                <a href="#">
+                                                <a href="{{ route('home-test-show-overall', ['type_slug' => $test->testType->slug, 'code' => $test->code]) }}">
                                                     <i>{{ $test->name }} ({{ $test->testType->name }})</i>
                                                 </a>
                                             </li>
