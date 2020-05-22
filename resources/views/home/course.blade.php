@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <fieldset class="form-border">
             <legend class="form-border">{{ $p_course->name }}</legend>
             <div class="row">
@@ -83,7 +83,7 @@
             @endauth
         </fieldset>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="row">
             <div class="col-md-12">
                 <fieldset class="form-border">
@@ -132,30 +132,39 @@
 <script src="{{ asset('bower_components/adminlte3/dist/js/adminlte.min.js') }}"></script>
 <script>
     $(document).ready(function () {
-        Chart.defaults.global.defaultFontColor = '#000000';
-        Chart.defaults.global.defaultFontFamily = 'Arial';
+        var ajax_progress_url = '{!! route('home-user-course-progress', ['code' => $p_course->code]) !!}';
+        
+        $.ajax({
+            url: ajax_progress_url,
+            type: 'GET',
+            success: function (received_data) {
+                Chart.defaults.global.defaultFontColor = '#000000';
+                Chart.defaults.global.defaultFontFamily = 'Arial';
 
-        var chart_data = {
-            labels: [
-                'Progress',
-                'Remaining'
-            ],
-            datasets: [
-                {
-                    data: [1, 2],
-                    backgroundColor : ['#0000ff', '#7fffd4'],
-                }
-            ]
-        };
-        var chart_options = {
-            maintainAspectRatio : false,
-            responsive : true,
-        };
-        var chart_canvas = $('#js-pie-chart');
-        var progress_chart = new Chart(chart_canvas, {
-            type: 'pie',
-            data: chart_data,
-            options: chart_options
+                var chart_data = {
+                    labels: received_data.labels,
+                    datasets: [
+                        {
+                            data: received_data.data,
+                            backgroundColor : ['#0000ff', '#7fffd4'],
+                        }
+                    ]
+                };
+                var chart_options = {
+                    maintainAspectRatio : false,
+                    responsive : true,
+                };
+                var chart_canvas = $('#js-pie-chart');
+                var progress_chart = new Chart(chart_canvas, {
+                    type: 'pie',
+                    data: chart_data,
+                    options: chart_options
+                });
+            },
+            error: function (e) {
+                $('#js-pie-chart').text('AJAX REQUEST ERROR');
+                console.log(e.message);
+            }
         });
     });
 </script>

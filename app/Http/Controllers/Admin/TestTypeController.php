@@ -49,6 +49,7 @@ class TestTypeController extends AdminController
         $test_type = new TestType();
         $test_type->language_id = $request->get('language_id');
         $test_type->name = $request->get('name');
+        $test_type->slug = $request->get('slug');
         $test_type->description = $request->get('description');
         $test_type->fixed_quiz_quantity = $request->get('fixed_quiz_quantity');
         $test_type->fixed_time = $request->get('fixed_time');
@@ -108,6 +109,7 @@ class TestTypeController extends AdminController
         $test_type = TestType::findOrFail($id);
         $test_type->language_id = $request->get('language_id');
         $test_type->name = $request->get('name');
+        $test_type->slug = $request->get('slug');
         $test_type->description = $request->get('description');
         $test_type->fixed_quiz_quantity = $request->get('fixed_quiz_quantity');
         $test_type->fixed_time = $request->get('fixed_time');
@@ -167,6 +169,10 @@ class TestTypeController extends AdminController
         if ($test_type->is_available == 0) {
             $test_type->is_available = 1;
         } else {
+            $test_type->is_available = 0;
+        }
+
+        if (!$test_type->testTypeRule) {
             $test_type->is_available = 0;
         }
 

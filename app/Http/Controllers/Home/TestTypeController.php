@@ -13,12 +13,17 @@ class TestTypeController extends HomeController
     /**
      * Show Test Type with its Tests on client site.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return void
      */
-    public function show($id)
+    public function show($slug)
     {
-        $p_test_type = TestType::findOrFail($id);
+        $p_test_type = TestType::where('slug', $slug)->first();
+
+        if (!$p_test_type) {
+            return redirect()->route('home');
+        }
+
         $p_tests = $p_test_type->tests->where('is_available', 1)->sortByDesc('id');
         $related_types = TestType::where('language_id', $p_test_type->language_id)
                 ->where('id', '<>', $p_test_type->id)

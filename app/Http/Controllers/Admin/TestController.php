@@ -50,6 +50,7 @@ class TestController extends AdminController
         $test = new Test();
         $test->user_id = Auth::user()->id;
         $test->name = $request->get('name');
+        $test->code = md5($request->get('name'));
         $test->test_type_id = $request->get('test_type_id');
         $test->time = $request->get('time');
 
@@ -127,6 +128,7 @@ class TestController extends AdminController
     {
         $test = Test::findOrFail($id);
         $test->name = $request->get('name');
+        $test->code = md5($request->get('name'));
         $test->time = $request->get('time');
 
         $test_type = $test->testType;

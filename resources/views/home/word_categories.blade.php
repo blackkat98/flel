@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <div class="row">
             @foreach ($p_word_categories as $category)
                 <div class="col-md-12">
@@ -58,7 +58,7 @@
             @endforeach
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <fieldset class="form-border">
             <legend class="form-border">@lang('Word Categories')</legend>
             <ul>

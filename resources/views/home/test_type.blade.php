@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <fieldset class="form-border">
             <legend class="form-border">@lang('Tests') @lang('In') {{ $p_test_type->name }}</legend>
             <ul>
@@ -26,7 +26,7 @@
             </ul>
         </fieldset>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <fieldset class="form-border">
             <legend class="form-border">@lang('Related') (@lang('Test Types'))</legend>
             <ul>

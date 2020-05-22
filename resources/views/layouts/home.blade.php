@@ -181,7 +181,7 @@
                                             @foreach ($test_types as $test_type)
                                                 @if ($test_type->language_id == $language->id)
                                                     <li>
-                                                        <a href="{{ route('home-test-type-show', ['id' => $test_type->id]) }}">
+                                                        <a href="{{ route('home-test-type-show', ['slug' => $test_type->slug]) }}">
                                                             <i>{{ $test_type->name }}</i>
                                                         </a>
                                                     </li>

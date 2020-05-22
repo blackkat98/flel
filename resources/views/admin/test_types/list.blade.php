@@ -23,7 +23,7 @@
                 <table id="js-table" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <td> @lang('Name') </td>
+                            <td> @lang('Name') (@lang('Slug')) </td>
                             <td> @lang('Language') </td>
                             <td> @lang('Description') </td>
                             <td> @lang('Number of') @lang('Quizzes') </td>
@@ -37,7 +37,7 @@
                     <tbody>
                         @foreach ($test_types as $type)
                             <tr>
-                                <td> {{ $type->name }} </td>
+                                <td> {{ $type->name }} ({{ $type->slug }}) </td>
                                 <td> {{ $type->language->name }} </td>
                                 <td> {{ $type->description }} </td>
                                 <td>
@@ -221,6 +221,12 @@
                                                             <input id="name" class="form-control" name="name" value="{{ $type->name }}">
                                                         </div>
                                                         <div class="form-group">
+                                                            <label for="slug">
+                                                                @lang('Slug')*
+                                                            </label>
+                                                            <input id="slug" class="form-control" name="slug" placeholder="@lang('Start') @lang('With') @lang('Lowercase letters'), @lang('Can only contain') - @lang('And') @lang('End') @lang('With') @lang('Numbers')" value="{{ $type->slug }}">
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label>
                                                                 @lang('Language')*
                                                             </label>
@@ -325,6 +331,12 @@
                             @lang('Name')*
                         </label>
                         <input id="name" class="form-control" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="slug">
+                            @lang('Slug')*
+                        </label>
+                        <input id="slug" class="form-control" name="slug" placeholder="@lang('Start') @lang('With') @lang('Lowercase letters'), @lang('Can only contain') - @lang('And') @lang('End') @lang('With') @lang('Numbers')">
                     </div>
                     <div class="form-group">
                         <label>

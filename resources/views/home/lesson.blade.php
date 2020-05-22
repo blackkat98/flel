@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <fieldset class="form-border">
             <legend class="form-border">{{ $p_course->name }} - @lang('Lessons') {{ $p_lesson->number }}</legend>
             <div class="row">
@@ -92,7 +92,7 @@
             </div>
         </fieldset>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="row">
             <div class="col-md-12">
                 <fieldset class="form-border">

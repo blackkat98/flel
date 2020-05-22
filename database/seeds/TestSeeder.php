@@ -16,6 +16,7 @@ class TestSeeder extends Seeder
             'user_id' => 1,
             'test_type_id' => 2,
             'name' => 'Practice Test 1',
+            'code' => 'dc04a6e9fb6709a79d985b36a7b50420',
             'time' => '60',
             'is_available' => 0
         ]);

@@ -15,6 +15,7 @@ class TestTypeSeeder extends Seeder
         DB::table('test_types')->insert([
             'language_id' => 1,
             'name' => 'Toeic',
+            'slug' => 'toeic',
             'fixed_quiz_quantity' => 200,
             'fixed_parts' => json_encode(['Listening', 'Reading']),
             'fixed_time' => '120',
@@ -25,6 +26,7 @@ class TestTypeSeeder extends Seeder
         DB::table('test_types')->insert([
             'language_id' => 1,
             'name' => 'Self Test',
+            'slug' => 'self-test',
             'fixed_quiz_quantity' => 0,
             'fixed_parts' => json_encode(['Default']),
             'fixed_time' => 0,

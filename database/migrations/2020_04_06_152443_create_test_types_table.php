@@ -17,6 +17,7 @@ class CreateTestTypesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('language_id');
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->integer('fixed_quiz_quantity')->default(0);
             $table->text('fixed_parts')->nullable();

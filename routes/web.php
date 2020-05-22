@@ -27,13 +27,22 @@ Route::group(['prefix' => 'home'], function () {
 
     Route::group(['prefix' => 'user_course'], function () {
         Route::post('/save', 'Home\UserCourseController@store')->name('home-user-course-store');
+
+        Route::group(['prefix' => 'ajax'], function () {
+            Route::get('/progress/{code}', 'Home\UserCourseController@ajaxProgressData')->name('home-user-course-progress');
+        });
     });
 
-    Route::group(['prefix' => 'test-type'], function () {
-        Route::get('/{id}', 'Home\TestTypeController@show')->name('home-test-type-show');
+    Route::group(['prefix' => 'test_type'], function () {
+        Route::get('/{slug}', 'Home\TestTypeController@show')->name('home-test-type-show');
     });
 
-    Route::group(['prefix' => 'word-categories'], function() {
+    Route::group(['prefix' => 'test'], function () {
+        Route::get('overall/{type_slug}/{code}', 'Home\TestController@showOverall')->name('home-test-show-overall');
+        Route::get('detail/{type_slug}/{code}', 'Home\TestController@showOverall')->name('home-test-show-detail');
+    });
+
+    Route::group(['prefix' => 'word_categories'], function() {
         Route::get('/{language_slug}', 'Home\WordCategoryController@list')->name('home-word-categories-list');
     });
 });
