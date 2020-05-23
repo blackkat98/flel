@@ -68,7 +68,7 @@ class TestController extends HomeController
             ]);
         }
 
-        $p_test_parts = $test->testParts;
+        $p_test_parts = $p_test->testParts;
         $p_test_quizzes = [];
 
         foreach ($p_test_parts as $part) {

@@ -69,12 +69,12 @@
                     </div>
                     <div class="col-md-9">
                         <div class="row">
-                            <button class="btn btn-success col-md-6">
+                            <a href="{{ route('home-lesson-show', ['code' => $p_course->code, 'lesson_number' => 1]) }}" class="btn btn-success col-md-6">
                                 <b> @lang('Start') </b>
-                            </button>
-                            <button class="btn btn-primary col-md-6">
+                            </a>
+                            <a href="{{ route('home-lesson-show', ['code' => $p_course->code, 'lesson_number' => $progress_number]) }}" class="btn btn-primary col-md-6">
                                 <b> @lang('Resume') </b>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -146,13 +146,13 @@
                     datasets: [
                         {
                             data: received_data.data,
-                            backgroundColor : ['#0000ff', '#7fffd4'],
+                            backgroundColor : ['#0000ff', '#7fffd4']
                         }
                     ]
                 };
                 var chart_options = {
                     maintainAspectRatio : false,
-                    responsive : true,
+                    responsive : true
                 };
                 var chart_canvas = $('#js-pie-chart');
                 var progress_chart = new Chart(chart_canvas, {

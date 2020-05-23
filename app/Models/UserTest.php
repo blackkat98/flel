@@ -11,7 +11,11 @@ class UserTest extends Model
     protected $table = 'user_tests';
 
     protected $fillable = [
-        'user_id', 'test_id', 'attempt_number', 'score'
+        'user_id', 'test_id', 'attempt_number', 'sheet', 'score'
+    ];
+
+    protected $casts = [
+        'sheet' => 'array'
     ];
 
     public function user()

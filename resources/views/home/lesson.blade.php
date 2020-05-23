@@ -78,14 +78,20 @@
             </div>
             <br>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-1">
+
+                </div>
+                <a href="{{ route('home-course-show', ['code' => $p_course->code]) }}" class="btn btn-primary col-md-4">
+                    @lang('Back') @lang('To') @lang('Course')
+                </a>
+                <div class="col-md-2">
 
                 </div>
                 <form method="post" action="{{ route('home-user-course-store') }}">
                     @csrf
                     <input type="hidden" name="code" value="{{ $p_course->code }}">
                     <input type="hidden" name="lesson_number" value="{{ $p_lesson->number }}">
-                    <button class="btn btn-primary col-md-6">
+                    <button class="btn btn-primary col-md-4">
                         <b> @lang('Save') @lang('Progress') </b>
                     </button>
                 </form>

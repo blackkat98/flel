@@ -17,6 +17,7 @@ class CreateUserTestsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('test_id');
+            $table->text('sheet');
             $table->integer('attempt_number');
             $table->integer('score');
             $table->timestamps();
