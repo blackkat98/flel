@@ -94,12 +94,12 @@ class TestQuizController extends AdminController
             }
         }
 
-        if ($test_quiz->quiz_type == TestQuizType::MULTIPLE_CHOICE) {
+        if ($test_quiz->quiz_type == TestQuizType::multiple_choice) {
             $test_quiz->options = $options;
             $test_quiz->answer = $checks;
         }
 
-        if ($test_quiz->quiz_type == TestQuizType::WRITING) {
+        if ($test_quiz->quiz_type == TestQuizType::writing) {
             $test_quiz->answer = $options;
         }
 
@@ -211,12 +211,12 @@ class TestQuizController extends AdminController
             }
         }
 
-        if ($test_quiz->quiz_type == TestQuizType::MULTIPLE_CHOICE && count($options) > 0  && count($checks) > 0) {
+        if ($test_quiz->quiz_type == TestQuizType::multiple_choice && count($options) > 0  && count($checks) > 0) {
             $test_quiz->options = $options;
             $test_quiz->answer = $checks;
         }
 
-        if ($test_quiz->quiz_type == TestQuizType::WRITING && count($options) > 0) {
+        if ($test_quiz->quiz_type == TestQuizType::writing && count($options) > 0) {
             $test_quiz->answer = $options;
         }
 

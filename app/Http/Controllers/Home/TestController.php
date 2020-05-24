@@ -7,6 +7,7 @@ use App\Http\Controllers\Home\HomeController;
 use App\Models\Test;
 use App\Models\TestType;
 use App\Models\UserTest;
+use App\Enums\TestQuizType;
 
 class TestController extends HomeController
 {
@@ -54,6 +55,7 @@ class TestController extends HomeController
     public function showTestSheet($type_slug, $code)
     {
         $p_test_type = TestType::where('slug', $type_slug)->first();
+        $test_quiz_types = TestQuizType::toArray();
 
         if (!$p_test_type) {
             return redirect()->route('home');
@@ -79,7 +81,8 @@ class TestController extends HomeController
             'p_test_type' => $p_test_type,
             'p_test' => $p_test,
             'p_test_parts' => $p_test_parts,
-            'p_test_quizzes' => $p_test_quizzes
+            'p_test_quizzes' => $p_test_quizzes,
+            'test_quiz_types' => $test_quiz_types
         ]);
     }
 }
