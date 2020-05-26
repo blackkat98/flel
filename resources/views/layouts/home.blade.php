@@ -130,6 +130,22 @@
                             </a>
                         </li>
                         <li class="has-dropdown">
+                            <a href="#"> @lang('Q&A') </a>
+                            <div class="dropdown">
+                                <div class="dropdown-body">
+                                    <ul class="dropdown-list">
+                                        @foreach ($languages as $language)
+                                            <li>
+                                                <a href="#">
+                                                    {{ $language->name }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="has-dropdown">
                             <a href="#"> @lang('Words') </a>
                             <div class="dropdown">
                                 <div class="dropdown-body">
