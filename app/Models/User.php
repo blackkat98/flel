@@ -10,6 +10,9 @@ use App\Models\Test;
 use App\Models\UserTest;
 use App\Models\UserCourse;
 use App\Models\TutorContact;
+use App\Models\Topic;
+use App\Models\Reply;
+use App\Models\Upvote;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -67,5 +70,20 @@ class User extends Authenticatable
     public function tutorContact()
     {
         return $this->hasOne(TutorContact::class, 'user_id');
+    }
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class, 'user_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, 'user_id');
+    }
+
+    public function upvotes()
+    {
+        return $this->hasMany(Upvote::class, 'user_id');
     }
 }
