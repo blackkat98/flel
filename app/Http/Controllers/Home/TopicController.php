@@ -21,7 +21,9 @@ class TopicController extends HomeController
      */
     public function list()
     {
-        //
+        return view('home.topics', [
+
+        ]);
     }
 
     /**
@@ -57,6 +59,7 @@ class TopicController extends HomeController
         $topic->title = $request->get('title');
         $topic->content = $request->get('content');
 
+        $language = Language::findOrFail($request->get('language_id'));
         $tags = [];
 
         foreach ($request->all() as $key => $value) {
@@ -65,15 +68,22 @@ class TopicController extends HomeController
             }
         }
 
+        if (count($tags) < 1) {
+            return redirect()->back()->with('warning', __('Tags') . ' ' . __('is required'));
+        }
+
         if ($request->hasFile('attachment')) {
             $path = Storage::disk('public')->put(config('customize.attachment_dir'), $request->file('attachment'));
             $test_quiz->attachment = config('customize.storage_dir') . $path;
         }
 
         if ($topic->save()) {
+            static::createTag($tags, $topic->id);
 
-
-            return redirect()->back()->with('success', $topic->title . ' ' . __('has been created'));
+            return redirect()->route('home-topic-show', [
+                'language_slug' => $language->slug,
+                'id' => $topic->id
+            ])->with('success', $topic->title . ' ' . __('has been created'));
         } else {
             return redirect()->back()->with('error', __('Action Failed'));
         }
@@ -131,12 +141,12 @@ class TopicController extends HomeController
      * @param  int  $topic_id
      * @return \Illuminate\Http\Response
      */
-    public function createTag($tag_inputs, $topic_id)
+    public static function createTag($tag_inputs, $topic_id)
     {
         foreach ($tag_inputs as $input) {
             $tag = new Tag();
             $tag->topic_id = $topic_id;
-            $tag->key = AccentReduction::normalize($input);
+            $tag->key = strtolower(AccentReduction::normalize($input));
 
             $tag->save();
         }

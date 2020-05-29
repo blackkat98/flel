@@ -49,6 +49,7 @@ Route::group(['prefix' => 'home'], function () {
     Route::group(['prefix' => 'forum'], function () {
         Route::get('/{language_slug}', 'Home\TopicController@list')->name('home-topic-list');
         Route::get('/{language_slug}/create', 'Home\TopicController@create')->name('home-topic-create');
+        Route::get('/{language_slug}/{id}', 'Home\TopicController@show')->name('home-topic-show');
     });
 
     Route::group(['prefix' => 'topic'], function () {

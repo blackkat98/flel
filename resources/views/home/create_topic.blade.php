@@ -1,7 +1,7 @@
 @extends('layouts.home')
 
 @section('title')
-    @lang('Create') @lang('Topic')
+    @lang('Create') {{ $p_language->name }} @lang('Topic')
 @endsection
 
 @section('css')
@@ -17,6 +17,7 @@
             <form class="form-horizontal" method="post" action="{{ route('home-topic-store') }}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="language_id" value="{{ $p_language->id }}">
+
                 <div class="form-group row">
                     <label for="title" class="col-md-12 col-form-label text-md-right">@lang('Title')*</label>
                     <i class="col-md-12 text-muted">@lang('Be general and short')</i>
@@ -26,10 +27,18 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="title" class="col-md-12 col-form-label text-md-right">@lang('Content')*</label>
+                    <label for="content" class="col-md-12 col-form-label text-md-right">@lang('Content')*</label>
                     <i class="col-md-12 text-muted">@lang('Make your problem clear to others')</i>
                     <div class="col-md-12">
                         <textarea id="content" class="form-control" name="content">{{ old('content') }}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="attachment" class="col-md-12 col-form-label text-md-right">@lang('Attachment')*</label>
+                    <i class="col-md-12 text-muted">@lang('Add a File')</i>
+                    <div class="col-md-12">
+                        <input type="file" id="attachment" class="form-control" name="attachment">
                     </div>
                 </div>
 
