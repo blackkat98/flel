@@ -4,7 +4,7 @@ namespace App\Helper;
 
 use App\Enums\AcuteAccent;
 
-class LatinNormalizeAccent
+class AccentReduction
 {
     /**
      * Collect Accent Lists from Enum.

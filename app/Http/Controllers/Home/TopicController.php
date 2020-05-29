@@ -10,7 +10,7 @@ use App\Models\Language;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Helper\LatinNormalizeAccent;
+use App\Helper\AccentReduction;
 
 class TopicController extends HomeController
 {
@@ -136,7 +136,7 @@ class TopicController extends HomeController
         foreach ($tag_inputs as $input) {
             $tag = new Tag();
             $tag->topic_id = $topic_id;
-            $tag->key = LatinNormalizeAccent::normalize($input);
+            $tag->key = AccentReduction::normalize($input);
 
             $tag->save();
         }
