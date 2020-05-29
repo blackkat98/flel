@@ -53,6 +53,9 @@
     "Create a new instance in": "Tạo một đối tượng mới trong",
     "Choose a Category": "Chọn phân loại",
     "Get Ready": "Hãy sẵn sàng",
+    "Be general and short": "Hãy trình bày khái quát và ngắn gọn",
+    "Make your problem clear to others": "Hãy làm rõ vấn đề của bạn",
+    "Add tags and separate them with spaces": "Hãy tạo tags và phân biệt bằng dấu cách",
 
     "Data Table of all": "Bảng dữ liệu các",
     "Details of": "Chi tiết về",
@@ -109,6 +112,8 @@
     "Part": "Phần",
     "Attempt": "Lần thử",
     "Test Sheet": "Phần Bài Làm",
+    "Title": "Tiêu đề",
+    "Content": "Nội dung",
 
     "has been created": "vừa được tạo",
     "has been updated": "vừa được cập nhật",
@@ -142,5 +147,8 @@
     "Words": "Từ",
     "Roles": "Vị trí chức năng",
     "Permissions": "Quyền thực thi",
-    "Tutor Contacts": "Danh bạ gia sư"
+    "Tutor Contacts": "Danh bạ gia sư",
+    "Topic": "Vấn đề",
+    "Reply": "Trả lời",
+    "Tags": "Tags"
 }

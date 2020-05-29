@@ -24,6 +24,7 @@ return [
     'storage_dir' => '/storage/',
     'image_dir' => 'images',
     'sound_dir' => 'sounds',
-    'video_dir' => 'videos'
+    'video_dir' => 'videos',
+    'attachment_dir' => 'attachments'
 ];
 

@@ -396,24 +396,6 @@
             "info": true,
             "autoWidth": true
         });
-
-        if ('{!! session()->get('success') !!}' !== '') {
-            toastr.success('{!! session()->get('success') !!}');
-        }
-
-        if ('{!! session()->get('error') !!}' !== '') {
-            toastr.error('{!! session()->get('error') !!}');
-        }
-
-        if ('{!! session()->get('warning') !!}' !== '') {
-            toastr.warning('{!! session()->get('warning') !!}');
-        }
-
-        var form_validation_errors = {!! json_encode($errors->toArray(), JSON_HEX_TAG) !!};
-        
-        for (var key in form_validation_errors) {
-            toastr.warning(form_validation_errors[key][0]);
-        }
     });
 </script>
 @endsection

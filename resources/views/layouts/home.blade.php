@@ -31,6 +31,10 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('bower_components/adminlte3/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('bower_components/adminlte3/plugins/toastr/toastr.min.css') }}">
     @yield('css')
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -311,6 +315,38 @@
     <!-- <script src="{{ asset('js/jquery.stellar.min.js') }}"></script> -->
     <script src="{{ asset('home_config/js/main.js') }}"></script>
     <script src="{{ asset('home_config/js/custom.js') }}"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('bower_components/adminlte3/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('bower_components/adminlte3/plugins/toastr/toastr.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $(window).on('keydown', function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                }
+            });
+
+            if ('{!! session()->get('success') !!}' !== '') {
+                toastr.success('{!! session()->get('success') !!}');
+            }
+
+            if ('{!! session()->get('error') !!}' !== '') {
+                toastr.error('{!! session()->get('error') !!}');
+            }
+
+            if ('{!! session()->get('warning') !!}' !== '') {
+                toastr.warning('{!! session()->get('warning') !!}');
+            }
+            
+            var form_validation_errors = {!! json_encode($errors->toArray(), JSON_HEX_TAG) !!};
+            
+            for (var key in form_validation_errors) {
+                toastr.warning(form_validation_errors[key][0]);
+            }
+        });
+    </script>
     @yield('js')
 </body>
 

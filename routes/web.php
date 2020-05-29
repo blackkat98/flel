@@ -45,6 +45,15 @@ Route::group(['prefix' => 'home'], function () {
     Route::group(['prefix' => 'word_categories'], function() {
         Route::get('/{language_slug}', 'Home\WordCategoryController@list')->name('home-word-categories-list');
     });
+
+    Route::group(['prefix' => 'forum'], function () {
+        Route::get('/{language_slug}', 'Home\TopicController@list')->name('home-topic-list');
+        Route::get('/{language_slug}/create', 'Home\TopicController@create')->name('home-topic-create');
+    });
+
+    Route::group(['prefix' => 'topic'], function () {
+        Route::post('/store', 'Home\TopicController@store')->name('home-topic-store');
+    });
 });
 
 Route::group(['prefix' => 'admin'], function () {
