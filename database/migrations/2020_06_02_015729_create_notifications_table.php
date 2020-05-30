@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRepliesTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateRepliesTable extends Migration
      */
     public function up()
     {
-        Schema::create('replies', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('topic_id');
+            $table->integer('notification_type')->default(0);
             $table->integer('user_id');
-            $table->integer('reply_id');
-            $table->text('content');
-            $table->string('attachment')->nullable();
-            $table->integer('is_approved')->default(0);
+            $table->text('display');
+            $table->string('link');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateRepliesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('replies');
+        Schema::dropIfExists('notifications');
     }
 }

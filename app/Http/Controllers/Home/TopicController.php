@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TopicRequest;
 use App\Http\Controllers\Home\HomeController;
 use App\Models\Topic;
+use App\Models\Reply;
+use App\Models\Upvote;
 use App\Models\Language;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
@@ -74,7 +76,7 @@ class TopicController extends HomeController
 
         if ($request->hasFile('attachment')) {
             $path = Storage::disk('public')->put(config('customize.attachment_dir'), $request->file('attachment'));
-            $test_quiz->attachment = config('customize.storage_dir') . $path;
+            $topic->attachment = config('customize.storage_dir') . $path;
         }
 
         if ($topic->save()) {
@@ -92,12 +94,33 @@ class TopicController extends HomeController
     /**
      * Display the specified resource.
      *
+     * @param  string  $language_slug
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($language_slug, $id)
     {
-        //
+        $p_language = Language::where('slug', $language_slug)->first();
+
+        if (!$p_language) {
+            return redirect()->route('home');
+        }
+
+        $p_topic = Topic::find($id);
+
+        if (!$p_topic) {
+            return redirect()->route('home-topic-list', [
+                'language_slug' => $p_language->slug
+            ]);
+        }
+
+        $p_replies = $p_topic->replies;
+
+        return view('home.topic', [
+            'p_language' => $p_language,
+            'p_topic' => $p_topic,
+            'p_replies' => $p_replies
+        ]);
     }
 
     /**

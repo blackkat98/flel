@@ -13,6 +13,8 @@ use App\Models\TutorContact;
 use App\Models\Topic;
 use App\Models\Reply;
 use App\Models\Upvote;
+use App\Models\Notification;
+use App\Models\Chat;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -85,5 +87,20 @@ class User extends Authenticatable
     public function upvotes()
     {
         return $this->hasMany(Upvote::class, 'user_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id');
+    }
+
+    public function sentChat()
+    {
+        return $this->hasMany(Chat::class, 'sender_user_id');
+    }
+
+    public function receivedChat()
+    {
+        return $this->hasMany(Chat::class, 'receiver_user_id');
     }
 }

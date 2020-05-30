@@ -47,6 +47,8 @@
     "Uppercase letters": "chữ hoa",
     "Numbers": "Số",
     "Overall": "Tổng quan",
+    "Your Reply": "Phản hồi của Bạn",
+    "Instruction": "Hướng dẫn",
 
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
     "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",
@@ -151,6 +153,6 @@
     "Permissions": "Quyền thực thi",
     "Tutor Contacts": "Danh bạ gia sư",
     "Topic": "Vấn đề",
-    "Reply": "Trả lời",
+    "Reply": "Phản hồi",
     "Tags": "Tags"
 }

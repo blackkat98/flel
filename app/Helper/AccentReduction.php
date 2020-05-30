@@ -25,8 +25,9 @@ class AccentReduction
     public static function normalize($str)
     {
         $accents = static::getAccentTable();
+        $chars = mb_str_split($str);
 
-        foreach ($str as $char) {
+        foreach ($chars as $char) {
             foreach ($accents as $key => $value) {
                 if (in_array($char, $value)) {
                     $str = str_replace($char, $key, $str);

@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="attachment" class="col-md-12 col-form-label text-md-right">@lang('Attachment')*</label>
+                    <label for="attachment" class="col-md-12 col-form-label text-md-right">@lang('Attachment')</label>
                     <i class="col-md-12 text-muted">@lang('Add a File')</i>
                     <div class="col-md-12">
                         <input type="file" id="attachment" class="form-control" name="attachment">
@@ -63,7 +63,7 @@
 
     <div class="col-md-3">
         <fieldset class="form-border">
-            <legend class="form-border">@lang('Create') @lang('Topic')</legend>
+            <legend class="form-border">@lang('Instruction')</legend>
         </fieldset>
     </div>
 </div>

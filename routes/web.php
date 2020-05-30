@@ -55,6 +55,11 @@ Route::group(['prefix' => 'home'], function () {
     Route::group(['prefix' => 'topic'], function () {
         Route::post('/store', 'Home\TopicController@store')->name('home-topic-store');
     });
+
+    Route::group(['prefix' => 'reply'], function () {
+        Route::post('/ajax_store', 'Home\ReplyController@ajaxStore')->name('home-reply-store-ajax');
+        Route::post('/store', 'Home\ReplyController@store')->name('home-reply-store');
+    });
 });
 
 Route::group(['prefix' => 'admin'], function () {

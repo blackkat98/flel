@@ -9,10 +9,10 @@ use App\Models\Upvote;
 
 class Reply extends Model
 {
-    protected $table = 'replies',
+    protected $table = 'replies';
 
     protected $fillable = [
-        'topic_id', 'reply_id', 'content', 'attachment', 'is_approved'
+        'topic_id', 'user_id', 'reply_id', 'content', 'attachment', 'is_approved'
     ];
 
     public function topic()
@@ -42,7 +42,7 @@ class Reply extends Model
         } else {
             $reply = Reply::findOrFail($this->reply_id);
 
-            return $reply
+            return $reply;
         }
     }
 }
