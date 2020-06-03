@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\TestType;
 use App\Models\WordCategory;
 use App\Models\TutorContact;
+use App\Models\Topic;
 
 class Language extends Model
 {
@@ -34,5 +35,10 @@ class Language extends Model
     public function tutorContacts()
     {
         return $this->hasMany(TutorContact::class, 'language_id');
+    }
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class, 'language_id');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Reply;
 use App\Models\Tag;
+use App\Models\Language;
 
 class Topic extends Model
 {
@@ -28,5 +29,10 @@ class Topic extends Model
     public function tags()
     {
         return $this->hasMany(Tag::class, 'topic_id');
+    }
+
+    public function language()
+    {
+        return $this->belongsTo(Language::class, 'language_id');
     }
 }

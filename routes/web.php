@@ -50,10 +50,14 @@ Route::group(['prefix' => 'home'], function () {
         Route::get('/{language_slug}', 'Home\TopicController@list')->name('home-topic-list');
         Route::get('/{language_slug}/create', 'Home\TopicController@create')->name('home-topic-create');
         Route::get('/{language_slug}/{id}', 'Home\TopicController@show')->name('home-topic-show');
+        Route::get('/{language_slug}/edit/{id}', 'Home\TopicController@edit')->name('home-topic-edit');
     });
 
     Route::group(['prefix' => 'topic'], function () {
         Route::post('/store', 'Home\TopicController@store')->name('home-topic-store');
+        Route::post('/ajax_available/{id}', 'Home\TopicController@ajaxAvailable')->name('home-topic-available-ajax');
+        Route::post('/update/{id}', 'Home\TopicController@update')->name('home-topic-update');
+        Route::post('/delete/{id}', 'Home\TopicController@destroy')->name('home-topic-delete');
     });
 
     Route::group(['prefix' => 'reply'], function () {
