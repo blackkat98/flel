@@ -6,17 +6,22 @@ io.on('error', function (socket) {
 });
 
 io.on('connection', function (socket) {
-    console.log('Started connection with ' + socket.id);
+    var id = socket.id;
+
+    console.log('Started connection with ' + id);
+
+    io.emit('test_socket', 'Socket IO in use');
+
+    socket.on('disconnect', function (socket) {
+        console.log('Killed connection with ' + id);
+    });
+
+    socket.on('new_reply', function (signal) {
+        io.emit('add_reply', signal);
+    });
+
+    socket.on('topic_status_changed', function (signal) {
+        io.emit('update_topic_status', signal);
+    });
 });
 
-const Redis = require('ioredis');
-var redis = new Redis(6969);
-redis.psubscribe('*', function (error, count) {
-
-});
-
-redis.on('pmessage', function (partner, channel, message) {
-    console.log(partner);
-    console.log(channel);
-    console.log(message);
-});

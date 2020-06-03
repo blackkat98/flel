@@ -44,24 +44,7 @@ class ReplyController extends HomeController
      */
     public function store(ReplyRequest $request)
     {
-        $reply = new Reply();
-        $reply->topic_id = $request->get('topic_id');
-        $reply->reply_id = $request->get('reply_id');
-        $reply->user_id = Auth::user()->id;
-        $reply->content = $request->get('content');
-
-        if ($request->hasFile('attachment')) {
-            $path = Storage::disk('public')->put(config('customize.attachment_dir'), $request->file('attachment'));
-            $reply->attachment = config('customize.storage_dir') . $path;
-        }
-
-        if ($reply->save()) {
-            event(new ReplyEvent($reply));
-
-            return redirect()->back()->with('success', __('Your Reply') . ' ' . __('has been created'));
-        } else {
-            return redirect()->back()->with('error', __('Action Failed'));
-        }
+        
     }
 
     /**
@@ -78,6 +61,18 @@ class ReplyController extends HomeController
         $reply->user_id = Auth::user()->id;
         $reply->content = $request->content;
 
+        $topic = Topic::find($request->topic_id);
+
+        if ($topic->is_open == 0) {
+            return redirect()->route('home-topic-list', [
+                'language_slug' => $topic->language->slug
+            ]);
+        }
+
+        if (!$topic) {
+            return redirect()->route('home');
+        }
+
         if ($request->hasFile('attachment')) {
             $path = Storage::disk('public')->put(config('customize.attachment_dir'), $request->file('attachment'));
             $reply->attachment = config('customize.storage_dir') . $path;
@@ -85,12 +80,15 @@ class ReplyController extends HomeController
 
         if ($reply->save()) {
             return [
-                'success_msg' => __('Your Reply') . ' ' . __('has been created'),
-                'new_reply' => $reply
+                'status' => 'successful',
+                'msg' => __('Your Reply') . ' ' . __('has been created'),
+                'reply' => $reply,
+                'reply_owner' => $reply->user
             ];
         } else {
             return [
-                'error_msg' => __('Action Failed')
+                'status' => 'failed',
+                'msg' => __('Action Failed')
             ];
         }
     }
