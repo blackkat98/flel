@@ -52,6 +52,8 @@
     "Overall": "Tổng quan",
     "Your Reply": "Phản hồi của Bạn",
     "Instruction": "Hướng dẫn",
+    "Approve": "Xác nhận",
+    "Reply to": "Phản hồi tới",
 
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
     "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",
@@ -158,5 +160,6 @@
     "Topics": "Vấn đề",
     "Topic": "Vấn đề",
     "Reply": "Phản hồi",
-    "Tags": "Tags"
+    "Tags": "Tags",
+    "Tag": "Tag"
 }

@@ -129,6 +129,10 @@ class TopicController extends HomeController
 
         $p_replies = $p_topic->replies;
 
+        foreach ($p_replies as $p_reply) {
+            $p_reply->parent = $p_reply->parentReply();
+        }
+
         return view('home.topic', [
             'p_language' => $p_language,
             'p_topic' => $p_topic,

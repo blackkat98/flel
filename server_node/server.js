@@ -23,5 +23,13 @@ io.on('connection', function (socket) {
     socket.on('topic_status_changed', function (signal) {
         io.emit('update_topic_status', signal);
     });
+
+    socket.on('reply_approved', function (signal) {
+        io.emit('update_reply_status', signal);
+    });
+
+    socket.on('reply_deleted', function (signal) {
+        io.emit('delete_reply', signal);
+    });
 });
 

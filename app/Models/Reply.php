@@ -25,11 +25,6 @@ class Reply extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function upvotes()
-    {
-        return $this->hasMany(Upvote::class, 'reply_id');
-    }
-
     /**
      * Return the Parent Reply.
      *
@@ -44,5 +39,17 @@ class Reply extends Model
 
             return $reply;
         }
+    }
+
+    /**
+     * Return the Child Replies.
+     *
+     * @return App\Models\Reply|null
+     */
+    public function childReplies()
+    {
+        $replies = static::where('reply_id', $this->id)->get();
+
+        return $replies;
     }
 }

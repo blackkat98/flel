@@ -11,6 +11,29 @@ use App\Models\Test;
 class TestTypeController extends HomeController
 {
     /**
+     * Show Test Type List in a Language.
+     *
+     * @param  string  $language_slug
+     * @return void
+     */
+    public function list($language_slug)
+    {
+        $p_language = Language::where('slug', $language_slug)->first();
+
+        if (!$p_language) {
+            return redirect()->route('home');
+        }
+
+        $p_test_types = TestType::where('language_id', $p_language->id)
+                ->where('is_available', 1)->get();
+
+        return view('home.test_types', [
+            'p_language' => $p_language,
+            'p_test_types' => $p_test_types
+        ]);
+    }
+
+    /**
      * Show Test Type with its Tests on client site.
      *
      * @param  string  $slug

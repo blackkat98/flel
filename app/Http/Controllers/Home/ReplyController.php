@@ -79,6 +79,12 @@ class ReplyController extends HomeController
         }
 
         if ($reply->save()) {
+            $reply->parent = $reply->parentReply();
+
+            if ($reply->parent != null) {
+                $reply->parent_owner = $reply->parent->user;
+            }
+
             return [
                 'status' => 'successful',
                 'msg' => __('Your Reply') . ' ' . __('has been created'),
@@ -136,5 +142,80 @@ class ReplyController extends HomeController
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function ajaxDestroy(Request $request)
+    {
+        $id = $request->id;
+        $reply = Reply::findOrFail($id);
+
+        if ($reply->user_id != Auth::user()->id) {
+            return;
+        }
+
+        if ($reply->delete()) {
+            $children = $reply->childReplies();
+
+            if (count($children) > 0) {
+                foreach ($children as $child) {
+                    $child->delete();
+                }
+            }
+
+            return [
+                'status' => 'successful',
+                'reply' => $reply
+            ];
+        } else {
+            return [
+                'status' => 'failed',
+                'msg' => __('Action Failed')
+            ];
+        }
+    }
+
+    /**
+     * Mark a Reply as Approved by the Topic's owner.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function ajaxApprove(Request $request)
+    {
+        $id = $request->id;
+        $reply = Reply::findOrFail($id);
+        $topic = $reply->topic;
+
+        if (!$topic) {
+            return;
+        }
+
+        if ($topic->user_id != Auth::user()->id) {
+            return;
+        }
+
+        if ($reply->is_approved == 0) {
+            $reply->is_approved = 1;
+        } else {
+            $reply->is_approved = 0;
+        }
+
+        if ($reply->save()) {
+            return [
+                'status' => 'successful',
+                'reply' => $reply
+            ];
+        } else {
+            return [
+                'status' => 'failed',
+                'msg' => __('Action Failed')
+            ];
+        }
     }
 }

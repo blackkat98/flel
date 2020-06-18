@@ -102,6 +102,10 @@ class LanguageController extends AdminController
     public function destroy($id)
     {
         $language = Language::findOrFail($id);
+
+        if (count($language->courses) > 0 || count($language->testTypes) > 0 || count($language->topics) > 0 || count($language->tutorContacts) > 0) {
+            return redirect()->back()->with('error', __('Action Failed'));
+        }
         
         if ($language->delete()) {
             return redirect()->back()->with('success', $language->name . ' ' . __('has been deleted'));

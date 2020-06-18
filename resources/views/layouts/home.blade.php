@@ -171,7 +171,11 @@
                                     <ul class="dropdown-list">
                                         @foreach ($languages as $language)
                                             <li>
-                                                <b> {{ $language->name }} </b>
+                                                <b>
+                                                    <a href="{{ route('home-course-list', ['language_slug' => $language->slug]) }}">
+                                                        {{ $language->name }}
+                                                    </a>
+                                                </b>
                                             </li>
 
                                             @foreach ($courses as $course)
@@ -195,7 +199,11 @@
                                     <ul class="dropdown-list">
                                         @foreach ($languages as $language)
                                             <li>
-                                                <b> {{ $language->name }} </b>
+                                                <b>
+                                                    <a href="{{ route('home-test-type-list', ['language_slug' => $language->slug]) }}">
+                                                        {{ $language->name }}
+                                                    </a>
+                                                </b>
                                             </li>
 
                                             @foreach ($test_types as $test_type)
@@ -234,7 +242,11 @@
                                 <div class="dropdown-body">
                                     <ul class="dropdown-list">
                                         @foreach ($languages as $language)
-                                            <li> <a href="#"> {{ $language->name }} </a> </li>
+                                            <li>
+                                                <a href="{{ route('home-tutor-list', ['language_slug' => $language->slug]) }}">
+                                                    {{ $language->name }}
+                                                </a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div>

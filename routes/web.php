@@ -21,6 +21,7 @@ Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'Home\HomeController@index')->name('home');
 
     Route::group(['prefix' => 'course'], function () {
+        Route::get('/in_lang/{language_slug}', 'Home\CourseController@list')->name('home-course-list');
         Route::get('/{code}', 'Home\CourseController@show')->name('home-course-show');
         Route::get('/{code}/{lesson_number}', 'Home\LessonController@show')->name('home-lesson-show');
     });
@@ -34,6 +35,7 @@ Route::group(['prefix' => 'home'], function () {
     });
 
     Route::group(['prefix' => 'test_type'], function () {
+        Route::get('/in_lang/{language_slug}', 'Home\TestTypeController@list')->name('home-test-type-list');
         Route::get('/{slug}', 'Home\TestTypeController@show')->name('home-test-type-show');
     });
 
@@ -62,7 +64,12 @@ Route::group(['prefix' => 'home'], function () {
 
     Route::group(['prefix' => 'reply'], function () {
         Route::post('/ajax_store', 'Home\ReplyController@ajaxStore')->name('home-reply-store-ajax');
-        Route::post('/store', 'Home\ReplyController@store')->name('home-reply-store');
+        Route::post('/ajax_delete', 'Home\ReplyController@ajaxDestroy')->name('home-reply-delete-ajax');
+        Route::post('/ajax_approve', 'Home\ReplyController@ajaxApprove')->name('home-reply-approve-ajax');
+    });
+
+    Route::group(['prefix' => 'tutor'], function () {
+        Route::get('/{language_slug}', 'Home\TutorContactController@list')->name('home-tutor-list');
     });
 });
 

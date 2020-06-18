@@ -74,15 +74,78 @@
             <legend class="form-border"></legend>
             <div class="row" id="js-replies">
                 @foreach ($p_replies as $reply)
-                    <div class="col-md-12">
+                    <div id="js-reply-pane-{{ $reply->id }}" class="col-md-12">
                         <fieldset class="form-border">
                             <legend class="form-border"></legend>
+                            <div id="js-reply-appr-sign-{{ $reply->id }}" class="col-md-1 text-center">
+                                @if ($reply->is_approved)
+                                    <i style="font-size: 64px; color: #006400" class="fa fa-star"></i>
+                                @endif
+                            </div>
                             <div class="col-md-2">
                                 <img class="img-thumbnail" src="{{ asset($reply->user->image) }}" alt="">
                                 <h5 class="text-center">{{ $reply->user->name }}</h5>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-9">
+                                @if ($reply->parent != null)
+                                    <div style="border: 2px dashed #00008b" class="col-md-12">
+                                        @lang('Reply to') <b>{{ $reply->parent->user->name }}</b>:
+                                        <br>
+                                        <h3>"</h3>
+                                            <i>{!! $reply->parent->content !!}</i><br>
+                                        <h3 style="float: right;">"</h3>
+                                    </div>
+                                @endif
+                                &nbsp;
                                 <p class="text-justify">{!! $reply->content !!}</p>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+
+                                </div>
+                                <div class="col-md-9"> 
+                                    @if (Auth::check() && Auth::user()->id == $p_topic->user_id)
+                                        <form id="js-reply-appr-{{ $reply->id }}">
+                                            <input class="hidden" name="_token" value="{{ csrf_token() }}" readonly>
+                                            <input class="hidden" name="id" value="{{ $reply->id }}" readonly>
+                                            <button type="button" class="btn btn-default col-md-2 js-reply-appr-btn">
+                                                <b>@lang('Approve')</b>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+
+                                </div>
+                                <div class="col-md-9"> 
+                                    @if (Auth::check() && Auth::user()->id == $reply->user_id)
+                                        <form id="js-reply-delete-{{ $reply->id }}">
+                                            <input class="hidden" name="_token" value="{{ csrf_token() }}" readonly>
+                                            <input class="hidden" name="id" value="{{ $reply->id }}" readonly>
+                                            <button type="button" class="btn btn-danger col-md-2 js-reply-delete-btn">
+                                                @lang('Delete')
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+
+                                </div>
+                                <div class="col-md-9"> 
+                                    <form id="js-reply-to-{{ $reply->id }}">
+                                        <input class="hidden" name="_token" value="{{ csrf_token() }}" readonly>
+                                        <input class="hidden" name="reply_id" value="{{ $reply->id }}" readonly>
+                                        <input class="hidden" name="topic_id" value="{{ $p_topic->id }}" readonly>
+                                        <input class="col-md-11" name="content">
+                                        <button type="button" class="btn btn-outline col-md-1 js-reply-to-btn">
+                                            <i style="color: #0000ff;" class="fa fa-arrow-right"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </fieldset>
                     </div>
@@ -144,18 +207,102 @@
 
         socket.on('add_reply', function (data) {
             var page_topic_id = parseInt('{{ $p_topic->id }}');
+            var page_topic_user_id = parseInt('{{ $p_topic->user->id }}');
+            var auth_id = parseInt('{{ Auth::user()->id }}');
+            var approve_txt = '{{ __('Approve') }}';
+            var delete_txt = '{{ __('Delete') }}';
+            var parent_txt = '{{ __('Reply to') }}';
+
+            if (auth_id === page_topic_user_id) {
+                var approve_form = `
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-9"> 
+                            <form id="js-reply-appr-${data.id}">
+                                <input class="hidden" name="_token" value="{{ csrf_token() }}" readonly>
+                                <input class="hidden" name="id" value="${data.id}" readonly>
+                                <button type="button" class="btn btn-default col-md-2 js-reply-appr-btn">
+                                    <b>${approve_txt}</b>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            } else {
+                var approve_form = ``;
+            }
+
+            if (auth_id === parseInt(data.user_id)) {
+                var crud = `
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-9"> 
+                            <form id="js-reply-delete-${data.id}">
+                                <input class="hidden" name="_token" value="{{ csrf_token() }}" readonly>
+                                <input class="hidden" name="id" value="${data.id}" readonly>
+                                <button type="button" class="btn btn-danger col-md-2 js-reply-delete-btn">
+                                    ${delete_txt}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            } else {
+                var crud = ``;
+            }
+
+            if (data.parent !== null) {
+                var parent = `
+                    <div style="border: 2px dashed #00008b" class="col-md-12">
+                        ${parent_txt} <b>${data.parent_owner.name}</b>:
+                        <br>
+                        <h3>"</h3>
+                            <i>${data.parent.content}</i><br>
+                        <h3 style="float: right;">"</h3>
+                    </div>
+                `;
+            } else {
+                var parent = ``;
+            }
 
             if (page_topic_id === parseInt(data.topic_id)) {
                 $('#js-replies').append(`
-                    <div class="col-md-12">
+                    <div id="js-reply-pane-${data.id}" class="col-md-12">
                         <fieldset class="form-border">
                             <legend class="form-border"></legend>
+                            <div id="js-reply-appr-sign-${data.id}" class="col-md-1">
+
+                            </div>
                             <div class="col-md-2">
                                 <img class="img-thumbnail" src="${domain}/${data.user.image}" alt="">
                                 <h5 class="text-center">${data.user.name}</h5>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-9">
+                                ${parent}
+                                &nbsp;
                                 <p class="text-justify">${data.content}</p>
+                            </div>
+                            ${approve_form}
+                            ${crud}
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+
+                                </div>
+                                <div class="col-md-9"> 
+                                    <form id="js-reply-to-${data.id}">
+                                        <input class="hidden" name="_token" value="{{ csrf_token() }}" readonly>
+                                        <input class="hidden" name="reply_id" value="${data.id}" readonly>
+                                        <input class="hidden" name="topic_id" value="${page_topic_id}" readonly>
+                                        <input class="col-md-11" name="content">
+                                        <button type="button" class="btn btn-outline col-md-1 js-reply-to-btn">
+                                            <i style="color: #0000ff;" class="fa fa-arrow-right"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </fieldset>
                     </div>
@@ -180,6 +327,20 @@
                     $('#js-rep-create-form-field').removeClass('hidden');
                 }
             }
+        });
+
+        socket.on('update_reply_status', function (data) {
+            if (data.is_approved == 1) {
+                $('#js-reply-appr-sign-' + data.id).html(`
+                    <i style="font-size: 64px; color: #006400" class="fa fa-star"></i>
+                `);
+            } else {
+                $('#js-reply-appr-sign-' + data.id).html(``);
+            }
+        });
+
+        socket.on('delete_reply', function (data) {
+            $('#js-reply-pane-' + data.id).remove();
         });
 
         $('.js-editor').summernote();
@@ -219,6 +380,70 @@
                 success: function (received_data) {
                     if (received_data.status === 'successful') {
                         socket.emit('topic_status_changed', received_data.topic);
+                    }
+                },
+                error: function (e) {
+                    console.log(e.responseJSON.message);
+                }
+            });
+        });
+
+        $(document).on('click', '.js-reply-appr-btn', function () {
+            var url = '{{ route('home-reply-approve-ajax') }}';
+            var form_data = new FormData($(this).parent()[0]);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: form_data,
+                processData: false,
+                contentType: false,
+                success: function (received_data) {
+                    if (received_data.status === 'successful') {
+                        socket.emit('reply_approved', received_data.reply);
+                    }
+                },
+                error: function (e) {
+                    console.log(e.responseJSON.message);
+                }
+            });
+        });
+
+        $(document).on('click', '.js-reply-delete-btn', function () {
+            var url = '{{ route('home-reply-delete-ajax') }}';
+            var form_data = new FormData($(this).parent()[0]);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: form_data,
+                processData: false,
+                contentType: false,
+                success: function (received_data) {
+                    if (received_data.status === 'successful') {
+                        socket.emit('reply_deleted', received_data.reply);
+                    }
+                },
+                error: function (e) {
+                    console.log(e.responseJSON.message);
+                }
+            });
+        });
+
+        $(document).on('click', '.js-reply-to-btn', function () {
+            var url = '{{ route('home-reply-store-ajax') }}';
+            var form_data = new FormData($(this).parent()[0]);
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: form_data,
+                processData: false,
+                contentType: false,
+                success: function (received_data) {
+                    if (received_data.status === 'successful') {
+                        socket.emit('new_reply', received_data.reply);
+                        $('input[name="content"]').val('');
                     }
                 },
                 error: function (e) {

@@ -7,10 +7,34 @@ use App\Http\Controllers\Home\HomeController;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\UserCourse;
+use App\Models\Language;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends HomeController
 {
+    /**
+     * Show Course on client site.
+     *
+     * @param  string  $language_slug
+     * @return void
+     */
+    public function list($language_slug)
+    {
+        $p_language = Language::where('slug', $language_slug)->first();
+
+        if (!$p_language) {
+            return redirect()->route('home');
+        }
+
+        $p_courses = Course::where('language_id', $p_language->id)
+                ->where('is_available', 1)->get();
+
+        return view('home.courses', [
+            'p_language' => $p_language,
+            'p_courses' => $p_courses
+        ]);
+    }
+
     /**
      * Show Course on client site.
      *
