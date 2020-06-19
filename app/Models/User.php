@@ -16,6 +16,7 @@ use App\Models\Upvote;
 use App\Models\Notification;
 use App\Models\Chat;
 use Spatie\Permission\Traits\HasRoles;
+use Cache;
 
 class User extends Authenticatable
 {
@@ -102,5 +103,15 @@ class User extends Authenticatable
     public function receivedChat()
     {
         return $this->hasMany(Chat::class, 'receiver_user_id');
+    }
+
+    /**
+     * Check if a User is online or not.
+     *
+     * @return bool
+     */
+    public function isOnline()
+    {
+        return Cache::has('user-online-' . $this->id);
     }
 }

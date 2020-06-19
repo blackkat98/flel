@@ -36,6 +36,11 @@ class UserRequest extends FormRequest
                     'email' => 'required|string|email|unique:users,email,' . $this->id,
                     'password' => 'required|string|min:6',
                 ];
+            case 'home-me-profile-update':
+                return [
+                    'name' => 'required|string',
+                    'email' => 'required|string|email|unique:users,email,' . $this->id
+                ];
         }
     }
     

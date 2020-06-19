@@ -16,7 +16,7 @@
             <legend class="form-border">@lang('Create') @lang('Topic')</legend>
             <form class="form-horizontal" method="post" action="{{ route('home-topic-store') }}" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="language_id" value="{{ $p_language->id }}">
+                <input class="hidden" name="language_id" value="{{ $p_language->id }}">
 
                 <div class="form-group row">
                     <label for="title" class="col-md-12 col-form-label text-md-right">@lang('Title')*</label>

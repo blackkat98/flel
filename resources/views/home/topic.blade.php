@@ -194,7 +194,6 @@
 
 @section('js')
 <script src="{{ asset('bower_components/adminlte3/plugins/summernote/summernote-bs4.min.js') }}"></script>
-<script src="{{ asset('js/socket.io.js') }}"></script>
 <script>
     $(document).ready(function () {
         var socket = io('http://localhost:6001');

@@ -75,7 +75,7 @@
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                         <div>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{ route('home-me-profile-show') }}">
                                                 &nbsp;&nbsp;<i class="fa fa-folder-open"></i>
                                                 &nbsp;&nbsp;@lang('Profile')
                                             </a>
@@ -252,13 +252,6 @@
                                 </div>
                             </div>
                         </li>
-                        @auth
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-tachometer"></i> @lang('Statistics')
-                                </a>
-                            </li>
-                        @endauth
                     </ul>
                     <!-- /nav -->
                 </div>
@@ -324,7 +317,7 @@
     <!-- jQuery Plugins -->
     <script src="{{ asset('home_config/js/jquery.min.js') }}"></script>
     <script src="{{ asset('home_config/js/bootstrap.min.js') }}"></script>
-    <!-- <script src="{{ asset('js/jquery.stellar.min.js') }}"></script> -->
+    <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
     <script src="{{ asset('home_config/js/main.js') }}"></script>
     <script src="{{ asset('home_config/js/custom.js') }}"></script>
 
@@ -332,6 +325,7 @@
     <script src="{{ asset('bower_components/adminlte3/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Toastr -->
     <script src="{{ asset('bower_components/adminlte3/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/socket.io.js') }}"></script>
     <script>
         $(document).ready(function () {
             $(window).on('keydown', function (event) {
@@ -357,6 +351,29 @@
             for (var key in form_validation_errors) {
                 toastr.warning(form_validation_errors[key][0]);
             }
+
+            var socket = io('http://localhost:6001');
+
+            socket.on('test_socket', function (data) {
+                console.log(data);
+            });
+
+            socket.on('noti_to_tutor', function (data) {
+                var confirm_txt = '{{ __('Confirm') }}';
+                var auth_id = parseInt('{{ Auth::user()->id }}');
+
+                if (auth_id === parseInt(data.user_id)) {
+                    return;
+                }
+
+                toastr.info(`
+                        
+                    `, data.display, {
+                    timeOut: 0,
+                    extendedTimeOut: 0,
+                    closeButton: true
+                });
+            });
         });
     </script>
     @yield('js')

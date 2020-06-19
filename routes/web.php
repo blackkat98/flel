@@ -20,6 +20,12 @@ Auth::routes();
 Route::group(['prefix' => 'home'], function () {
     Route::get('/', 'Home\HomeController@index')->name('home');
 
+    Route::group(['prefix' => 'me'], function () {
+        Route::get('/profile', 'Home\UserController@showProfile')->name('home-me-profile-show');
+        Route::post('/update_profile', 'Home\UserController@updateProfile')->name('home-me-profile-update');
+        Route::post('/update_password', 'Home\UserController@updatePassword')->name('home-me-password-update');
+    });
+
     Route::group(['prefix' => 'course'], function () {
         Route::get('/in_lang/{language_slug}', 'Home\CourseController@list')->name('home-course-list');
         Route::get('/{code}', 'Home\CourseController@show')->name('home-course-show');
@@ -70,6 +76,15 @@ Route::group(['prefix' => 'home'], function () {
 
     Route::group(['prefix' => 'tutor'], function () {
         Route::get('/{language_slug}', 'Home\TutorContactController@list')->name('home-tutor-list');
+    });
+
+    Route::group(['prefix' => 'thread'], function () {
+        Route::get('/show/{code}', 'Home\ThreadController@show')->name('home-thread-show');
+        Route::post('/ajax_store', 'Home\ThreadController@ajaxStore')->name('home-thread-store-ajax');
+    });
+
+    Route::group(['prefix' => 'chat'], function () {
+        Route::post('/ajax_store', 'Home\ChatController@ajaxStore')->name('home-chat-store-ajax');
     });
 });
 

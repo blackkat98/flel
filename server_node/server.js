@@ -31,5 +31,13 @@ io.on('connection', function (socket) {
     socket.on('reply_deleted', function (signal) {
         io.emit('delete_reply', signal);
     });
+
+    socket.on('new_thread', function (signal) {
+        io.emit('noti_to_tutor', signal);
+    });
+
+    socket.on('new_message', function (signal) {
+        io.emit('update_chat', signal);
+    });
 });
 
