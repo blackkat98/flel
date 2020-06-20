@@ -40,10 +40,21 @@ class ChatController extends HomeController
         $chat->is_read = 0;
 
         if ($chat->save()) {
+            $chat_noti = new Notification();
+            $chat_noti->notification_type = NotiType::new_msg;
+            $chat_noti->user_id = $receiver_id;
+            $chat_noti->display = Auth::user()->name . ' ' . __('messaged you');
+            $chat_noti->link = route('home-thread-show', [
+                'code' => $thread->code
+            ]);
+            $chat_noti->is_read = 0;
+            $chat_noti->save();
+
             return [
                 'status' => 'successful',
                 'msg' => __('A new Message') . ' ' . __('has been created'),
-                'chat' => $chat
+                'chat' => $chat,
+                'chat_noti' => $chat_noti
             ];
         } else {
             return [

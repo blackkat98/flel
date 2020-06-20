@@ -36,8 +36,12 @@ io.on('connection', function (socket) {
         io.emit('noti_to_tutor', signal);
     });
 
-    socket.on('new_message', function (signal) {
+    socket.on('new_chat', function (signal) {
         io.emit('update_chat', signal);
+    });
+
+    socket.on('new_chat_noti', function (signal) {
+        io.emit('noti_for_chat', signal);
     });
 });
 

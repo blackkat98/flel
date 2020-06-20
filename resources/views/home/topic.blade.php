@@ -205,9 +205,13 @@
         var domain = window.location.origin;
 
         socket.on('add_reply', function (data) {
+            if (parseInt('{{ Auth::check() == 1 }}') !== 1) {
+                return;
+            }
+            
             var page_topic_id = parseInt('{{ $p_topic->id }}');
             var page_topic_user_id = parseInt('{{ $p_topic->user->id }}');
-            var auth_id = parseInt('{{ Auth::user()->id }}');
+            var auth_id = parseInt('{{ Auth::check() ? Auth::user()->id : 0 }}');
             var approve_txt = '{{ __('Approve') }}';
             var delete_txt = '{{ __('Delete') }}';
             var parent_txt = '{{ __('Reply to') }}';

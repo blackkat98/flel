@@ -86,6 +86,11 @@ Route::group(['prefix' => 'home'], function () {
     Route::group(['prefix' => 'chat'], function () {
         Route::post('/ajax_store', 'Home\ChatController@ajaxStore')->name('home-chat-store-ajax');
     });
+
+    Route::group(['prefix' => 'notification'], function () {
+        Route::get('/ajax_load_unread', 'Home\NotificationController@ajaxLoadUnread')->name('home-noti-load-unread-ajax');
+        Route::post('/redirect_by_noti', 'Home\NotificationController@redirectByNoti')->name('home-noti-redirect-read');
+    });
 });
 
 Route::group(['prefix' => 'admin'], function () {

@@ -17,14 +17,14 @@
 
             <div class="row">
                 <div class="col-md-5">
-                    <fieldset style="background-color: #f0e68c; height: 400px;" class="form-border">
+                    <fieldset id="js-conversation-fieldset" style="background-color: #f0e68c; height: 400px; overflow-y: scroll;" class="form-border">
                         @if ($thread->attendee->id == Auth::user()->id)
                             <legend class="form-border">@lang('With') @lang('Tutor'): {{ $thread->tutor->tutorContact->real_name }}</legend>
                         @else
                             <legend class="form-border">@lang('With'): {{ $thread->attendee->name }}</legend>
                         @endif
                         <div class="row">
-                            <div id="js-conversation-pane" class="col-md-11" style="overflow-y: auto; overflow-x: hidden;">
+                            <div id="js-conversation-pane" class="col-md-12">
                                 @foreach ($chats as $chat)
                                     @if ($chat->sender_user_id == Auth::user()->id)
                                         <div class="row">
@@ -45,7 +45,6 @@
                                     @endif
                                 @endforeach
                             </div>
-                            <div class="col-md-1"></div>
                         </div>
                     </fieldset>
                 </div>
@@ -89,6 +88,44 @@
         });
 
         var domain = window.location.origin;
+        $('#js-conversation-fieldset').scrollTop($('#js-conversation-pane').height());
+
+        socket.on('update_chat', function (data) {
+            if (parseInt('{{ Auth::check() == 1 }}') !== 1) {
+                return;
+            }
+
+            var thread_id = parseInt('{{ $thread->id }}');
+            var auth_id = parseInt('{{ Auth::check() ? Auth::user()->id : 0 }}');
+
+            if (parseInt(data.thread_id) !== thread_id) {
+                return;
+            }
+
+            if (parseInt(data.sender_user_id) === auth_id) {
+                $('#js-conversation-pane').append(`
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div style="background-color: #3578e5; color: #ffffff; border-radius: 5px;" class="col-md-10">
+                            ${data.message}
+                        </div>
+                    </div>
+                    <br>
+                `);
+            } else {
+                $('#js-conversation-pane').append(`
+                    <div class="row">
+                        <div style="background-color: #cccccc; color: #000000; border-radius: 5px;" class="col-md-10">
+                            ${data.message}
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br>
+                `);
+            }
+
+            $('#js-conversation-fieldset').scrollTop($('#js-conversation-pane').height());
+        });
 
         $(document).on('click', '#js-chat-btn', function () {
             var url = '{{ route('home-chat-store-ajax') }}';
@@ -102,8 +139,8 @@
                 contentType: false,
                 success: function (received_data) {
                     if (received_data.status === 'successful') {
-                        console.log(received_data.chat);
                         socket.emit('new_chat', received_data.chat);
+                        socket.emit('new_chat_noti', received_data.chat_noti);
                         $('textarea[name="message"]').val('');
                     }
                 },

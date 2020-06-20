@@ -129,7 +129,7 @@
 
                     <ul class="nav-menu">
                         <li>
-                            <a href="#">
+                            <a href="{{ route('home') }}">
                                 <i class="fa fa-home"></i> @lang('Home')
                             </a>
                         </li>
@@ -358,17 +358,92 @@
                 console.log(data);
             });
 
-            socket.on('noti_to_tutor', function (data) {
-                var confirm_txt = '{{ __('Confirm') }}';
-                var auth_id = parseInt('{{ Auth::user()->id }}');
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('home-noti-load-unread-ajax') }}',
+                success: function (received_data) {
+                    console.log(received_data);
+                    var confirm_txt = '{{ __('Confirm') }}';
+                    var route = '{{ route('home-noti-redirect-read') }}';
 
-                if (auth_id === parseInt(data.user_id)) {
+                    for (var noti of received_data) {
+                        console.log(noti);
+                        var form = `
+                            <form method="post" action="${route}">
+                                <input class="hidden" name="_token" value="{{ csrf_token() }}" readonly>
+                                <input class="hidden" name="id" value="${noti.id}" readonly>
+                                <button type="submit" class="btn btn-default">
+                                    ${confirm_txt}
+                                </button>
+                            </form>
+                        `;
+
+                        toastr.info(form, noti.display, {
+                            timeOut: 0,
+                            extendedTimeOut: 0,
+                            closeButton: true
+                        });
+                    }
+                },
+                error: function (e) {
+                    console.log(e.responseJSON.message);
+                }
+            });
+
+            socket.on('noti_to_tutor', function (data) {
+                if (parseInt('{{ Auth::check() == 1 }}') !== 1) {
                     return;
                 }
 
-                toastr.info(`
-                        
-                    `, data.display, {
+                var confirm_txt = '{{ __('Confirm') }}';
+                var auth_id = parseInt('{{ Auth::check() ? Auth::user()->id : 0 }}');
+
+                if (auth_id !== parseInt(data.user_id)) {
+                    return;
+                }
+
+                var route = '{{ route('home-noti-redirect-read') }}';
+                var form = `
+                    <form method="post" action="${route}">
+                        <input class="hidden" name="_token" value="{{ csrf_token() }}" readonly>
+                        <input class="hidden" name="id" value="${data.id}" readonly>
+                        <button type="submit" class="btn btn-default">
+                            ${confirm_txt}
+                        </button>
+                    </form>
+                `;
+
+                toastr.info(form, data.display, {
+                    timeOut: 0,
+                    extendedTimeOut: 0,
+                    closeButton: true
+                });
+            });
+
+            socket.on('noti_for_chat', function (data) {
+                if (parseInt('{{ Auth::check() == 1 }}') !== 1) {
+                    return;
+                }
+
+                var confirm_txt = '{{ __('Confirm') }}';
+                var auth_id = parseInt('{{ Auth::check() ? Auth::user()->id : 0 }}');
+
+                if (auth_id !== parseInt(data.user_id)) {
+                    return;
+                }
+
+                var route = '{{ route('home-noti-redirect-read') }}';
+                var form = `
+                    <form method="post" action="${route}">
+                        <input class="hidden" name="_token" value="{{ csrf_token() }}" readonly>
+                        <input class="hidden" name="id" value="${data.id}" readonly>
+                        <button type="submit" class="btn btn-default">
+                            ${confirm_txt}
+                        </button>
+                    </form>
+                `;
+
+                toastr.info(form, data.display, {
                     timeOut: 0,
                     extendedTimeOut: 0,
                     closeButton: true
