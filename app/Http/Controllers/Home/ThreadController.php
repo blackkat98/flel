@@ -16,6 +16,21 @@ use App\Enums\ThreadStatus;
 class ThreadController extends HomeController
 {
     /**
+     * Display the list of resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list()
+    {
+        $threads = Thread::where('tutor_id', Auth::user()->id)
+                ->orWhere('attendee_id', Auth::user()->id)->get();
+
+        return view('home.threads', [
+            'threads' => $threads
+        ]);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  string  $code
@@ -26,6 +41,10 @@ class ThreadController extends HomeController
         $thread = Thread::where('code', $code)->first();
 
         if (!$thread) {
+            return redirect()->route('home');
+        }
+
+        if ($thread->tutor_id != Auth::user()->id && $thread->attendee_id != Auth::user()->id) {
             return redirect()->route('home');
         }
 
@@ -86,6 +105,28 @@ class ThreadController extends HomeController
                 'status' => 'failed',
                 'msg' => __('Action Failed')
             ];
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  Illuminate\Http\Request  $request
+     * @param  int $id
+     * @return App\Models\Thread
+     */
+    public function ajaxUpdateSheet(Request $request, $id)
+    {
+        $thread = Thread::findOrFail($id);
+
+        if (Auth::user()->id != $thread->tutor_id && Auth::user()->id != $thread->attendee_id) {
+            return;
+        }
+
+        $thread->sheet = $request->sheet;
+
+        if ($thread->save()) {
+            return $thread;
         }
     }
 }

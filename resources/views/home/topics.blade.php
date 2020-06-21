@@ -16,14 +16,17 @@
             <legend class="form-border">@lang('Tags')</legend>
         </fieldset>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-9">
         <fieldset class="form-border">
             <legend class="form-border">@lang('Topics') @lang('In') {{ $p_language->name }}</legend>
-        </fieldset>
-    </div>
-    <div class="col-md-2">
-        <fieldset class="form-border">
-            <legend class="form-border">@lang('Other') @lang('Languages')</legend>
+            @foreach ($p_topics as $topic)
+                <h3>
+                    <a href="{{ route('home-topic-show', ['language_slug' => $p_language->slug, 'id' => $topic->id]) }}">
+                        <i style="color: {{ $topic->is_open == 1 ? '#ff9900' : '#ff0000' }};" class="fa fa-file"></i> {{ $topic->title }}
+                    </a>
+                </h3>
+            @endforeach
+            {{ $p_topics->links() }}
         </fieldset>
     </div>
 </div>

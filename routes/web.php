@@ -33,11 +33,9 @@ Route::group(['prefix' => 'home'], function () {
     });
 
     Route::group(['prefix' => 'user_course'], function () {
-        Route::post('/save', 'Home\UserCourseController@store')->name('home-user-course-store');
+        Route::post('/store', 'Home\UserCourseController@store')->name('home-user-course-store');
 
-        Route::group(['prefix' => 'ajax'], function () {
-            Route::get('/progress/{code}', 'Home\UserCourseController@ajaxProgressData')->name('home-user-course-progress');
-        });
+        Route::get('/ajax_progress/{code}', 'Home\UserCourseController@ajaxProgressData')->name('home-user-course-progress');
     });
 
     Route::group(['prefix' => 'test_type'], function () {
@@ -48,6 +46,12 @@ Route::group(['prefix' => 'home'], function () {
     Route::group(['prefix' => 'test'], function () {
         Route::get('overall/{type_slug}/{code}', 'Home\TestController@showOverall')->name('home-test-show-overall');
         Route::get('sheet/{type_slug}/{code}', 'Home\TestController@showTestSheet')->name('home-test-show-sheet');
+    });
+
+    Route::group(['prefix' => 'user_test'], function () {
+        Route::post('/store', 'Home\UserTestController@store')->name('home-user-test-store');
+
+        Route::get('/ajax_attempt/{test_id}', 'Home\UserTestController@ajaxAttemptData')->name('home-user-test-attempt-ajax');
     });
 
     Route::group(['prefix' => 'word_categories'], function() {
@@ -79,8 +83,10 @@ Route::group(['prefix' => 'home'], function () {
     });
 
     Route::group(['prefix' => 'thread'], function () {
+        Route::get('/list', 'Home\ThreadController@list')->name('home-thread-list');
         Route::get('/show/{code}', 'Home\ThreadController@show')->name('home-thread-show');
         Route::post('/ajax_store', 'Home\ThreadController@ajaxStore')->name('home-thread-store-ajax');
+        Route::post('/ajax_update_sheet/{id}', 'Home\ThreadController@ajaxUpdateSheet')->name('home-thread-update-sheet-ajax');
     });
 
     Route::group(['prefix' => 'chat'], function () {

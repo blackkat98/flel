@@ -12,6 +12,7 @@ use App\Models\Language;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use App\Helper\AccentReduction;
 use App\Helper\MediaDeletion;
 
@@ -31,13 +32,11 @@ class TopicController extends HomeController
             return redirect()->route('home');
         }
 
-        $p_topics = $p_language->topics;
-        $p_languages = Language::all();
+        $p_topics = DB::table('topics')->where('language_id', $p_language->id)->paginate(10);
 
         return view('home.topics', [
             'p_language' => $p_language,
-            'p_topics' => $p_topics,
-            'p_languages' => $p_languages
+            'p_topics' => $p_topics
         ]);
     }
 

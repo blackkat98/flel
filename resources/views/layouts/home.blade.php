@@ -140,7 +140,7 @@
                                     <ul class="dropdown-list">
                                         @foreach ($languages as $language)
                                             <li>
-                                                <a href="#">
+                                                <a href="{{ route('home-topic-list', ['language_slug' => $language->slug]) }}">
                                                     {{ $language->name }}
                                                 </a>
                                             </li>
@@ -252,6 +252,11 @@
                                 </div>
                             </div>
                         </li>
+                        <li>
+                            <a href="{{ route('home-thread-list') }}">
+                                <i class="fa fa-code"></i> @lang('Threads')
+                            </a>
+                        </li>
                     </ul>
                     <!-- /nav -->
                 </div>
@@ -290,7 +295,6 @@
         <!-- /container -->
     </div>
     <!-- /SECTION -->
-
 
     <!-- FOOTER -->
     <footer id="footer">
@@ -362,7 +366,6 @@
                 type: 'GET',
                 url: '{{ route('home-noti-load-unread-ajax') }}',
                 success: function (received_data) {
-                    console.log(received_data);
                     var confirm_txt = '{{ __('Confirm') }}';
                     var route = '{{ route('home-noti-redirect-read') }}';
 

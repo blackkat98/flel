@@ -8,6 +8,7 @@ use App\Models\Test;
 use App\Models\TestType;
 use App\Models\UserTest;
 use App\Enums\TestQuizType;
+use Illuminate\Support\Facades\Auth;
 
 class TestController extends HomeController
 {
@@ -38,9 +39,13 @@ class TestController extends HomeController
             ]);
         }
 
+        $p_user_tests = UserTest::where('user_id', Auth::user()->id)
+                ->where('test_id', $p_test->id)->get();
+
         return view('home.test_overall', [
             'p_test_type' => $p_test_type,
             'p_test' => $p_test,
+            'p_user_tests' => $p_user_tests,
             'related_tests' => $related_tests
         ]);
     }
@@ -74,7 +79,7 @@ class TestController extends HomeController
         $p_test_quizzes = [];
 
         foreach ($p_test_parts as $part) {
-            $p_test_quizzes[$part->id] = $part->testQuizzes;
+            $p_test_quizzes[$part->id] = $part->testQuizzes->sortBy('number');
         }
 
         return view('home.test_sheet', [

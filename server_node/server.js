@@ -43,5 +43,9 @@ io.on('connection', function (socket) {
     socket.on('new_chat_noti', function (signal) {
         io.emit('noti_for_chat', signal);
     });
+
+    socket.on('thread_sheet_changed', function (signal) {
+        io.emit('update_thread_sheet', signal);
+    });
 });
 

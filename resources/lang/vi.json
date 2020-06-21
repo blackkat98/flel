@@ -32,6 +32,7 @@
     "Previous": "Kế trước",
     "And": "Và",
     "Of": "Của",
+    "At": "Lúc",
     "Existing": "Hiện có",
     "Additional": "Ngoại lệ",
     "Search": "Tìm kiếm",
@@ -61,6 +62,16 @@
     "Workspace": "Workspace",
     "Tutor": "Gia sư",
     "Confirm": "Xác nhận",
+    "Send": "Gửi",
+    "Highlight": "Đánh dấu",
+    "Clear": "Xoá dấu",
+    "Good": "Tốt",
+    "Bad": "Xấu",
+    "Error": "Lỗi",
+    "Comment": "Ghi chú",
+    "Mark as Comment": "Đánh dấu ghi chú",
+    "Clear Comment": "Xoá ghi chú",
+    "Color code": "Mã màu",
 
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
     "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",
@@ -174,6 +185,7 @@
     "Reply": "Phản hồi",
     "Tags": "Tags",
     "Tag": "Tag",
+    "Threads": "Threads",
     "Thread": "Thread",
     "Notification": "Thông báo"
 }

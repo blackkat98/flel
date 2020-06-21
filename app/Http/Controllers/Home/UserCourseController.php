@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserCourseController extends HomeController
 {
+    public function list()
+    {
+
+    }
+
     /**
      * Save Course Progress.
      *

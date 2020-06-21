@@ -47,6 +47,16 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
+                    <h5> @lang('Statistics'): </h5>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <canvas id="js-line-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
                     <h5> @lang('Actions'): </h5>
                 </div>
                 <div class="col-md-9">
@@ -67,6 +77,18 @@
             <div class="col-md-12">
                 <fieldset class="form-border">
                     <legend class="form-border">@lang('Attempt')</legend>
+                    <table style="border: 1px solid black;" class="col-md-12">
+                        <tr>
+                            <th style="border: 1px solid black;" class="text-center"> @lang('Number') </th>
+                            <th style="border: 1px solid black;" class="text-center"> @lang('Score') </th>
+                        </tr>
+                        @foreach ($p_user_tests as $user_test)
+                            <tr>
+                                <td style="border: 1px solid black;" class="text-center"> {{ $user_test->attempt_number }} </td>
+                                <td style="border: 1px solid black;" class="text-center"> {{ $user_test->score }} </td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </fieldset>
             </div>
 
@@ -96,7 +118,55 @@
 <script src="{{ asset('bower_components/adminlte3/dist/js/adminlte.min.js') }}"></script>
 <script>
     $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: '{{ route('home-user-test-attempt-ajax', ['test_id' => $p_test->id]) }}',
+            success: function (received_data) {
+                console.log(received_data);
+                Chart.defaults.global.defaultFontColor = '#000000';
+                Chart.defaults.global.defaultFontFamily = 'Arial';
 
+                var chart_data = {
+                    labels: received_data.numbers,
+                    datasets: [
+                        {
+                            label: '{{ __('Score') }}',
+                            data: received_data.scores,
+                            lineTension: 0,
+                            backgroundColor: '#99ffff',
+                            borderColor: '#2e6da4',
+                            borderWidth: 1
+                        }
+                    ]
+                };
+                var chart_options = {
+                    maintainAspectRatio : false,
+                    responsive : true,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true,
+                                callback: function (value) {
+                                    if (Number.isInteger(value)) {
+                                        return value;
+                                    }
+                                },
+                                stepSize: 1
+                            }
+                        }]
+                    },
+                };
+                var chart_canvas = $('#js-line-chart');
+                var progress_chart = new Chart(chart_canvas, {
+                    type: 'line',
+                    data: chart_data,
+                    options: chart_options
+                });
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
     });
 </script>
 @endsection
