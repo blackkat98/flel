@@ -9,6 +9,7 @@ use App\Models\Language;
 use App\Models\Course;
 use App\Models\TestType;
 use App\Models\Test;
+use Session;
 
 class HomeController extends Controller
 {
@@ -39,5 +40,18 @@ class HomeController extends Controller
     public function index()
     {
         return view('home.index');
+    }
+
+    /**
+     * Change Web Display Language.
+     *
+     * @param string $locale
+     * @return \Illuminate\Http\Response
+     */
+    public function changeLocale($locale)
+    {
+        \Session::put('web_locale', $locale);
+
+        return redirect()->back();
     }
 }

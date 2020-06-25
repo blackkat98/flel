@@ -40,13 +40,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Home</a>
+                    <a href="{{ route('home') }}" class="nav-link">@lang('Home')</a>
                 </li>
                 @yield('top-nav')
             </ul>
 
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
+            {{-- <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
                     <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
@@ -55,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </button>
                     </div>
                 </div>
-            </form>
+            </form> --}}
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
@@ -155,7 +155,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <span class="dropdown-header">@lang('Select page language')</span>
                         <div class="dropdown-divider"></div>
                         @foreach ($locales as $key => $value)
-                            <a href="#" class="dropdown-item">
+                            <a href="{{ route('admin-locale', ['locale' => $key]) }}" class="dropdown-item">
                                 <i class="fas fa-flag mr-2"></i> {{ $value }} ({{ $key }})
                             </a>
                             <div class="dropdown-divider"></div>

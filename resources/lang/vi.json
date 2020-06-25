@@ -33,6 +33,7 @@
     "And": "Và",
     "Of": "Của",
     "At": "Lúc",
+    "All": "Tất cả",
     "Existing": "Hiện có",
     "Additional": "Ngoại lệ",
     "Search": "Tìm kiếm",
@@ -72,6 +73,7 @@
     "Mark as Comment": "Đánh dấu ghi chú",
     "Clear Comment": "Xoá ghi chú",
     "Color code": "Mã màu",
+    "Search Results": "Kết quả tìm kiếm",
 
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
     "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",

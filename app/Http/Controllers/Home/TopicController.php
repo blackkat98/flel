@@ -32,11 +32,52 @@ class TopicController extends HomeController
             return redirect()->route('home');
         }
 
+        $p_tags = Tag::whereHas('topic', function ($q) use ($p_language) {
+            $q->where('language_id', '=', $p_language->id);
+        })->distinct('key')->get();
+
         $p_topics = DB::table('topics')->where('language_id', $p_language->id)->paginate(10);
 
         return view('home.topics', [
             'p_language' => $p_language,
-            'p_topics' => $p_topics
+            'p_topics' => $p_topics,
+            'p_tags' => $p_tags->sortBy('key')
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param string  $language_slug
+     * @param string  $tag_key
+     * @return \Illuminate\Http\Response
+     */
+    public function listByTag($language_slug, $tag_key)
+    {
+        $p_language = Language::where('slug', $language_slug)->first();
+
+        if (!$p_language) {
+            return redirect()->route('home');
+        }
+
+        $p_tags = Tag::whereHas('topic', function ($q) use ($p_language) {
+            $q->where('language_id', '=', $p_language->id);
+        })->distinct('key')->get();
+
+        $p_topics = DB::table('topics')
+                ->join('tags', function ($q) use ($tag_key) {
+                    $q->on('tags.topic_id', '=', 'topics.id');
+                })
+                ->where('topics.language_id', $p_language->id)
+                ->where('tags.key', '=', $tag_key)
+                ->select('topics.*')
+                ->paginate(10);
+
+        return view('home.topics_by_tag', [
+            'p_language' => $p_language,
+            'p_topics' => $p_topics,
+            'p_tags' => $p_tags->sortBy('key'),
+            'p_tag_key' => $tag_key
         ]);
     }
 

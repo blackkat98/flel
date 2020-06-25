@@ -102,13 +102,15 @@
                             </ul>
                         @endguest
 
-                        <button class="nav-item dropdown">{{ app()->getLocale() }}</button>
                         <button class="search-btn"><i class="fa fa-search"></i></button>
-                        <button class="aside-btn"><i class="fa fa-bars"></i></button>
+                        <button class="aside-btn">{{ app()->getLocale() }}</button>
                         <div id="nav-search">
-                            <form method="post" action="#">
-                                @csrf
-                                <input class="input" name="search" placeholder="@lang('Search')">
+                            <form id="js-search-form" method="post" action="{{ route('home-search') }}">
+                                <input class="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input class="input" name="text" placeholder="@lang('Search')">
+                                <button id="js-search-btn" type="button" class="btn btn-default">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </form>
                             <button class="nav-close search-close">
                                 <span></span>
@@ -266,7 +268,13 @@
             <!-- Aside Nav -->
             <div id="nav-aside">
                 <ul class="nav-aside-menu">
-
+                    @lang('Select page language')
+                    <br>&nbsp;
+                    @foreach ($locales as $key => $value)
+                        <a href="{{ route('home-locale', ['locale' => $key]) }}">
+                            <h5><b style="color: #ffffff;">{{ $value }} ({{ $key }})</b></h5>
+                        </a>
+                    @endforeach
                 </ul>
                 <button class="nav-close nav-aside-close"><span></span></button>
             </div>
@@ -336,6 +344,14 @@
                 if (event.keyCode == 13) {
                     event.preventDefault();
                 }
+            });
+
+            $(document).on('click', '#js-search-btn', function () {
+                if ($('input[name="text"]').val() === '') {
+                    return;
+                }
+
+                $('#js-search-form').submit();
             });
 
             if ('{!! session()->get('success') !!}' !== '') {
