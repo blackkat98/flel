@@ -80,8 +80,16 @@
                                                 &nbsp;&nbsp;@lang('Profile')
                                             </a>
                                         </div>
+                                        @hasanyrole('root|admin|editor')
+                                            <div>
+                                                <a class="dropdown-item" href="{{ route('admin') }}">
+                                                    &nbsp;&nbsp;<i class="fa fa-key"></i>
+                                                    &nbsp;&nbsp;@lang('Adminstration')
+                                                </a>
+                                            </div>
+                                        @endhasanyrole
                                         <div>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="{{ route('home-statistics') }}">
                                                 &nbsp;&nbsp;<i class="fa fa-tachometer"></i>
                                                 &nbsp;&nbsp;@lang('Statistics')
                                             </a>

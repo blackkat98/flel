@@ -6,6 +6,11 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('bower_components/adminlte3/dist/css/all.min.css') }}">
+<style>
+    table, th, td, tr {
+        border: 1px solid black;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -77,15 +82,15 @@
             <div class="col-md-12">
                 <fieldset class="form-border">
                     <legend class="form-border">@lang('Attempt')</legend>
-                    <table style="border: 1px solid black;" class="col-md-12">
+                    <table class="col-md-12">
                         <tr>
-                            <th style="border: 1px solid black;" class="text-center"> @lang('Number') </th>
-                            <th style="border: 1px solid black;" class="text-center"> @lang('Score') </th>
+                            <th class="text-center"> @lang('Number') </th>
+                            <th class="text-center"> @lang('Score') </th>
                         </tr>
                         @foreach ($p_user_tests as $user_test)
                             <tr>
-                                <td style="border: 1px solid black;" class="text-center"> {{ $user_test->attempt_number }} </td>
-                                <td style="border: 1px solid black;" class="text-center"> {{ $user_test->score }} </td>
+                                <td class="text-center"> {{ $user_test->attempt_number }} </td>
+                                <td class="text-center"> {{ $user_test->score }} </td>
                             </tr>
                         @endforeach
                     </table>

@@ -2,10 +2,13 @@
     "Welcome": "Chào mừng bạn",
     "Authentication": "Xác thực người dùng",
     "Admin": "Quản trị viên",
+    "Editor": "Biên tập viên",
+    "Root": "Người dùng quyền cao nhất",
     "Home": "Trang chính",
     "Profile": "T.tin cá nhân",
     "Statistics": "Thống kê",
     "Q&A": "Hỏi-đáp",
+    "Adminstration": "Quản lý",
 
     "Select page language": "Chọn ngôn ngữ hiển thị",
 

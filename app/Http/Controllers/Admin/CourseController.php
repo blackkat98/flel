@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Models\Course;
 use App\Models\Language;
 use App\Models\Lesson;
+use App\Models\UserCourse;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends AdminController
@@ -125,6 +126,10 @@ class CourseController extends AdminController
         
         foreach ($course->lessons as $lesson) {
             $lesson->delete();
+        }
+
+        foreach ($course->userCourses as $u_course) {
+            $u_course->delete();
         }
         
         if ($course->delete()) {

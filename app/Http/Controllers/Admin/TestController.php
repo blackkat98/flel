@@ -162,6 +162,10 @@ class TestController extends AdminController
             $part->delete();
         }
 
+        foreach ($test->userTests as $u_test) {
+            $u_test->delete();
+        }
+
         if ($test->delete()) {
             return redirect()->route('admin-tests-list')->with('success', $test->name . ' ' . __('has been deleted'));
         } else {

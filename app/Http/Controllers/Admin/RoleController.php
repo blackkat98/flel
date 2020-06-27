@@ -151,7 +151,7 @@ class RoleController extends AdminController
     {
         $role = Role::findById($id);
 
-        if ($role->users != null) {
+        if (count($role->users) > 0) {
             return redirect()->back()->with('error', __('Action Failed'));
         }
 

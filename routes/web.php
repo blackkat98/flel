@@ -19,18 +19,26 @@ Auth::routes();
 
 Route::group(['prefix' => 'home'], function () {
     Route::get('/change_locale/{locale}', 'Home\HomeController@changeLocale')
-            ->middleware('locale')
+            ->middleware(['locale'])
             ->name('home-locale');
 
     Route::get('/', 'Home\HomeController@index')
             ->name('home');
 
     Route::group(['prefix' => 'me'], function () {
-        Route::get('/profile', 'Home\UserController@showProfile')->name('home-me-profile-show');
+        Route::get('/profile', 'Home\UserController@showProfile')
+                ->middleware(['auth'])
+                ->name('home-me-profile-show');
         Route::post('/update_profile', 'Home\UserController@updateProfile')
+                ->middleware(['auth'])
                 ->name('home-me-profile-update');
         Route::post('/update_password', 'Home\UserController@updatePassword')
+                ->middleware(['auth'])
                 ->name('home-me-password-update');
+
+        Route::get('/statistics', 'Home\StatisticsController@index')
+                ->middleware(['auth'])
+                ->name('home-statistics');
     });
 
     Route::group(['prefix' => 'course'], function () {
@@ -44,9 +52,11 @@ Route::group(['prefix' => 'home'], function () {
 
     Route::group(['prefix' => 'user_course'], function () {
         Route::post('/store', 'Home\UserCourseController@store')
+                ->middleware(['auth'])
                 ->name('home-user-course-store');
 
         Route::get('/ajax_progress/{code}', 'Home\UserCourseController@ajaxProgressData')
+                ->middleware(['auth'])
                 ->name('home-user-course-progress');
     });
 
@@ -61,14 +71,17 @@ Route::group(['prefix' => 'home'], function () {
         Route::get('overall/{type_slug}/{code}', 'Home\TestController@showOverall')
                 ->name('home-test-show-overall');
         Route::get('sheet/{type_slug}/{code}', 'Home\TestController@showTestSheet')
+                ->middleware(['auth'])
                 ->name('home-test-show-sheet');
     });
 
     Route::group(['prefix' => 'user_test'], function () {
         Route::post('/store', 'Home\UserTestController@store')
+                ->middleware(['auth'])
                 ->name('home-user-test-store');
 
         Route::get('/ajax_attempt/{test_id}', 'Home\UserTestController@ajaxAttemptData')
+                ->middleware(['auth'])
                 ->name('home-user-test-attempt-ajax');
     });
 
@@ -83,14 +96,16 @@ Route::group(['prefix' => 'home'], function () {
         Route::get('/{language_slug}/tag/{key}', 'Home\TopicController@listByTag')
                 ->name('home-topic-list-by-tag');
         Route::get('/{language_slug}/create', 'Home\TopicController@create')
+                ->middleware(['auth'])
                 ->name('home-topic-create');
         Route::get('/{language_slug}/show/{id}', 'Home\TopicController@show')
                 ->name('home-topic-show');
         Route::get('/{language_slug}/edit/{id}', 'Home\TopicController@edit')
+                ->middleware(['auth'])
                 ->name('home-topic-edit');
     });
 
-    Route::group(['prefix' => 'topic'], function () {
+    Route::group(['prefix' => 'topic', 'middleware' => ['auth']], function () {
         Route::post('/store', 'Home\TopicController@store')
                 ->name('home-topic-store');
         Route::post('/ajax_available/{id}', 'Home\TopicController@ajaxAvailable')
@@ -101,7 +116,7 @@ Route::group(['prefix' => 'home'], function () {
                 ->name('home-topic-delete');
     });
 
-    Route::group(['prefix' => 'reply'], function () {
+    Route::group(['prefix' => 'reply', 'middleware' => ['auth']], function () {
         Route::post('/ajax_store', 'Home\ReplyController@ajaxStore')
                 ->name('home-reply-store-ajax');
         Route::post('/ajax_delete', 'Home\ReplyController@ajaxDestroy')
@@ -115,7 +130,7 @@ Route::group(['prefix' => 'home'], function () {
                 ->name('home-tutor-list');
     });
 
-    Route::group(['prefix' => 'thread'], function () {
+    Route::group(['prefix' => 'thread', 'middleware' => ['auth']], function () {
         Route::get('/list', 'Home\ThreadController@list')
                 ->name('home-thread-list');
         Route::get('/show/{code}', 'Home\ThreadController@show')
@@ -126,12 +141,12 @@ Route::group(['prefix' => 'home'], function () {
                 ->name('home-thread-update-sheet-ajax');
     });
 
-    Route::group(['prefix' => 'chat'], function () {
+    Route::group(['prefix' => 'chat', 'middleware' => ['auth']], function () {
         Route::post('/ajax_store', 'Home\ChatController@ajaxStore')
                 ->name('home-chat-store-ajax');
     });
 
-    Route::group(['prefix' => 'notification'], function () {
+    Route::group(['prefix' => 'notification', 'middleware' => ['auth']], function () {
         Route::get('/ajax_load_unread', 'Home\NotificationController@ajaxLoadUnread')
                 ->name('home-noti-load-unread-ajax');
         Route::post('/redirect_by_noti', 'Home\NotificationController@redirectByNoti')
@@ -144,13 +159,14 @@ Route::group(['prefix' => 'home'], function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/change_locale/{locale}', 'Admin\AdminController@changeLocale')
-            ->middleware('locale')
+            ->middleware(['locale'])
             ->name('admin-locale');
 
     Route::get('/', 'Admin\AdminController@index')
+            ->middleware(['role:root|admin|editor'])
             ->name('admin');
 
-    Route::group(['prefix' => 'users'], function () {
+    Route::group(['prefix' => 'users', 'middleware' => ['role:admin']], function () {
         Route::get('/', 'Admin\UserController@list')->name('admin-users-list');
         Route::post('/store', 'Admin\UserController@store')
                 ->name('admin-users-store');
@@ -164,7 +180,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-users-update-permissions');
     });
     
-    Route::group(['prefix' => 'languages'], function () {
+    Route::group(['prefix' => 'languages', 'middleware' => ['role:admin|editor']], function () {
         Route::get('/', 'Admin\LanguageController@list')
                 ->name('admin-languages-list');
         Route::post('/store', 'Admin\LanguageController@store')
@@ -175,7 +191,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-languages-delete');
     });
     
-    Route::group(['prefix' => 'courses'], function () {
+    Route::group(['prefix' => 'courses', 'middleware' => ['role:admin|editor']], function () {
         Route::get('/', 'Admin\CourseController@list')
                 ->name('admin-courses-list');
         Route::get('/show/{id}', 'Admin\CourseController@show')
@@ -190,7 +206,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-courses-available');
     });
     
-    Route::group(['prefix' => 'test-types'], function () {
+    Route::group(['prefix' => 'test-types', 'middleware' => ['role:admin|editor']], function () {
         Route::get('/', 'Admin\TestTypeController@list')
                 ->name('admin-test-types-list');
         Route::post('/store', 'Admin\TestTypeController@store')
@@ -203,7 +219,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-test-types-available');
     });
 
-    Route::group(['prefix' => 'test-type-rules'], function () {
+    Route::group(['prefix' => 'test-type-rules', 'middleware' => ['role:admin|editor']], function () {
         Route::post('/store', 'Admin\TestTypeRuleController@store')
                 ->name('admin-test-type-rules-store');
         Route::post('/update/{id}', 'Admin\TestTypeRuleController@update')
@@ -212,7 +228,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-test-type-rules-delete');
     });
 
-    Route::group(['prefix' => 'tests'], function () {
+    Route::group(['prefix' => 'tests', 'middleware' => ['role:admin|editor']], function () {
         Route::get('/', 'Admin\TestController@list')
                 ->name('admin-tests-list');
         Route::get('/show/{id}', 'Admin\TestController@show')
@@ -227,7 +243,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-tests-available');
     });
 
-    Route::group(['prefix' => 'test-parts'], function () {
+    Route::group(['prefix' => 'test-parts', 'middleware' => ['role:admin|editor']], function () {
         Route::post('/store', 'Admin\TestPartController@store')
                 ->name('admin-test-parts-store');
         Route::post('/update/{id}', 'Admin\TestPartController@update')
@@ -236,7 +252,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-test-parts-delete');
     });
     
-    Route::group(['prefix' => 'test-quizzes'], function () {
+    Route::group(['prefix' => 'test-quizzes', 'middleware' => ['role:admin|editor']], function () {
         Route::post('/store', 'Admin\TestQuizController@store')
                 ->name('admin-test-quizzes-store');
         Route::post('/update/{id}', 'Admin\TestQuizController@update')
@@ -245,7 +261,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-test-quizzes-delete');
     });
 
-    Route::group(['prefix' => 'lessons'], function () {
+    Route::group(['prefix' => 'lessons', 'middleware' => ['role:admin|editor']], function () {
         Route::post('/store', 'Admin\LessonController@store')
                 ->name('admin-lessons-store');
         Route::post('/update/{id}', 'Admin\LessonController@update')
@@ -254,7 +270,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-lessons-delete');
     });
 
-    Route::group(['prefix' => 'word_categories'], function () {
+    Route::group(['prefix' => 'word_categories', 'middleware' => ['role:admin|editor']], function () {
         Route::get('/', 'Admin\WordCategoryController@list')
                 ->name('admin-word-categories-list');
         Route::post('/store', 'Admin\WordCategoryController@store')
@@ -265,7 +281,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-word-categories-delete');
     });
 
-    Route::group(['prefix' => 'words'], function () {
+    Route::group(['prefix' => 'words', 'middleware' => ['role:admin|editor']], function () {
         Route::get('/', 'Admin\WordController@list')
                 ->name('admin-words-list');
         Route::post('/store', 'Admin\WordController@store')
@@ -276,7 +292,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-words-delete');
     });
 
-    Route::group(['prefix' => 'permissions'], function () {
+    Route::group(['prefix' => 'permissions', 'middleware' => ['role:root']], function () {
         Route::get('/', 'Admin\PermissionController@list')
                 ->name('admin-permissions-list');
         Route::post('/store', 'Admin\PermissionController@store')
@@ -287,7 +303,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-permissions-delete');
     });
 
-    Route::group(['prefix' => 'roles'], function () {
+    Route::group(['prefix' => 'roles', 'middleware' => ['role:root']], function () {
         Route::get('/', 'Admin\RoleController@list')
                 ->name('admin-roles-list');
         Route::post('/store', 'Admin\RoleController@store')
@@ -298,7 +314,7 @@ Route::group(['prefix' => 'admin'], function () {
                 ->name('admin-roles-delete');
     });
 
-    Route::group(['prefix' => 'tutor_contacts'], function () {
+    Route::group(['prefix' => 'tutor_contacts', 'middleware' => ['role:admin']], function () {
         Route::get('/', 'Admin\TutorContactController@list')
                 ->name('admin-tutor-contacts-list');
         Route::post('/store', 'Admin\TutorContactController@store')
