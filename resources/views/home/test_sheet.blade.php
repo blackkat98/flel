@@ -50,12 +50,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <fieldset class="form-border">
-                                <legend class="form-border text-primary">@lang('Part'): {{ $test_part->name }}</legend>
+                                <legend id="test-part-{{ $test_part->id }}" class="form-border text-primary">@lang('Part'): {{ $test_part->name }}</legend>
                                 @foreach($p_test_quizzes[$test_part->id] as $quiz)
                                     <div class="row">
                                         <div class="col-md-12">
                                             <fieldset class="form-border">
-                                                <legend class="form-border">#{{ $quiz->number }}:</legend>
+                                                <legend id="test-quiz-{{ $quiz->id }}" class="form-border">#{{ $quiz->number }}:</legend>
                                                 <div class="row">
                                                     <b>{{ $quiz->question }}</b>
                                                 </div>
@@ -113,6 +113,28 @@
                     </div>
                 @endforeach
             </form>
+        </fieldset>
+    </div>
+    <div style="position: fixed; right: 10px;" class="col-md-2">
+        <fieldset class="form-border">
+            <legend class="form-border">@lang('Number')</legend>
+
+            @foreach ($p_test_parts as $test_part)
+                <h5>
+                    <a href="#test-part-{{ $test_part->id }}">
+                        {{ $test_part->name }}
+                    </a>
+                </h5>
+                <div class="row">
+                    @foreach ($p_test_quizzes[$test_part->id] as $quiz)
+                        <div class="col-md-2">
+                            <a href="#test-quiz-{{ $quiz->id }}">
+                                <b>{{ $quiz->number }}</b>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
         </fieldset>
     </div>
 </div>

@@ -9,6 +9,9 @@
 @endsection
 
 @section('content')
+<audio id="js-reader" controls style="display: none;">
+    <source src="">
+</audio>
 <div class="row">
     <div class="col-md-9">
         <div class="row">
@@ -29,7 +32,12 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                                <div class="col-md-2">{{ $word->ipa }}</div>
+                                <div class="col-md-2">
+                                    {{ $word->ipa }}<br>
+                                    <button id="js-listen-{{ $word->id }}" class="btn btn-outline">
+                                        <i class="fa fa-volume-up"></i>
+                                    </button>
+                                </div>
                                 <div class="col-md-1">
                                     @if ($word->pronunciation)
                                         <audio controls>
@@ -40,7 +48,7 @@
                                 <div class="col-md-1">
                                     
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <b>{{ $word->definition }}</b>
                                     <br>
                                     @if ($word->example)
@@ -50,6 +58,9 @@
                                             {{ $word->example }}
                                         </i>
                                     @endif
+                                </div>
+                                <div class="col-md-1">
+                                    
                                 </div>
                             </div>
                         @endforeach
@@ -76,5 +87,35 @@
 @endsection
 
 @section('js')
+<script>
+    console.log('{{ config('more_hosts.py_host') }}')
+</script>
+@foreach ($p_word_categories as $category)
+    @foreach ($p_words[$category->id] as $word)
+        <script>
+            $('#js-listen-' + '{{ $word->id }}').on('click', function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ config('more_hosts.py_host') }}' + 'read/' + '{{ $word->word }}',
+                    dataType: 'json',
+                    success: function (s) {
+                        var file_path = s.mp3_file;
+                        var audio_source = '{{ config('more_hosts.py_domain') }}' + file_path;
 
+                        $('#js-reader').replaceWith(`
+                            <audio id="js-reader" controls style="display: none;">
+                                <source src="${audio_source}">
+                            </audio>
+                        `);
+
+                        $('#js-reader').trigger('play');
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                });
+            });
+        </script>
+    @endforeach
+@endforeach
 @endsection

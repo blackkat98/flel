@@ -9,6 +9,7 @@ use App\Models\Language;
 use App\Models\Course;
 use App\Models\TestType;
 use App\Models\Test;
+use App\Models\User;
 use Session;
 
 class HomeController extends Controller
@@ -39,7 +40,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home.index');
+        $online_number = 0;
+
+        foreach (User::all() as $user) {
+            if ($user->isOnline()) {
+                $online_number++;
+            }
+        }
+
+        return view('home.index', [
+            'user_number' => User::count(),
+            'online_number' => $online_number,
+            'language_number' => Language::count(),
+            'test_type_number' => TestType::count(),
+            'course_number' => Course::count()
+        ]);
     }
 
     /**

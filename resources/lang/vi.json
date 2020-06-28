@@ -8,7 +8,7 @@
     "Profile": "T.tin cá nhân",
     "Statistics": "Thống kê",
     "Q&A": "Hỏi-đáp",
-    "Adminstration": "Quản lý",
+    "Administration": "Quản lý",
 
     "Select page language": "Chọn ngôn ngữ hiển thị",
 
@@ -77,6 +77,21 @@
     "Clear Comment": "Xoá ghi chú",
     "Color code": "Mã màu",
     "Search Results": "Kết quả tìm kiếm",
+    "Online number": "Số người trực tuyến",
+    "User number": "Tổng số người dùng",
+    "Language number": "Số ngôn ngữ",
+    "Course number": "Số khoá học",
+    "Test Type number": "Số kiểu bài kiểm tra",
+
+    "Welcome to FLEL Administration site": "Chào mừng bạn đến trang quản lý của FLEL",
+    "Here you can": "Ở đây bạn có thể",
+    "Create anything": "Tạo bất cứ thứ gì",
+    "Read anything": "Đọc bất cứ thứ gì",
+    "Update any changes": "Thay đổi những gì cần thiết",
+    "Delete any leftover": "Xoá bất cứ dữ liệu thừa",
+    "Here you should": "Ở đây bạn nên",
+    "Be responsible with your given Role": "Có trách nhiệm với vai trò của mình",
+    "Take care all Data with your heart": "Quản lý dữ liệu tận tâm",
 
     "Are you sure to logout?": "Bạn muốn đăng xuất?",
     "Just to make sure you did not misclick.": "Chúng tôi muốn chắc chắn rằng bạn không bấm nhầm.",

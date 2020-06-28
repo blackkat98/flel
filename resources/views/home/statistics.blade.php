@@ -6,6 +6,15 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('bower_components/adminlte3/dist/css/all.min.css') }}">
+<style>
+    td:nth-child(6n+1), td:nth-child(6n+3), td:nth-child(6n+5) {
+        background-color: #ffb6c1;
+    }
+
+    td:nth-child(6n+2), td:nth-child(6n+4), td:nth-child(6n) {
+        background-color: #e0ffff;
+    }
+</style>
 @endsection
 
 @section('content')

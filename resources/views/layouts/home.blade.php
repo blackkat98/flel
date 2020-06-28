@@ -84,7 +84,7 @@
                                             <div>
                                                 <a class="dropdown-item" href="{{ route('admin') }}">
                                                     &nbsp;&nbsp;<i class="fa fa-key"></i>
-                                                    &nbsp;&nbsp;@lang('Adminstration')
+                                                    &nbsp;&nbsp;@lang('Administration')
                                                 </a>
                                             </div>
                                         @endhasanyrole
